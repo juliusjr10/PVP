@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PVP.Server.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Prisijungimo i duombaze varas
+var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+//Builderis duombazes kontekstui
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 var app = builder.Build();
 
 app.UseDefaultFiles();
