@@ -1,0 +1,6 @@
+@PVP.Server_HostAddress = http://localhost:5095
+
+GET {{PVP.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
