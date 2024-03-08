@@ -4,7 +4,7 @@ function App() {
     return (
 
         <div className="App">
-            <h1 className="text-3xl font-bold underline">
+            <h1 className="font-italic underline">
                 Hello world!
             </h1>
         <ResetPassword/>
