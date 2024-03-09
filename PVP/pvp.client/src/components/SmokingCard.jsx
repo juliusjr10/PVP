@@ -13,7 +13,7 @@ export default function ActionAreaCard() {
                 <CardContent>
                     <SmokeFreeIcon style={{ fontSize: '250px' }}></SmokeFreeIcon>
                     <Typography gutterBottom variant="h5" component="div">
-                        Lizard
+                        Smoking
                     </Typography>
                 </CardContent>
             </CardActionArea>
