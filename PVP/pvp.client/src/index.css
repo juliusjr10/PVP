@@ -70,3 +70,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.react-calendar:focus {
+    outline: none; /* Remove outline on focus */
+}
+
+/* Ensure that the previously selected date remains visible */
+.react-calendar__tile--active {
+    background-color: #646cff; /* Adjust background color for active date */
+    color: #ffffff; /* Adjust text color for active date */
+}
+
+/* Remove styles applied when a date is clicked */
+.react-calendar__tile--now:active,
+.react-calendar__tile--now:focus,
+.react-calendar__tile--now:hover {
+    background-color: transparent; /* Remove background color */
+    color: inherit; /* Use default text color */
+}

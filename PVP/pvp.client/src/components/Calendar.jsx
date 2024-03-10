@@ -20,7 +20,8 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
         return null;
     };
     const handleCheckCurrentDate = () => {
-        const currentDate = new Date(); // Get the current date
+        const currentDate = new Date(); // Get the current date and time
+        currentDate.setHours(0, 0, 0, 0); // Set time to midnight
         const formattedDate = currentDate.toISOString().split('T')[0];
 
         if (!checkedDates.includes(formattedDate)) {

@@ -94,7 +94,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         }),
     }),
 );
-
+const CalendarContainer = styled(Box)(({ theme }) => ({
+    position: 'absolute',
+    top: theme.spacing(9),
+    right: theme.spacing(1),
+}));
 export default function MiniDrawer() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -107,7 +111,6 @@ export default function MiniDrawer() {
         '2024-03-06',
         '2024-03-07',
         '2024-03-08',
-        '2024-03-09',
     ]);
     const handleCheckDate = date => {
         const formattedDate = date.toISOString().split('T')[0];
@@ -216,7 +219,9 @@ export default function MiniDrawer() {
                 </List>
             </Drawer>
             <Box>
-                <Calendar checkedDates={checkedDates} onCheckDate={handleCheckDate} />
+                <CalendarContainer>
+                    <Calendar checkedDates={checkedDates} onCheckDate={handleCheckDate} />
+                </CalendarContainer>
             </Box>
         </Box>
     );
