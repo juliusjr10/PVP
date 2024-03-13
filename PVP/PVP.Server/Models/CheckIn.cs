@@ -9,7 +9,7 @@ namespace PVP.Server.Models
         public Mood Mood { get; set; }
 
         public DateTime Date { get; set; }
-        public string Note { get; set; }
+        public string? Note { get; set; }
         
         public int? UserHabitId { get; set; }
         public HabitUser? UserHabit { get; set; }
