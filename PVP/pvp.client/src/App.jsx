@@ -6,8 +6,10 @@ import SmokingHabit from './pages/SmokingHabit';
 import NoPage from './pages/NoPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ColorModeContext from "./components/ColorModeContext"
+import SignUp from "./pages/SignUp";
 
 export default function App() {
+
     const [mode, setMode] = useState('dark');
     const colorMode = useMemo(
         () => ({
@@ -31,6 +33,7 @@ export default function App() {
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
+{/* Nzn kaip routus issprest               <SignUp/>*/}
                 <BrowserRouter>
                     <Routes>
                         <Route index element={<MainPage />} />
