@@ -8,7 +8,7 @@ namespace PVP.Server.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<User> Users { get;} = [];
+        public ICollection<HabitUser> HabitUser { get;} = [];
 
         public ICollection<WeekDay> WeekDays { get;} = new List<WeekDay>();
     }

@@ -12,7 +12,20 @@ namespace PVP.Server.Models
         public string Note { get; set; }
         
         public int? UserHabitId { get; set; }
-        public UserHabit? UserHabit { get; set; }
+        public HabitUser? UserHabit { get; set; }
+
+
+
+    }
+
+    public enum Mood
+    {
+        Nervous,
+        Sad,
+        Happy,
+        Neutral,
+        Calm,
+        Angry
 
     }
 }

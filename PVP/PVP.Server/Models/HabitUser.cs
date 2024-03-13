@@ -2,11 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PVP.Server.Models
 {
-    public class UserHabit
+    public class HabitUser
     {
-        public int HabitId { get; set; }
-        public string UserId { get; set; }
-
+        [Key]
+        public int Id { get; set; }
         public ICollection<CheckIn> CheckIns { get; } = [];
 
 

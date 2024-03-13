@@ -13,7 +13,8 @@ namespace PVP.Server.Models
         public string Password { get; set; }
         public DateTime DateOfBirth {  get; set; }
 
-        public List<Habit> Habits { get; } = [];
+        public ICollection<HabitUser> HabitUser { get; } = [];
+        public List<Group> Groups { get; } = [];
 
 
     }
