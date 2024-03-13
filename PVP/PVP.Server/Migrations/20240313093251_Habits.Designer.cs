@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PVP.Server.Data;
 
@@ -10,9 +11,11 @@ using PVP.Server.Data;
 namespace PVP.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240313093251_Habits")]
+    partial class Habits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +34,7 @@ namespace PVP.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Habits", (string)null);
+                    b.ToTable("Habits");
                 });
 
             modelBuilder.Entity("PVP.Server.Models.User", b =>
@@ -64,7 +67,7 @@ namespace PVP.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,5 +10,8 @@ namespace PVP.Server.Data
 
         }
         public DbSet<User>Users { get; set; }
+
+        public DbSet<Habit>Habits { get; set; }
+        public DbSet<WeekDay> WeekDays { get; set; }
     }
 }

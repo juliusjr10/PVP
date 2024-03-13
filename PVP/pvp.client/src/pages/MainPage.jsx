@@ -197,10 +197,7 @@ export default function MiniDrawer() {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <Typography paragraph>
-                    Sveikas
-                </Typography>
-                <Typography paragraph>
-                    Labas
+                    Cia home page'as
                 </Typography>
             </Box>
         </Box>
