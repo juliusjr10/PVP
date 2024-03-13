@@ -11,8 +11,8 @@ using PVP.Server.Data;
 namespace PVP.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240313112132_Enums")]
-    partial class Enums
+    [Migration("20240313185922_UserIdChange")]
+    partial class UserIdChange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,8 @@ namespace PVP.Server.Migrations
                     b.Property<int>("GroupsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsersId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
 
                     b.HasKey("GroupsId", "UsersId");
 
@@ -51,7 +51,6 @@ namespace PVP.Server.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int?>("UserHabitId")
@@ -103,8 +102,8 @@ namespace PVP.Server.Migrations
                     b.Property<int?>("HabitId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -117,8 +116,9 @@ namespace PVP.Server.Migrations
 
             modelBuilder.Entity("PVP.Server.Models.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime(6)");

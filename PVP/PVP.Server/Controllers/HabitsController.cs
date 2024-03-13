@@ -31,6 +31,24 @@ namespace PVP.Server.Controllers
 
             return Ok(habits);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Habit>> GetHabit(int id)
+        {
+            try
+            {
+                var result = await _appDbContext.Habits.FindAsync(id);
+
+                if (result == null) return NotFound();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     }
 
 }

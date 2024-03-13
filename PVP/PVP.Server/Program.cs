@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Data;
+using PVP.Server.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,12 @@ builder.Services.AddSwaggerGen();
 
 //Prisijungimo i duombaze varas
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+builder.Services.AddCors();
 //Builderis duombazes kontekstui
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<JwtService>();
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -27,6 +32,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(options => options
+    .WithOrigins(new[] {"http://localhost:3000"})
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+);
 
 app.UseAuthorization();
 
