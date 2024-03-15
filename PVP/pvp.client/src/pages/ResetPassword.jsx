@@ -14,7 +14,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 // Import your logo image
-import Logo from './assets/logo-no-background.svg'; // Update the path to your logo file
+import Logo from "../assets/logo-no-background.svg"; // Update the path to your logo file
 
 function Copyright(props) {
     return (
@@ -82,7 +82,7 @@ export default function ResetPassword() {
                         </Button>
                     </Box>
                     <Box mt={2} mb={4} textAlign="center">
-                        <Link href="#" variant="body2">
+                        <Link href="/login" variant="body2">
                             Remember your password? Sign in
                         </Link>
                     </Box>
