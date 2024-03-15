@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using PVP.Server.Data;
 using PVP.Server.Dtos;
 using PVP.Server.Helpers;
@@ -14,10 +16,12 @@ namespace PVP.Server.Controllers
     {
         private readonly IUserRepository _repository;
         private readonly JwtService _jwtService;
-        public AuthController(IUserRepository repository, JwtService jwtService) 
+        private readonly IEmailService _emailSender;
+        public AuthController(IUserRepository repository, JwtService jwtService, IEmailService emailSenderService) 
         {
             _repository = repository;
             _jwtService = jwtService;
+            _emailSender = emailSenderService;
         }
         [HttpPost("register")]
         public IActionResult Register(RegisterDto dto)
@@ -103,6 +107,7 @@ namespace PVP.Server.Controllers
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
 
             _repository.Update(user);
+            _emailSender.SendEmail(email, "Password reset", user.PasswordResetToken);
 
             return Ok("You may now reset your password");
         }
