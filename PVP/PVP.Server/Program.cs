@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Data;
 using PVP.Server.Helpers;
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<JwtService>();
+
 var app = builder.Build();
 
 app.UseDefaultFiles();

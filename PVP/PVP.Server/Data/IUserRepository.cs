@@ -8,5 +8,9 @@ namespace PVP.Server.Data
         User GetByEmail(string email);
 
         User GetById(int id);
+
+        User Update(User user);
+
+        User GetByPasswordResetToken(string passwordResetToken);
     }
 }

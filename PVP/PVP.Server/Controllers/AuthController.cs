@@ -3,6 +3,7 @@ using PVP.Server.Data;
 using PVP.Server.Dtos;
 using PVP.Server.Helpers;
 using PVP.Server.Models;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace PVP.Server.Controllers
@@ -87,6 +88,45 @@ namespace PVP.Server.Controllers
             {
                 message = "success"
             });
+        }
+
+        [HttpPost("forgotpassword")]
+        public IActionResult ForgotPassword(string email)
+        {
+            var user = _repository.GetByEmail(email);
+            if(user == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            user.PasswordResetToken = CreateRandomToken();
+            user.ResetTokenExpires = DateTime.Now.AddDays(1);
+
+            _repository.Update(user);
+
+            return Ok("You may now reset your password");
+        }
+
+        [HttpPost("resetpassword")]
+        public IActionResult ResetPassword(ResetPasswordDto dto)
+        {
+            var user = _repository.GetByPasswordResetToken(dto.Token);
+            if (user == null || user.ResetTokenExpires < DateTime.Now)
+            {
+                return BadRequest("Invalid token");
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            user.PasswordResetToken = null;
+            user.ResetTokenExpires = null;
+
+            _repository.Update(user);
+
+            return Ok("Password reset");
+        }
+        private string CreateRandomToken()
+        {
+            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
         }
     }
 }

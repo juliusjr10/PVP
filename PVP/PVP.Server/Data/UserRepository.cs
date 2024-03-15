@@ -25,5 +25,18 @@ namespace PVP.Server.Data
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
         }
+
+        public User GetByPasswordResetToken(string passwordResetToken)
+        {
+            return _context.Users.FirstOrDefault(u => u.PasswordResetToken == passwordResetToken);
+        }
+
+        public User Update(User user)
+        {
+            _context.Users.Update(user);
+            user.Id = _context.SaveChanges();
+
+            return user;
+        }
     }
 }

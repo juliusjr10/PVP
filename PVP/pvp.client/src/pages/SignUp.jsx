@@ -17,6 +17,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SignIn from "./SignIn"
+import { useHistory } from 'react-router-dom';
+
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -36,9 +38,10 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
     const [redirect, setRedirect] = useState(false);
+    const history = useHistory();
 
     const handleSignInClick = () => {
-        setRedirect(true);
+        history.push('/signin');
     };
 
     const handleSubmit = async (event) => {
@@ -70,7 +73,7 @@ export default function SignUp() {
     };
 
     if (redirect) {
-        return <SignIn/>;
+        return <SignIn />;
     }
     return (
         <ThemeProvider theme={defaultTheme}>
