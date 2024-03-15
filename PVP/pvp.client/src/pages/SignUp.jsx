@@ -35,7 +35,11 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const [redirect, setRedirect] = useState(true);
+    const [redirect, setRedirect] = useState(false);
+
+    const handleSignInClick = () => {
+        setRedirect(true);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -74,10 +78,10 @@ export default function SignUp() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        justifyContent: 'center',
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -162,7 +166,7 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link onClick={handleSignInClick} variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>

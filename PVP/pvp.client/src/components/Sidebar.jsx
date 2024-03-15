@@ -15,6 +15,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Link, useLocation } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AppBar from '@mui/material/AppBar';
 import logo from '../assets/logo-white.svg';
 import ToggleDarkMode from './ToggleDarkMode';
@@ -31,6 +32,16 @@ export default function ClippedDrawer() {
 
     const handleItemClick = (link) => {
         setActivePage(link);
+    };
+
+    const handleLogout = async () => {
+        await fetch('https://localhost:7200/api/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        });
+
+        window.location.href = '/mainpage';
     };
 
     return (
@@ -65,7 +76,7 @@ export default function ClippedDrawer() {
                 <Toolbar>
                     Cia userio profilis
                 </Toolbar>
-                <ToggleDarkMode/>
+                <ToggleDarkMode />
                 <Divider />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
@@ -123,6 +134,22 @@ export default function ClippedDrawer() {
                                 </ListItemButton>
                             </ListItem>
                         ))}
+                        <ListItem disablePadding>
+                            <ListItemButton
+                                onClick={handleLogout}
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: 'center',
+                                    px: 2.5,
+                                    borderRadius: 1,
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <ExitToAppIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Logout" />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                 </Box>
             </Drawer>
