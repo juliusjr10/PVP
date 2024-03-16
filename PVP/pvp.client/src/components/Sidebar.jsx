@@ -13,19 +13,18 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import StarIcon from '@mui/icons-material/Star';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, useLocation } from 'react-router-dom';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AppBar from '@mui/material/AppBar';
 import logo from '../assets/logo-white.svg';
 import ToggleDarkMode from './ToggleDarkMode';
-
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 const drawerWidth = 240;
 
 export default function ClippedDrawer() {
     const [activePage, setActivePage] = React.useState('');
     const location = useLocation();
-
+    const [username, setUsername] = React.useState('');
     React.useEffect(() => {
         setActivePage(location.pathname);
     }, [location]);
@@ -43,6 +42,28 @@ export default function ClippedDrawer() {
 
         window.location.href = '/mainpage';
     };
+
+    React.useEffect(() => {
+        setActivePage(location.pathname);
+    }, [location]);
+
+    React.useEffect(() => {
+        const fetchUsername = async () => {
+            try {
+                const response = await fetch('https://localhost:7200/api/user', {
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                });
+
+                const content = await response.json();
+                setUsername(content.username);
+            } catch (error) {
+                console.error('Error fetching username:', error);
+            }
+        };
+
+        fetchUsername();
+    }, []);
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -74,9 +95,18 @@ export default function ClippedDrawer() {
                 anchor="left"
             >
                 <Toolbar>
-                    Cia userio profilis
+                    <Box sx={{
+                        bgcolor: 'rgba(0, 0, 0, 0.08)',
+                        display: 'flex',
+                        width: '100%',
+                        p: 0.5,
+                        borderColor: 'rgba(0, 0, 0, 0.16)',
+                        borderRadius: 0.5,
+                    }}>
+                        <Avatar alt={username} src="../assets/react.svg"></Avatar>
+                        <Link to='/editprofile'><Typography sx={{ m: 1 }}>{username}</Typography></Link>
+                    </Box>
                 </Toolbar>
-                <ToggleDarkMode />
                 <Divider />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
@@ -110,30 +140,7 @@ export default function ClippedDrawer() {
                         ))}
                     </List>
                     <Divider />
-                    <List>
-                        {['Profile', 'Settings'].map((text, index) => (
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: 'center',
-                                        px: 2.5,
-                                        borderRadius: 1,
-                                        backgroundColor: (activePage === `/profilepage` && index === 0) || (activePage === `/settingspage` && index === 1) ? 'black' : 'inherit',
-                                        color: (activePage === `/profilepage` && index === 0) || (activePage === `/settingspage` && index === 1) ? 'white' : 'inherit',
-                                        '&:hover': {
-                                            backgroundColor: (activePage !== `/profilepage` && index === 0) || (activePage !== `/settingspage` && index === 1) ? 'rgba(0, 0, 0, 0.08)' : 'black',
-                                        },
-                                    }}
-                                    onClick={() => handleItemClick(index === 0 ? '/profilepage' : '/settingspage')}
-                                >
-                                    <ListItemIcon sx={{ color: 'inherit' }}>
-                                        {index % 2 === 0 ? <AccountBoxIcon /> : <SettingsIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                    <List>                      
                         <ListItem disablePadding>
                             <ListItemButton
                                 onClick={handleLogout}
@@ -151,6 +158,7 @@ export default function ClippedDrawer() {
                             </ListItemButton>
                         </ListItem>
                     </List>
+                    <ToggleDarkMode />
                 </Box>
             </Drawer>
         </Box>

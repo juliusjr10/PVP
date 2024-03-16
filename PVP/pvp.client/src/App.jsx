@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
+import EditProfile from './pages/EditProfile';
 
 export default function App() {
 
@@ -69,6 +70,7 @@ export default function App() {
                                 <Route path="/mainpage" element={<MainPage />} />
                                 <Route path="/habitspage" element={<HabitsPage />} />
                                 <Route path="/smokinghabit" element={<SmokingHabit />} />
+                                <Route path="/editprofile" element={<EditProfile />} />
                                 <Route path="*" element={<NoPage />} />
                             </>
                         )}
