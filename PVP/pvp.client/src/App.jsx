@@ -7,6 +7,7 @@ import NoPage from './pages/NoPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ColorModeContext from "./components/ColorModeContext"
 import SignUp from "./pages/SignUp";
+import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
 
@@ -59,7 +60,8 @@ export default function App() {
                 <BrowserRouter>
                     <Routes>
                         {!isAuthenticated && <Route path="*" element={<SignUp />} />}
-                        <Route path="/resetpassword" element={<ResetPassword />} />
+                        <Route path="/forgotpassword" element={<ForgotPassword />} />
+                        <Route path="/resetpassword/:token" element={<ResetPassword />} exact/>
                         <Route path="/login" element={<SignIn />} />
                         {isAuthenticated && (
                             <>
@@ -68,7 +70,6 @@ export default function App() {
                                 <Route path="/habitspage" element={<HabitsPage />} />
                                 <Route path="/smokinghabit" element={<SmokingHabit />} />
                                 <Route path="*" element={<NoPage />} />
-                                <Route path="/resetpassword" element={<ResetPassword />} />
                             </>
                         )}
                     </Routes>

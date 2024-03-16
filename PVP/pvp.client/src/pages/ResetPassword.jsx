@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,58 +13,55 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { useState } from 'react';
+import { useParams } from "react-router-dom";
+import Logo from "../assets/logo-no-background.svg";
+import MainPage from "./MainPage";
 
-// Import your logo image
-import Logo from "../assets/logo-no-background.svg"; // Update the path to your logo file
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                HabitBook
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-const defaultTheme = createTheme();
-
-export default function ResetPassword() {
-    const [resetMessage, setResetMessage] = useState(null);
-    const [emailWritten, setEmailWritten] = useState(false);
+function ResetPassword() {
+    const { token } = useParams();
+    const [resetSuccessful, setResetSuccessful] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const form = event.currentTarget; // Store a reference to the form element
-        const data = new FormData(form);
-        const email = data.get('email');
-        const url = `https://localhost:7200/api/forgotpassword?email=${encodeURIComponent(email)}`;
+        const data = new FormData(event.currentTarget);
+        const newPassword = data.get('newpassword');
+        const confirmNewPassword = data.get('confirmnewpassword');
 
-        await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            // No need to stringify here since we are using query parameters
-        });
+        // Check if passwords match
+        if (newPassword !== confirmNewPassword) {
+            console.error("New password and confirm password do not match");
+            // Handle mismatch, e.g., show an error message to the user
+            return;
+        }
 
-        // Reset the form fields after submission
-        form.reset();
-
-        // Show reset message
-        setResetMessage('Password reset link sent. Please check your email.');
-    };
-
-    const handleEmailChange = (event) => {
-        const email = event.target.value;
-        setEmailWritten(!!email.trim()); // Set emailWritten to true if email is not empty
+        const requestBody = {
+            newPassword: newPassword,
+            confirmNewPassword: confirmNewPassword,
+            token: token
+        };
+        console.log('Request Body:', requestBody); // Log the request body
+        try {
+            const response = await fetch('https://localhost:7200/api/resetpassword', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+            // Check if response status is 200 (OK)
+            if (response.status === 200) {
+                // Set resetSuccessful to true after successful password reset
+                setResetSuccessful(true);
+            } else {
+                console.error('Reset password failed with status:', response.status);
+                // Handle other status codes, e.g., show an error message to the user
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error, e.g., show an error message to the user
+        }
     };
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={createTheme()}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -83,40 +81,50 @@ export default function ResetPassword() {
                     <Typography component="h1" variant="h5" sx={{ textAlign: 'center' }}>
                         Reset Password
                     </Typography>
-                    {emailWritten && resetMessage && (
-                        <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
-                            {resetMessage}
+                    {/* If password reset is successful, show a success message */}
+                    {resetSuccessful && (
+                        <Typography variant="body1" color="primary" sx={{ textAlign: 'center', mt: 2 }}>
+                            Password reset successful. Please proceed to <Link href="/login">login</Link>.
                         </Typography>
                     )}
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            onChange={handleEmailChange}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Reset password
-                        </Button>
-                    </Box>
-                    <Box mt={2} mb={4} textAlign="center">
-                        <Link href="/login" variant="body2">
-                            Remember your password? Sign in
-                        </Link>
-                    </Box>
+                    {!resetSuccessful && (
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="newpassword"
+                                label="New password"
+                                name="newpassword"
+                                autoComplete="newpassword"
+                                autoFocus
+                                type = "password"
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="confirmnewpassword"
+                                label="Confirm new password"
+                                name="confirmnewpassword"
+                                autoComplete="confirmnewpassword"
+                                autoFocus
+                                type = "password"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Reset password
+                            </Button>
+                        </Box>
+                    )}
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </ThemeProvider>
     );
 }
+
+export default ResetPassword;

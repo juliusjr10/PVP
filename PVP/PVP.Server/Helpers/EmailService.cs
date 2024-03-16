@@ -14,7 +14,7 @@ namespace PVP.Server.Helpers
 
             MailMessage emailSend = new MailMessage(from, to);
             emailSend.Subject = subject;
-            emailSend.Body = "<i>" + message + "<i>";
+            emailSend.Body = message;
 
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
