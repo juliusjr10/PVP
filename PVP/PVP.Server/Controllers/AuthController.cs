@@ -107,7 +107,15 @@ namespace PVP.Server.Controllers
             user.ResetTokenExpires = DateTime.Now.AddDays(1);
 
             _repository.Update(user);
-            _emailSender.SendEmail(email, "Password reset", "https://localhost:5173/resetpassword/"+user.PasswordResetToken);
+            _emailSender.SendEmail(email, "Password reset",
+                "<html>"+
+                "<body>"+
+                "<h3>Reset your password!</h3><br>"+
+                "Press this <a href=\"https://localhost:5173/resetpassword/"+user.PasswordResetToken + "\">link</a> to reset your password!" +
+                "</body>"+
+                "</html>"
+                );
+                
 
             return Ok("You may now reset your password");
         }

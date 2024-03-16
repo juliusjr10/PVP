@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PVP.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a0b9784eff5687ad080bcda6b5700b5ad6117e5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7a82ccdad7f3d491ee960c60da6dea64dad753d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PVP.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PVP.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
