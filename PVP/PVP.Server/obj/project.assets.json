@@ -3470,19 +3470,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\serei\\.nuget\\packages\\": {}
+    "C:\\Users\\armin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+      "projectUniqueName": "C:\\Users\\armin\\Desktop\\HabitBook\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
       "projectName": "PVP.Server",
-      "projectPath": "C:\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
-      "packagesPath": "C:\\Users\\serei\\.nuget\\packages\\",
-      "outputPath": "C:\\PVP\\PVP\\PVP.Server\\obj\\",
+      "projectPath": "C:\\Users\\armin\\Desktop\\HabitBook\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+      "packagesPath": "C:\\Users\\armin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\armin\\Desktop\\HabitBook\\PVP\\PVP\\PVP.Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\serei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\armin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

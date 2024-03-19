@@ -31,7 +31,7 @@ function SignIn() {
         }
 
         try {
-            const response = await fetch('https://localhost:7200/api/login', {
+            const response = await fetch('https://localhost:7200/api/Auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
