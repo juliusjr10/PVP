@@ -28,7 +28,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -40,15 +39,15 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #d6d4d0;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
@@ -70,3 +69,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.react-calendar:focus {
+    outline: none; /* Remove outline on focus */
+}
+
+/* Ensure that the previously selected date remains visible */
+.react-calendar__tile--active {
+    background-color: #646cff; /* Adjust background color for active date */
+    color: #ffffff; /* Adjust text color for active date */
+}
+
+/* Remove styles applied when a date is clicked */
+.react-calendar__tile--now:active,
+.react-calendar__tile--now:focus,
+.react-calendar__tile--now:hover {
+    background-color: transparent; /* Remove background color */
+    color: inherit; /* Use default text color */
+}
+

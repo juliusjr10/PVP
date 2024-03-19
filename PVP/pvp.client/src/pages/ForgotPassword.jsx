@@ -12,9 +12,10 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { useState } from 'react';
 
 // Import your logo image
-import Logo from './assets/logo-no-background.svg'; // Update the path to your logo file
+import Logo from "../assets/logo-no-background.svg"; // Update the path to your logo file
 
 function Copyright(props) {
     return (
@@ -32,12 +33,33 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function ResetPassword() {
-    const handleSubmit = (event) => {
+    const [resetMessage, setResetMessage] = useState(null);
+    const [emailWritten, setEmailWritten] = useState(false);
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
+        const form = event.currentTarget; // Store a reference to the form element
+        const data = new FormData(form);
+        const email = data.get('email');
+        const url = `https://localhost:7200/api/forgotpassword?email=${encodeURIComponent(email)}`;
+
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            // No need to stringify here since we are using query parameters
         });
+
+        // Reset the form fields after submission
+        form.reset();
+
+        // Show reset message
+        setResetMessage('Password reset link sent. Please check your email.');
+    };
+
+    const handleEmailChange = (event) => {
+        const email = event.target.value;
+        setEmailWritten(!!email.trim()); // Set emailWritten to true if email is not empty
     };
 
     return (
@@ -61,6 +83,11 @@ export default function ResetPassword() {
                     <Typography component="h1" variant="h5" sx={{ textAlign: 'center' }}>
                         Reset Password
                     </Typography>
+                    {emailWritten && resetMessage && (
+                        <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                            {resetMessage}
+                        </Typography>
+                    )}
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
                         <TextField
                             margin="normal"
@@ -71,6 +98,7 @@ export default function ResetPassword() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={handleEmailChange}
                         />
                         <Button
                             type="submit"
@@ -80,11 +108,6 @@ export default function ResetPassword() {
                         >
                             Reset password
                         </Button>
-                    </Box>
-                    <Box mt={2} mb={4} textAlign="center">
-                        <Link href="#" variant="body2">
-                            Remember your password? Sign in
-                        </Link>
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
