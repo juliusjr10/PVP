@@ -1,6 +1,6 @@
 ﻿using PVP.Server.Models;
 
-namespace PVP.Server.Data
+namespace PVP.Server.Data.UserRepo
 {
     public interface IUserRepository
     {

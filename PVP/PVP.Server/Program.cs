@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Data;
+using PVP.Server.Data.UserRepo;
 using PVP.Server.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);

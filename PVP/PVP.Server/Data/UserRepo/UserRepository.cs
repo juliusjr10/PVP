@@ -1,4 +1,5 @@
-﻿using PVP.Server.Models;
+﻿using PVP.Server.Data.UserRepo;
+using PVP.Server.Models;
 
 namespace PVP.Server.Data
 {
