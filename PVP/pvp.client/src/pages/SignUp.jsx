@@ -17,7 +17,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SignIn from "./SignIn"
-import { Link as RouterLink } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -38,6 +37,8 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
     const [redirect, setRedirect] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null); // State to store selected date
+    const [error, setError] = useState(null); // State to hold error message
 
     const handleSignInClick = () => {
         setRedirect(true);
@@ -56,15 +57,19 @@ export default function SignUp() {
                     Username: data.get('username'),
                     Email: data.get('email'),
                     Password: data.get('password'),
-                    DateOfBirth: '2024-03-13T21:25:38.24Z'
+                    DateOfBirth: selectedDate // Include selected date in the request
                 })
             });
 
             if (!response.ok) {
-                throw new Error('Failed to register');
+                if (response.status === 400) {
+                    setError('Bad egister data. Please check your input. Password must be atleast 6 characters long');
+                } else {
+                    throw new Error('Failed to register');
+                }
+            } else {
+                setRedirect(true);
             }
-
-            setRedirect(true);
         } catch (error) {
             console.error('Error:', error);
             // Handle error, e.g., show an error message to the user
@@ -93,6 +98,11 @@ export default function SignUp() {
                         Sign up
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                        {error && (
+                            <Typography variant="body2" color="error" align="center" sx={{ mb: 2 }}>
+                                {error}
+                            </Typography>
+                        )}
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -148,7 +158,10 @@ export default function SignUp() {
                             </Grid>
                             <Grid item xs={12}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker />
+                                    <DatePicker
+                                        value={selectedDate}
+                                        onChange={(newValue) => setSelectedDate(newValue)} // Update selected date
+                                    />
                                 </LocalizationProvider>
                             </Grid>
                             <Grid item xs={12}>

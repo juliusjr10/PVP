@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using PVP.Server.Data;
+using PVP.Server.Data.UserRepo;
 using PVP.Server.Dtos;
 using PVP.Server.Helpers;
 using PVP.Server.Models;
@@ -35,9 +35,11 @@ namespace PVP.Server.Controllers
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 DateOfBirth = dto.DateOfBirth
             };
-
-
-            return Created("success", _repository.Create(user));
+            if (_repository.IsUsername(dto.Username) == false)
+            {
+                return Created("success", _repository.Create(user));
+            }
+            else return BadRequest("Duplicate username");
         }
         [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
@@ -123,6 +125,7 @@ namespace PVP.Server.Controllers
         [HttpPost("resetpassword")]
         public IActionResult ResetPassword(ResetPasswordDto dto)
         {
+
             var user = _repository.GetByPasswordResetToken(dto.Token);
             if (user == null || user.ResetTokenExpires < DateTime.Now)
             {
@@ -136,6 +139,37 @@ namespace PVP.Server.Controllers
             _repository.Update(user);
 
             return Ok("Password reset");
+        }
+
+        [HttpPost("edituser")]
+        public IActionResult EditUser(UserEditDto dto)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = _jwtService.Verify(jwt);
+
+                int id = int.Parse(token.Issuer);
+                var user = _repository.GetById(id);
+
+                if (dto.Name != null) user.Name = dto.Name;
+                if (dto.Lastname != null) user.Lastname = dto.Lastname;
+                if (dto.Username != null && _repository.IsUsername(dto.Username) == false) user.Username = dto.Username;
+                else if (dto.Username == null) { }
+                else return BadRequest("Duplicate username");
+
+                if (dto.Password != null && dto.Password == dto.ConfirmPassword) user.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+                else if (dto.Password == null) { }
+                else return BadRequest("Passwords must match");
+
+                _repository.Update(user);
+                return Ok(user);
+            }
+            catch (Exception _) 
+            {
+                return Unauthorized();
+            }
         }
         private string CreateRandomToken()
         {

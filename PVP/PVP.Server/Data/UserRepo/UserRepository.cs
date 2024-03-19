@@ -1,7 +1,6 @@
-﻿using PVP.Server.Data.UserRepo;
-using PVP.Server.Models;
+﻿using PVP.Server.Models;
 
-namespace PVP.Server.Data
+namespace PVP.Server.Data.UserRepo
 {
     public class UserRepository : IUserRepository
     {
@@ -17,7 +16,15 @@ namespace PVP.Server.Data
 
             return user;
         }
-        public User GetByEmail (string email) 
+        public bool IsUsername(string username)
+        {
+            bool isUsername = true;
+            if(_context.Users.FirstOrDefault(u => u.Username == username) == null) 
+                isUsername = false;
+
+            return isUsername;
+        }
+        public User GetByEmail(string email)
         {
             return _context.Users.FirstOrDefault(u => u.Email == email);
         }
