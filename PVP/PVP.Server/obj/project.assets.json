@@ -3470,19 +3470,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\serei\\.nuget\\packages\\": {}
+    "C:\\Users\\ailan\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+      "projectUniqueName": "C:\\Users\\ailan\\source\\repos\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
       "projectName": "PVP.Server",
-      "projectPath": "C:\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
-      "packagesPath": "C:\\Users\\serei\\.nuget\\packages\\",
-      "outputPath": "C:\\PVP\\PVP\\PVP.Server\\obj\\",
+      "projectPath": "C:\\Users\\ailan\\source\\repos\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+      "packagesPath": "C:\\Users\\ailan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ailan\\source\\repos\\PVP\\PVP\\PVP.Server\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\serei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ailan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3490,7 +3495,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
@@ -3502,11 +3508,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3571,7 +3572,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

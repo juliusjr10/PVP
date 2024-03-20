@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect} from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import HabitsPage from './pages/HabitsPage';
+import LandingPage from './pages/LandingPage';
 import SmokingHabit from './pages/SmokingHabit';
 import NoPage from './pages/NoPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -71,6 +72,7 @@ export default function App() {
                                 <Route path="/habitspage" element={<HabitsPage />} />
                                 <Route path="/smokinghabit" element={<SmokingHabit />} />
                                 <Route path="/editprofile" element={<EditProfile />} />
+                                <Route path="/landingpage" element={<LandingPage />} />
                                 <Route path="*" element={<NoPage />} />
                             </>
                         )}
