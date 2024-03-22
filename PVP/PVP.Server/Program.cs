@@ -21,6 +21,11 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IHabitService, HabitService>();
+// Configure JSON serialization options
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+});
 
 var app = builder.Build();
 

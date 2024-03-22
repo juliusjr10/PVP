@@ -19,59 +19,41 @@ namespace PVP.Server.Helpers
         }
         public async Task<HabitUser?> AddUserHabit(int userId, int habitId)
         {
-            var user = await _context.Users
-                .Include(u => u.HabitUser)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null)
+            var habitUser = new HabitUser
             {
-                return null;
-            }
-            var habit = await _context.Habits
-                .Where(w => w.Id == habitId)
-                .Include(w => w.HabitUser)
-                .FirstOrDefaultAsync();
-            if (habit == null)
-            {
-                return null;
-            }
-            var habitUser = new HabitUser();
-            habit.HabitUser.Add(habitUser);
-            user.HabitUser.Add(habitUser);
+                UserId = userId,
+                HabitId = habitId
+            };
+            await _context.HabitUser.AddAsync(habitUser);
             await _context.SaveChangesAsync();
             return habitUser;
         }
 
         public async Task<ICollection<HabitUser>> GetAllUserHabits(int userId)
         {
-            var user = await _context.Users
-                .Include(u => u.HabitUser)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null)
+            var habitUserList = _context.HabitUser
+                .Where(hu => hu.UserId == userId)
+                .Include(hu => hu.CheckIns).ToList();
+            if (habitUserList == null)
             {
                 return [];
             }
-            var habitList = user.HabitUser;
-            if(habitList == null)
-            {
-                return [];
-            }
-            return habitList;
+            return habitUserList;
         }
         public async Task<CheckIn?> CheckIn(CheckInDTO dto, int userId)
         {
-            var user = await _context.Users
-              .Include(u => u.HabitUser)
-              .Include(u => u.HabitUser)
-              .FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null)
+            var habitUser = await _context.HabitUser
+                .FirstOrDefaultAsync(hu => hu.UserId == userId && hu.HabitId == dto.HabitId);
+            var checkin = new CheckIn
             {
-                return null;
-            }
-            var habitList = user.HabitUser;
-            if (habitList == null)
-            {
-                return null;
-            }
+                HabitUserId = habitUser.Id,
+                Mood = (Mood)dto.Mood,
+                Date = dto.Date,
+                Note = dto.Note,
+            };
+            await _context.CheckIns.AddAsync(checkin);
+            await _context.SaveChangesAsync();
+            return checkin;
         }
     }
 }

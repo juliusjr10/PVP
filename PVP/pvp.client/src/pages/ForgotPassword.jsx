@@ -41,7 +41,7 @@ export default function ResetPassword() {
         const form = event.currentTarget; // Store a reference to the form element
         const data = new FormData(form);
         const email = data.get('email');
-        const url = `https://localhost:7200/api/forgotpassword?email=${encodeURIComponent(email)}`;
+        const url = `https://localhost:7200/api/Auth/forgotpassword?email=${encodeURIComponent(email)}`;
 
         await fetch(url, {
             method: 'POST',
