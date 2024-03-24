@@ -27,8 +27,15 @@ namespace PVP.Server.Data
                 Name = "Stop Smoking"
             };
 
+            var secondHabit = new Habit()
+            {
+                Id = 2,
+                Name = "Stop Masturbating"
+            };
+
+
             var users = new List<User>() { firstUser };
-            var habits = new List<Habit>() { firstHabit };
+            var habits = new List<Habit>() { firstHabit, secondHabit };
 
             await context.AddRangeAsync(users);
             await context.AddRangeAsync(habits);

@@ -40,6 +40,16 @@ namespace PVP.Server.Helpers
             }
             return habitUserList;
         }
+        public async Task<ICollection<Habit>> GetAllHabits()
+        {
+            var habitList = _context.Habits
+                .ToList();
+            if (habitList == null)
+            {
+                return [];
+            }
+            return habitList;
+        }
         public async Task<CheckIn?> CheckIn(CheckInDTO dto, int userId)
         {
             var habitUser = await _context.HabitUser
@@ -55,5 +65,18 @@ namespace PVP.Server.Helpers
             await _context.SaveChangesAsync();
             return checkin;
         }
+        public async Task<ICollection<CheckIn>> GetUserHabitCheckins(int userId, int habitId)
+        {
+            var checkIns = _context.HabitUser
+                .Where(h => h.UserId == userId && h.HabitId == habitId)
+                .SelectMany(ch => ch.CheckIns)
+                .ToList();
+            if (checkIns == null)
+            {
+                return [];
+            }
+            return checkIns;
+        }
+
     }
 }

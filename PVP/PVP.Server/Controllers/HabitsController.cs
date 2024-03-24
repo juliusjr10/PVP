@@ -20,7 +20,7 @@ namespace PVP.Server.Controllers
             _habitService = habitService;
             _jwtService = jwtService;
         }
-        [HttpPost("addhabit")]
+        [HttpPost("adduserhabit")]
         public async Task<IActionResult> AddUserHabit(AddUserHabitDTO dto)
         {
             var jwt = Request.Cookies["jwt"];
@@ -59,14 +59,14 @@ namespace PVP.Server.Controllers
             }
 
             int userID = int.Parse(token.Issuer);
-            var workouts = await _habitService.GetAllUserHabits(userID);
+            var habits = await _habitService.GetAllUserHabits(userID);
 
-            if (workouts == null)
+            if (habits == null)
             {
                 return BadRequest(new { message = "Failed to retrieve user habits." });
             }
 
-            return Ok(workouts);
+            return Ok(habits);
 
         }
         [HttpPost("checkin")]
@@ -90,6 +90,57 @@ namespace PVP.Server.Controllers
                 return BadRequest(new { message = "Failed to check in" });
             }
             return Ok(checkin);
+        }
+        [HttpGet("getallhabits")]
+        public async Task<IActionResult> GetAllHabits()
+        {
+
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            var habits = await _habitService.GetAllHabits();
+
+            if (habits == null)
+            {
+                return BadRequest(new { message = "Failed to retrieve user habits." });
+            }
+
+            return Ok(habits);
+        }
+        [HttpGet("getuserhabitcheckins/{habitID}")]
+        public async Task<IActionResult> GetGetUserHabitCheckins(int habitID)
+        {
+
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int userID = int.Parse(token.Issuer);
+            var checkIns = await _habitService.GetUserHabitCheckins(userID,habitID);
+
+            if (checkIns == null)
+            {
+                return BadRequest(new { message = "Failed to retrieve user habits." });
+            }
+
+            return Ok(checkIns);
+
         }
     }
 }

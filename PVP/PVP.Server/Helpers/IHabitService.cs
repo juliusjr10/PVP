@@ -8,5 +8,7 @@ namespace PVP.Server.Helpers
         Task<HabitUser?> AddUserHabit(int userId, int habitId);
         Task<ICollection<HabitUser>> GetAllUserHabits(int userId);
         Task<CheckIn> CheckIn(CheckInDTO dto, int userId);
+        Task<ICollection<Habit>> GetAllHabits();
+        Task<ICollection<CheckIn>> GetUserHabitCheckins(int userId, int habitId);
     }
 }
