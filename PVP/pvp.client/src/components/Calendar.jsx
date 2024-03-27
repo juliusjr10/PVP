@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { format } from 'date-fns';
 
 const MyCalendar = ({ checkedDates, onCheckDate }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -11,7 +12,7 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
     };
 
     const tileContent = ({ date, view }) => {
-        const formattedDate = date.toISOString().split('T')[0];
+        const formattedDate = format(date, 'yyyy-MM-dd');
 
         if (view === 'month' && checkedDates.includes(formattedDate)) {
             return <span className="check-mark">&#10003;</span>; // Custom check mark
@@ -19,16 +20,17 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
 
         return null;
     };
+
     const handleCheckCurrentDate = () => {
         const currentDate = new Date(); // Get the current date and time
-        const formattedDate = currentDate.toISOString().split('T')[0];
 
-        if (!checkedDates.includes(formattedDate)) {
+        if (!checkedDates.includes(format(currentDate, 'yyyy-MM-dd'))) {
             onCheckDate(currentDate);
         } else {
             // Handle unchecking if needed
         }
     };
+
     return (
         <div>
             <Calendar
@@ -49,5 +51,3 @@ MyCalendar.propTypes = {
 };
 
 export default MyCalendar;
-
-
