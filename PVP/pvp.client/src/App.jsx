@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect} from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import HabitsPage from './pages/HabitsPage';
+import LandingPage from './pages/LandingPage';
 import SmokingHabit from './pages/SmokingHabit';
 import NoPage from './pages/NoPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -61,6 +62,7 @@ export default function App() {
                 <BrowserRouter>
                     <Routes>
                         {!isAuthenticated && <Route path="*" element={<SignUp />} />}
+                        <Route path="/landingpage" element={<LandingPage />} />
                         <Route path="/forgotpassword" element={<ForgotPassword />} />
                         <Route path="/resetpassword/:token" element={<ResetPassword />} exact/>
                         <Route path="/login" element={<SignIn />} />

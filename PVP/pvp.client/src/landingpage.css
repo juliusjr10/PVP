@@ -1,0 +1,97 @@
+﻿.circleblue {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 10em; /* Norimas aukštis */
+    width: 10em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 25%; /* Centruojame vertikaliai */
+    left: 84%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circleblue2 {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 35%; /* Centruojame vertikaliai */
+    left: 95%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circleblue3 {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 29%; /* Centruojame vertikaliai */
+    left: 5%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circleblue4 {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 6em; /* Norimas aukštis */
+    width: 6em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 20%; /* Centruojame vertikaliai */
+    left: 75%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+}
+
+.hero-container {
+    position: relative;
+}
+
+.circlered {
+    background: #F76C6C; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 10em; /* Norimas aukštis */
+    width: 10em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 60%; /* Centruojame vertikaliai */
+    left: 84%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circlered2 {
+    background: #F76C6C; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 70%; /* Centruojame vertikaliai */
+    left: 95%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circlered3 {
+    background: #F76C6C; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 81%; /* Centruojame vertikaliai */
+    left: 5%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circlered4 {
+    background: #F76C6C; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 6em; /* Norimas aukštis */
+    width: 6em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 55%; /* Centruojame vertikaliai */
+    left: 75%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+}
