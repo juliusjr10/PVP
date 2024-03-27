@@ -1,5 +1,5 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -11,13 +11,8 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleColorMode from './ToggleColorMode';
+import Logo from "../assets/logo-white.png";
 
-const logoStyle = {
-    width: '140px',
-    height: 'auto',
-    cursor: 'pointer',
-};
 
 function AppAppBar() {
     const [open, setOpen] = React.useState(false);
@@ -48,6 +43,7 @@ function AppAppBar() {
                     boxShadow: 0,
                     bgcolor: 'transparent',
                     backgroundImage: 'none',
+                    height: 150,
                     mt: 0,
                 }}
             >
@@ -61,8 +57,8 @@ function AppAppBar() {
                             justifyContent: 'space-between',
                             flexShrink: 0,
                             borderRadius: '0px',
-                            bgcolor: 'rgba(36, 48, 94, 1)',
-                            maxHeight: 100,
+                            bgcolor: '#24305E',
+                            height: 100,
                             border: '1px solid',
                             borderColor: 'divider',
                         }}
@@ -72,36 +68,38 @@ function AppAppBar() {
                                 flexGrow: 1,
                                 display: 'flex',
                                 alignItems: 'center',
+                                justifyContent: 'space-between',
                                 ml: '20px',
                                 px: 0,
                             }}
                         >
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 <MenuItem
-                                    onClick={() => scrollToSection('hero')}
+                                    onClick={() => scrollToSection('aboutUsSection')}
                                     sx={{ py: '6px', px: '12px' }}
                                 >
-                                    <Typography variant="body2" color="#FFFFFF">
+                                    <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
                                         About
                                     </Typography>
                                 </MenuItem>
-                                <MenuItem
-                                    onClick={() => scrollToSection('testimonials')}
-                                    sx={{ py: '6px', px: '12px' }}
-                                >
-                                    <Typography variant="body2" color="#FFFFFF">
-                                        Sign in
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem
-                                    onClick={() => scrollToSection('highlights')}
-                                    sx={{ py: '6px', px: '12px' }}
-                                >
-                                    <Typography variant="body2" color="#FFFFFF">
-                                        Sign up
-                                    </Typography>
-                                </MenuItem>
+                                <Link to="/login" style={{ textDecoration: 'none' }}>
+                                    <MenuItem sx={{ py: '6px', px: '12px' }}>
+                                        <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
+                                            Sign in
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
+                                <Link to="/signup" style={{ textDecoration: 'none' }}>
+                                    <MenuItem sx={{ py: '6px', px: '12px' }}>
+                                        <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
+                                            Sign up
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
                             </Box>
+                            <div style={{ textAlign: 'right' }}>
+                                <img src={Logo} alt="Logo" style={{ width: '90px' }} />
+                            </div>
                         </Box>
                         <Box
                             sx={{

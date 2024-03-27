@@ -62,6 +62,7 @@ export default function App() {
                 <BrowserRouter>
                     <Routes>
                         {!isAuthenticated && <Route path="*" element={<SignUp />} />}
+                        <Route path="/landingpage" element={<LandingPage />} />
                         <Route path="/forgotpassword" element={<ForgotPassword />} />
                         <Route path="/resetpassword/:token" element={<ResetPassword />} exact/>
                         <Route path="/login" element={<SignIn />} />
@@ -72,7 +73,6 @@ export default function App() {
                                 <Route path="/habitspage" element={<HabitsPage />} />
                                 <Route path="/smokinghabit" element={<SmokingHabit />} />
                                 <Route path="/editprofile" element={<EditProfile />} />
-                                <Route path="/landingpage" element={<LandingPage />} />
                                 <Route path="*" element={<NoPage />} />
                             </>
                         )}
