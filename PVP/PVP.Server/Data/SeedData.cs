@@ -33,12 +33,18 @@ namespace PVP.Server.Data
                 Name = "Stop Masturbating"
             };
 
-
+            var firstUserHabit = new HabitUser()
+            {
+                Id = 1,
+                HabitId = 1,
+                UserId = 1
+            };
             var users = new List<User>() { firstUser };
             var habits = new List<Habit>() { firstHabit, secondHabit };
-
+            var userhabits = new List<HabitUser> { firstUserHabit };
             await context.AddRangeAsync(users);
             await context.AddRangeAsync(habits);
+            await context.AddRangeAsync(userhabits);
             await context.SaveChangesAsync();
         }
     }

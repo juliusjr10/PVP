@@ -54,6 +54,20 @@ namespace PVP.Server.Helpers
         {
             var habitUser = await _context.HabitUser
                 .FirstOrDefaultAsync(hu => hu.UserId == userId && hu.HabitId == dto.HabitId);
+
+            var checkInDate = dto.Date;
+
+            var existingCheckIn = await _context.CheckIns
+                .FirstOrDefaultAsync(ci => ci.HabitUserId == habitUser.Id &&
+                                             ci.Date.Year == checkInDate.Year &&
+                                             ci.Date.Month == checkInDate.Month &&
+                                             ci.Date.Day == checkInDate.Day);
+
+            if (existingCheckIn != null)
+            {
+                return null;
+            }
+
             var checkin = new CheckIn
             {
                 HabitUserId = habitUser.Id,
@@ -61,6 +75,7 @@ namespace PVP.Server.Helpers
                 Date = dto.Date,
                 Note = dto.Note,
             };
+
             await _context.CheckIns.AddAsync(checkin);
             await _context.SaveChangesAsync();
             return checkin;
@@ -68,13 +83,10 @@ namespace PVP.Server.Helpers
         public async Task<ICollection<CheckIn>> GetUserHabitCheckins(int userId, int habitId)
         {
             var checkIns = _context.HabitUser
-                .Where(h => h.UserId == userId && h.HabitId == habitId)
-                .SelectMany(ch => ch.CheckIns)
-                .ToList();
-            if (checkIns == null)
-            {
-                return [];
-            }
+            .Where(h => h.UserId == userId && h.HabitId == habitId)
+            .SelectMany(ch => ch.CheckIns)
+            .ToList();
+
             return checkIns;
         }
 
