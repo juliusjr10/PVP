@@ -1,3 +1,5 @@
+// MyCalendar.js
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
@@ -21,16 +23,6 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
         return null;
     };
 
-    const handleCheckCurrentDate = () => {
-        const currentDate = new Date(); // Get the current date and time
-
-        if (!checkedDates.includes(format(currentDate, 'yyyy-MM-dd'))) {
-            onCheckDate(currentDate);
-        } else {
-            // Handle unchecking if needed
-        }
-    };
-
     return (
         <div>
             <Calendar
@@ -40,7 +32,6 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
                 value={selectedDate}
                 tileContent={tileContent}
             />
-            <button onClick={handleCheckCurrentDate}>Check Current Date</button>
         </div>
     );
 };

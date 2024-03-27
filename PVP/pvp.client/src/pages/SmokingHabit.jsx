@@ -1,5 +1,7 @@
-﻿import React, { useState, useEffect } from 'react';
-import { styled} from '@mui/material/styles';
+﻿// SmokingHabit.js
+
+import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Calendar from '../components/Calendar';
@@ -11,8 +13,11 @@ const CalendarContainer = styled(Box)(({ theme }) => ({
     top: theme.spacing(9),
     right: theme.spacing(1),
 }));
+
 export default function SmokingHabit() {
     const [checkIns, setCheckIns] = useState([]);
+    const [selectedMood, setSelectedMood] = useState(0); // State to hold the selected mood
+    const [note, setNote] = useState(''); // State to hold the note
 
     useEffect(() => {
         const fetchCheckIns = async () => {
@@ -33,15 +38,14 @@ export default function SmokingHabit() {
         };
 
         fetchCheckIns();
-    }, []); 
+    }, []);
 
     const checkedDates = checkIns.map(checkIn => {
         const parsedDate = new Date(checkIn.date);
         return format(parsedDate, 'yyyy-MM-dd');
     }) ?? [];
 
-
-    const handleCheckDate = async date => {
+    const handleCheckDate = async (date, mood, note) => {
         const formattedDate = format(date, 'yyyy-MM-dd');
 
         if (checkedDates.includes(formattedDate)) {
@@ -58,9 +62,9 @@ export default function SmokingHabit() {
                 credentials: 'include',
                 body: JSON.stringify({
                     HabitId: 1,
-                    Mood: 0,
+                    Mood: mood,
                     Date: date,
-                    Note: 'string'
+                    Note: note 
                 })
             });
 
@@ -75,11 +79,33 @@ export default function SmokingHabit() {
         }
     };
 
+    const handleCheckCurrentDate = async () => {
+        const currentDate = new Date(); // Get the current date and time
+        handleCheckDate(currentDate, selectedMood, note); // Pass the note to the function
+    };
+
+    const handleMoodChange = event => {
+        setSelectedMood(event.target.value); // Update selected mood when it changes
+    };
+
+    const handleNoteChange = event => {
+        setNote(event.target.value); // Update note when it changes
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <Sidebar />
             <Box>
+                <textarea value={note} onChange={handleNoteChange} placeholder="Write your note here..." />
+                <select value={selectedMood} onChange={handleMoodChange}>
+                    <option value={0}>Awful</option>
+                    <option value={1}>Bad</option>
+                    <option value={2}>Meh</option>
+                    <option value={3}>Good</option>
+                    <option value={4}>Excellent</option>
+                </select>
+                <button onClick={handleCheckCurrentDate}>Check Current Date</button>
                 <CalendarContainer>
                     <Calendar checkedDates={checkedDates} onCheckDate={handleCheckDate} />
                 </CalendarContainer>
