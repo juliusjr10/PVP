@@ -20,6 +20,12 @@ builder.Services.AddCors();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IHabitService, HabitService>();
+// Configure JSON serialization options
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+});
 
 var app = builder.Build();
 
@@ -31,6 +37,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        //context.Database.Migrate();
+        await SeedData.Seed(context);
+    }
 }
 
 app.UseHttpsRedirection();
@@ -45,6 +57,9 @@ app.UseCors(options => options
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("/index.html");
 

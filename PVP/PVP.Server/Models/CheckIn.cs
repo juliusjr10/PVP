@@ -6,16 +6,11 @@ namespace PVP.Server.Models
     {
         [Key]
         public int Id { get; set; }
+        public int HabitUserId { get; set; }
         public Mood Mood { get; set; }
 
         public DateTime Date { get; set; }
         public string? Note { get; set; }
-        
-        public int? UserHabitId { get; set; }
-        public HabitUser? UserHabit { get; set; }
-
-
-
     }
 
     public enum Mood

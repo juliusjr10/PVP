@@ -10,7 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace PVP.Server.Controllers
 {
-    [Route("api")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : Controller
     {

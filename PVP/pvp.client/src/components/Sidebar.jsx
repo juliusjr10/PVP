@@ -34,7 +34,7 @@ export default function ClippedDrawer() {
     };
 
     const handleLogout = async () => {
-        await fetch('https://localhost:7200/api/logout', {
+        await fetch('https://localhost:7200/api/Auth/logout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -50,7 +50,7 @@ export default function ClippedDrawer() {
     React.useEffect(() => {
         const fetchUsername = async () => {
             try {
-                const response = await fetch('https://localhost:7200/api/user', {
+                const response = await fetch('https://localhost:7200/api/Auth/user', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                 });

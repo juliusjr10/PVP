@@ -18,7 +18,7 @@ export default function App() {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('https://localhost:7200/api/user', {
+                const response = await fetch('https://localhost:7200/api/Auth/user', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                 });

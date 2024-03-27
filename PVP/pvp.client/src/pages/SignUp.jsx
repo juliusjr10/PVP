@@ -48,7 +48,7 @@ export default function SignUp() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         try {
-            const response = await fetch('https://localhost:7200/api/register', {
+            const response = await fetch('https://localhost:7200/api/Auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -63,7 +63,7 @@ export default function SignUp() {
 
             if (!response.ok) {
                 if (response.status === 400) {
-                    setError('Bad egister data. Please check your input. Password must be atleast 6 characters long');
+                    setError('Bad register data. Please check your input. Password must be atleast 6 characters long');
                 } else {
                     throw new Error('Failed to register');
                 }

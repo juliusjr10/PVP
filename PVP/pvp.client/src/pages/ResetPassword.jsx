@@ -41,7 +41,7 @@ function ResetPassword() {
         };
         console.log('Request Body:', requestBody); // Log the request body
         try {
-            const response = await fetch('https://localhost:7200/api/resetpassword', {
+            const response = await fetch('https://localhost:7200/api/Auth/resetpassword', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
