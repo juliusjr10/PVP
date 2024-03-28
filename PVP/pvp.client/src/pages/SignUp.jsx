@@ -17,19 +17,25 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SignIn from "./SignIn"
+import AppAppBar from '../components/AppAppBar';
+import Footer from '../components/Footer';
+import '../landingpage.css';
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
+            {'© HabitBook '}
+            
             {new Date().getFullYear()}
             {'.'}
         </Typography>
     );
 }
+
+const signInUpPages = [
+    { label: 'Sign in', link: '/login' },
+    { label: 'Sign up', link: '/signup' },
+];
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -81,7 +87,14 @@ export default function SignUp() {
     }
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+            <AppAppBar pages={signInUpPages}></AppAppBar>
+            <Container disableGutters maxWidth={false} sx={{ bgcolor: '#A8D0E6', position: 'relative', overflow: 'hidden', }}>
+                <div className="circlebluelog"></div>
+                <div className="circleblue2log"></div>
+                <div className="circleblue3log"></div>
+                <div className="circleblue4log"></div>
+                <div className="circleblue5log"></div>
+                <Container component="main" maxWidth="xs" sx={{ pt: 12, bgcolor: '#ceeaed' }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -188,8 +201,9 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                </Container>
             </Container>
+            <Footer></Footer>
         </ThemeProvider>
     );
 }

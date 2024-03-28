@@ -4,7 +4,7 @@
     height: 10em; /* Norimas aukštis */
     width: 10em; /* Norimas plotis */
     position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
-    top: 25%; /* Centruojame vertikaliai */
+    top: 20%; /* Centruojame vertikaliai */
     left: 84%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
@@ -28,7 +28,7 @@
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
     position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
-    top: 29%; /* Centruojame vertikaliai */
+    top: 32%; /* Centruojame vertikaliai */
     left: 5%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
@@ -56,7 +56,7 @@
     width: 10em; /* Norimas plotis */
     position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
     top: 60%; /* Centruojame vertikaliai */
-    left: 84%; /* Centruojame horizontaliai */
+    left: 76%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
 }
@@ -67,8 +67,8 @@
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
     position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
-    top: 70%; /* Centruojame vertikaliai */
-    left: 95%; /* Centruojame horizontaliai */
+    top: 75%; /* Centruojame vertikaliai */
+    left: 92%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
 }
@@ -91,7 +91,66 @@
     height: 6em; /* Norimas aukštis */
     width: 6em; /* Norimas plotis */
     position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
-    top: 55%; /* Centruojame vertikaliai */
-    left: 75%; /* Centruojame horizontaliai */
+    top: 58%; /* Centruojame vertikaliai */
+    left: 30%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+}
+
+.circlebluelog {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 10em; /* Norimas aukštis */
+    width: 10em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 40%; /* Centruojame vertikaliai */
+    left: 74%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circleblue2log {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 75%; /* Centruojame vertikaliai */
+    left: 95%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circleblue3log {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 50%; /* Centruojame vertikaliai */
+    left: 5%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+}
+
+.circleblue4log {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 6em; /* Norimas aukštis */
+    width: 6em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 80%; /* Centruojame vertikaliai */
+    left: 25%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+}
+
+.circleblue5log {
+    background: #5F77A6; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 10em; /* Norimas aukštis */
+    width: 10em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 15%; /* Centruojame vertikaliai */
+    left: 26%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
 }
