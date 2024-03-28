@@ -1,10 +1,9 @@
-// MyCalendar.js
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { format } from 'date-fns';
+import '../CalendarMoods.css';
 
 const MyCalendar = ({ checkedDates, onCheckDate }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -13,14 +12,39 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
         setSelectedDate(date);
     };
 
-    const tileContent = ({ date, view }) => {
+    const tileClassName = ({ date }) => {
         const formattedDate = format(date, 'yyyy-MM-dd');
+        const checkedDate = checkedDates.find(item => item.date === formattedDate);
 
-        if (view === 'month' && checkedDates.includes(formattedDate)) {
-            return <span className="check-mark">&#10003;</span>; // Custom check mark
+        if (checkedDate) {
+            const mood = checkedDate.mood;
+            let moodClass = '';
+
+            switch (mood) {
+                case 0:
+                    moodClass = 'awful';
+                    break;
+                case 1:
+                    moodClass = 'bad';
+                    break;
+                case 2:
+                    moodClass = 'meh';
+                    break;
+                case 3:
+                    moodClass = 'good';
+                    break;
+                case 4:
+                    moodClass = 'excellent';
+                    break;
+                default:
+                    break;
+            }
+
+            console.log('Mood class:', moodClass); // Log the mood class
+            return moodClass;
         }
 
-        return null;
+        return '';
     };
 
     return (
@@ -30,7 +54,7 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
                 minDate={new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)} // 30 days before today
                 maxDate={new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)} // 30 days after today
                 value={selectedDate}
-                tileContent={tileContent}
+                tileClassName={tileClassName}
             />
         </div>
     );

@@ -42,7 +42,10 @@ export default function SmokingHabit() {
 
     const checkedDates = checkIns.map(checkIn => {
         const parsedDate = new Date(checkIn.date);
-        return format(parsedDate, 'yyyy-MM-dd');
+        return {
+            date: format(parsedDate, 'yyyy-MM-dd'),
+            mood: checkIn.mood // Assuming `checkIn` object contains mood property
+        };
     }) ?? [];
 
     const handleCheckDate = async (date, mood, note) => {
