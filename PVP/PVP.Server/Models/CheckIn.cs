@@ -15,12 +15,11 @@ namespace PVP.Server.Models
 
     public enum Mood
     {
-        Nervous,
-        Sad,
-        Happy,
-        Neutral,
-        Calm,
-        Angry
+        Awful,
+        Bad,
+        Meh,
+        Good,
+        Excellent
 
     }
 }

@@ -4,15 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import SmokeFreeIcon from '@mui/icons-material/SmokeFree';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+//import { Link } from 'react-router-dom';
 
-export default function ActionAreaCard() {
+export default function ActionAreaCard({ onClick }) {
     return (
-        <Card sx={{ maxWidth: 500 }}>
-            <CardActionArea component={Link} to={'/smokinghabit'}>
+        <Card sx={{ maxWidth: 300, marginBottom: 2 }}> 
+            <CardActionArea onClick={onClick} style={{ cursor: 'pointer' }}>
                 <CardContent>
-                    <SmokeFreeIcon style={{ fontSize: '250px' }}></SmokeFreeIcon>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <SmokeFreeIcon style={{ fontSize: '100px', marginBottom: '10px' }} /> 
+                    <Typography gutterBottom variant="h6" component="div"> 
                         Smoking
                     </Typography>
                 </CardContent>
@@ -20,3 +21,7 @@ export default function ActionAreaCard() {
         </Card>
     );
 }
+
+ActionAreaCard.propTypes = {
+    onClick: PropTypes.func.isRequired,
+};

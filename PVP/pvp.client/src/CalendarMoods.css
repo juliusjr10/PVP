@@ -1,0 +1,38 @@
+.awful:not(.react-calendar-tile--active) {
+    background-color: #FF0000; /* Red */
+}
+
+.bad:not(.react-calendar-tile--active) {
+    background-color: #FFA500; /* Orange */
+}
+
+.meh:not(.react-calendar-tile--active) {
+    background-color: #FFFF00; /* Yellow */
+}
+
+.good:not(.react-calendar-tile--active) {
+    background-color: #00FF00; /* Bright Green */
+}
+
+.excellent:not(.react-calendar-tile--active) {
+    background-color: #008000; /* Green */
+}
+.awful.react-calendar-tile--active {
+    background-color: #FF9999; /* Light Red for active checked tile */
+}
+
+.bad.react-calendar-tile--active {
+    background-color: #FFD699; /* Light Orange for active checked tile */
+}
+
+.meh.react-calendar-tile--active {
+    background-color: #FFFF99; /* Light Yellow for active checked tile */
+}
+
+.good.react-calendar-tile--active {
+    background-color: #99FF99; /* Light Green for active checked tile */
+}
+
+.excellent.react-calendar-tile--active {
+    background-color: #008040; /* Darker Green for active excellent tile */
+}
