@@ -57,19 +57,18 @@ export default function App() {
 
 
     return (
-        <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
+ 
+
                 <BrowserRouter>
                     <Routes>
-                        {!isAuthenticated && <Route path="*" element={<SignUp />} />}
+                        {!isAuthenticated && <Route path="*" element={<LandingPage />} />}
                         <Route path="/landingpage" element={<LandingPage />} />
                         <Route path="/forgotpassword" element={<ForgotPassword />} />
                         <Route path="/resetpassword/:token" element={<ResetPassword />} exact/>
                         <Route path="/login" element={<SignIn />} />
                         {isAuthenticated && (
                             <>
-                                <Route index element={<MainPage />} />
-                                <Route path="/mainpage" element={<MainPage />} />
+                                <Route index element={<HabitsPage />} />
                                 <Route path="/habitspage" element={<HabitsPage />} />
                                 <Route path="/smokinghabit" element={<SmokingHabit />} />
                                 <Route path="/editprofile" element={<EditProfile />} />
@@ -78,8 +77,8 @@ export default function App() {
                         )}
                     </Routes>
                 </BrowserRouter>
-            </ThemeProvider>
-        </ColorModeContext.Provider>
+
+
     );
 }
 

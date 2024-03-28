@@ -40,7 +40,7 @@ export default function ClippedDrawer() {
             credentials: 'include',
         });
 
-        window.location.href = '/mainpage';
+        window.location.href = '/landingpage';
     };
 
     React.useEffect(() => {
@@ -76,9 +76,11 @@ export default function ClippedDrawer() {
                     backgroundColor: 'black',
                 }}
             >
-                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <Toolbar sx={{ justifyContent: 'right', bgcolor: '#24305E' }}>
                     <div /> {/* Empty div for spacing */}
-                    <img className="object-cover h-14 w-28" src={logo} alt="Logo" />
+                   {/* <img className="object-cover h-14 w-28" src={logo} alt="Logo" />*/}
+                    <Avatar alt={username} src="../assets/react.svg"></Avatar>
+                    <Link to='/editprofile'><Typography sx={{ m: 1 }}>{username}</Typography></Link>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -88,32 +90,27 @@ export default function ClippedDrawer() {
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         boxSizing: 'border-box',
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                        backgroundColor: '#24305E',
                     },
                 }}
                 variant="permanent"
                 anchor="left"
             >
                 <Toolbar>
-                    <Box sx={{
-                        bgcolor: 'rgba(0, 0, 0, 0.08)',
-                        display: 'flex',
-                        width: '100%',
-                        p: 0.5,
-                        borderColor: 'rgba(0, 0, 0, 0.16)',
-                        borderRadius: 0.5,
-                    }}>
-                        <Avatar alt={username} src="../assets/react.svg"></Avatar>
-                        <Link to='/editprofile'><Typography sx={{ m: 1 }}>{username}</Typography></Link>
+                    <Box sx={{ justifyContent: 'right', pl: 3 }}>
+                        <img className="object-cover h-14 w-28" src={logo} alt="Logo" />
                     </Box>
+                        {/*<Avatar alt={username} src="../assets/react.svg"></Avatar>*/}
+                        {/*<Link to='/editprofile'><Typography sx={{ m: 1 }}>{username}</Typography></Link>*/}
+                    
                 </Toolbar>
                 <Divider />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
-                        {[{ text: 'Main Page', link: '/mainpage', icon: <HomeIcon /> },
+                        {[
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
                         { text: 'Groups', link: '/groupspage', icon: <GroupsIcon /> }].map((item) => (
-                            <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+                            <ListItem key={item.text} disablePadding sx={{ display: 'block', color: 'white' }}>
                                 <ListItemButton
                                     component={Link}
                                     to={item.link}
@@ -123,10 +120,11 @@ export default function ClippedDrawer() {
                                         px: 2.5,
                                         borderRadius: 1,
                                         padding: -10,
-                                        backgroundColor: activePage === item.link ? 'black' : 'inherit',
-                                        color: activePage === item.link ? 'white' : 'inherit',
+                                        backgroundColor: activePage === item.link ? '#5F77A6' : 'inherit',
+                                        color: 'white',
                                         '&:hover': {
-                                            backgroundColor: activePage !== item.link ? 'rgba(0, 0, 0, 0.08)' : 'black',
+                                            backgroundColor: activePage !== item.link ? 'rgba(0, 0, 0, 0.08)' : '#5F77A6',
+                                            color: '#bfbfbf',
                                         },
                                     }}
                                     onClick={() => handleItemClick(item.link)}
@@ -140,25 +138,37 @@ export default function ClippedDrawer() {
                         ))}
                     </List>
                     <Divider />
-                    <List>                      
-                        <ListItem disablePadding>
-                            <ListItemButton
-                                onClick={handleLogout}
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: 'center',
-                                    px: 2.5,
-                                    borderRadius: 1,
-                                }}
-                            >
-                                <ListItemIcon>
-                                    <ExitToAppIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Logout" />
-                            </ListItemButton>
-                        </ListItem>
+                    <List>
+                        {[
+                            { text: 'Logout', icon: <ExitToAppIcon /> }].map((item) => (
+                                <ListItem key={item.text} disablePadding sx={{
+                                    color: 'white',
+                                    '&:hover': {
+                                        color: '#bfbfbf',
+                                    }
+                                }}>
+                                    <ListItemButton
+                                        onClick={handleLogout}
+                                        sx={{
+                                            minHeight: 48,
+                                            justifyContent: 'center',
+                                            px: 2.5,
+                                            borderRadius: 1,
+                                            color: 'white',
+                                            '&:hover': {
+                                                backgroundColor: activePage !== item.link ? 'rgba(0, 0, 0, 0.08)' : '#5F77A6',
+                                                color: '#bfbfbf',
+                                            },
+                                        }}
+                                    >
+                                        <ListItemIcon sx={{ color: 'inherit' }}>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.text} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
                     </List>
-                    <ToggleDarkMode />
                 </Box>
             </Drawer>
         </Box>

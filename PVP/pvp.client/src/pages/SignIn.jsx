@@ -14,7 +14,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MainPage from './MainPage';
+import AppAppBar from '../components/AppAppBar';
+import Footer from '../components/Footer';
+import '../landingpage.css';
 
+
+const signInUpPages = [
+    { label: 'Sign in', link: '/login' },
+    { label: 'Sign up', link: '/signup' },
+];
 
 function SignIn() {
     const [redirect, setRedirect] = useState(false);
@@ -62,7 +70,14 @@ function SignIn() {
 
     return (
         <ThemeProvider theme={createTheme()}>
-            <Container component="main" maxWidth="xs">
+            <AppAppBar pages={signInUpPages}></AppAppBar>
+            <Container disableGutters maxWidth={false} sx={{ bgcolor: '#A8D0E6', position: 'relative', overflow: 'hidden', }}>
+                <div className="circlebluelog"></div>
+                <div className="circleblue2log"></div>
+                <div className="circleblue3log"></div>
+                <div className="circleblue4log"></div>
+                <div className="circleblue5log"></div>
+            <Container component="main" maxWidth="xs" sx={{ pt: 10, bgcolor: '#ceeaed', height: '88vh' }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -125,7 +140,9 @@ function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
+                </Container>
             </Container>
+            <Footer></Footer>
         </ThemeProvider>
     );
 }

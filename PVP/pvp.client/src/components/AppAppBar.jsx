@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Logo from "../assets/logo-white.png";
 
 
-function AppAppBar() {
+function AppAppBar({ pages }) {
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (newOpen) => () => {
@@ -22,16 +22,18 @@ function AppAppBar() {
     };
 
     const scrollToSection = (sectionId) => {
-        const sectionElement = document.getElementById(sectionId);
-        const offset = 128;
-        if (sectionElement) {
-            const targetScroll = sectionElement.offsetTop - offset;
-            sectionElement.scrollIntoView({ behavior: 'smooth' });
-            window.scrollTo({
-                top: targetScroll,
-                behavior: 'smooth',
-            });
-            setOpen(false);
+        if (sectionId) {
+            const sectionElement = document.getElementById(sectionId);
+            const offset = 128;
+            if (sectionElement) {
+                const targetScroll = sectionElement.offsetTop - offset;
+                sectionElement.scrollIntoView({ behavior: 'smooth' });
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth',
+                });
+                setOpen(false);
+            }
         }
     };
 
@@ -73,33 +75,23 @@ function AppAppBar() {
                                 px: 0,
                             }}
                         >
-                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                                <MenuItem
-                                    onClick={() => scrollToSection('aboutUsSection')}
-                                    sx={{ py: '6px', px: '12px' }}
-                                >
-                                    <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
-                                        About
-                                    </Typography>
-                                </MenuItem>
-                                <Link to="/login" style={{ textDecoration: 'none' }}>
-                                    <MenuItem sx={{ py: '6px', px: '12px' }}>
-                                        <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
-                                            Sign in
-                                        </Typography>
-                                    </MenuItem>
-                                </Link>
-                                <Link to="/signup" style={{ textDecoration: 'none' }}>
-                                    <MenuItem sx={{ py: '6px', px: '12px' }}>
-                                        <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
-                                            Sign up
-                                        </Typography>
-                                    </MenuItem>
-                                </Link>
-                            </Box>
-                            <div style={{ textAlign: 'right' }}>
+                            <Link to="/landingpage"> 
                                 <img src={Logo} alt="Logo" style={{ width: '90px' }} />
-                            </div>
+                            </Link>
+                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                {pages.map((page, index) => (
+                                    <Link key={index} to={page.link} style={{ textDecoration: 'none' }}>
+                                        <MenuItem
+                                            sx={{ py: '6px', px: '12px' }}
+                                            onClick={() => scrollToSection(page.sectionId)}
+                                        >
+                                            <Typography variant="body1" color="#FFFFFF" sx={{ fontSize: '18px' }}>
+                                                {page.label}
+                                            </Typography>
+                                        </MenuItem>
+                                    </Link>
+                                ))}
+                            </Box>
                         </Box>
                         <Box
                             sx={{

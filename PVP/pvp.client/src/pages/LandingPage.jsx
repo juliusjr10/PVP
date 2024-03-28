@@ -9,12 +9,31 @@ import Footer from '../components/Footer';
 import { Container } from "@mui/material";
 import '../landingpage.css';
 
+const allPages = [
+    { label: 'About', link: '/landingpage', sectionId: 'aboutUsSection' },
+    { label: 'Sign in', link: '/login', sectionId: null },
+    { label: 'Sign up', link: '/signup', sectionId: null },
+];
+
+const scrollToSection = (sectionId) => {
+    const sectionElement = document.getElementById(sectionId);
+    const offset = 128;
+    if (sectionElement) {
+        const targetScroll = sectionElement.offsetTop - offset;
+        sectionElement.scrollIntoView({ behavior: 'smooth' });
+        window.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth',
+        });
+    }
+};
+
 export default function LandingPage() {
 
     return (
        
         <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', bgcolor: '#A8D0E6', }}>
-            <AppAppBar>
+            <AppAppBar pages={allPages}>
             </AppAppBar>
             {/*<Box sx={{*/}
             {/*    bgcolor: '#A8D0E6',*/}
