@@ -3,25 +3,17 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import SmokeFreeIcon from '@mui/icons-material/SmokeFree';
 import PropTypes from 'prop-types';
-//import { Link } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Icon from "../assets/no-smoking.png";
 
-export default function ActionAreaCard({ onClick }) {
+export default function ActionAreaCard({ onClick, expanded }) {
     return (
-        <Card sx={{ maxWidth: 200, margin: 'auto', bgcolor: '#5F77A6' }}>
-            <CardActionArea component={Link} to={'/smokinghabit'} sx={{
-                '&:hover': {
-                    backgroundColor: '#3c506e',
-                }
-            }}
-                    >
+        <Card sx={{ maxWidth: 200, margin: 'auto', bgcolor: expanded ? '#3c506e' : '#5F77A6' }}>
+            <CardActionArea onClick={onClick} sx={{ cursor: 'pointer', '&:hover': { backgroundColor: '#3c506e' } }}>
                 <CardContent sx={{ textAlign: 'center' }}>
-                    <img src={Icon} alt="Logo" style={{ width: '150px', margin: 'auto' }} />
+                    <img src={Icon} alt="Smoke Free Icon" style={{ width: '150px', margin: 'auto' }} />
                     <Typography gutterBottom variant="h5" component="div" sx={{ color: 'white' }}>
-                        Smoking
+                        Stop Smoking
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -31,4 +23,5 @@ export default function ActionAreaCard({ onClick }) {
 
 ActionAreaCard.propTypes = {
     onClick: PropTypes.func.isRequired,
+    expanded: PropTypes.bool.isRequired,
 };

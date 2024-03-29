@@ -87,3 +87,8 @@ button:focus-visible {
     color: inherit; /* Use default text color */
 }
 
+/* Add custom styles for textarea */
+textarea {
+    background-color: #ffffff; /* Set background color */
+    color: #000000; /* Set text color */
+}

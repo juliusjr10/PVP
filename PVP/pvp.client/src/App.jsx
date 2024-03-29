@@ -1,12 +1,8 @@
 import React, { useState, useMemo, useEffect} from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import MainPage from './pages/MainPage';
+import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 import HabitsPage from './pages/HabitsPage';
 import LandingPage from './pages/LandingPage';
-import SmokingHabit from './pages/SmokingHabit';
-import NoPage from './pages/NoPage';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ColorModeContext from "./components/ColorModeContext"
 import SignUp from "./pages/SignUp";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
@@ -14,71 +10,76 @@ import SignIn from './pages/SignIn';
 import EditProfile from './pages/EditProfile';
 
 export default function App() {
+    const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
+    const [isAuthenticated, setIsAuthenticated] = useState(false); // Assuming initially user is not authenticated
+    useEffect(() => {
+        // Listen for the 'login' event to update isAuthenticated
+        const handleLogin = () => {
+            setIsAuthenticated(true);
+        };
+
+        window.addEventListener('login', handleLogin);
+
+        // Cleanup event listener
+        return () => {
+            window.removeEventListener('login', handleLogin);
+        };
+    }, []);
 
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('https://localhost:7200/api/Auth/user', {
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                });
+                try {
+                    const response = await fetch('https://localhost:7200/api/Auth/user', {
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    });
 
-                const content = await response.json();
-                if (content.username) {
-                    setIsAuthenticated(true);
+                    if (response.ok) {
+                        setIsAuthenticated(true);
+                    }
+                } catch (error) {
+                    console.error('Error:', error.message);
+                } finally {
+                    setLoading(false); // Once authentication status is resolved, set loading to false
                 }
-
-                console.log(content.username)
             }
         )();
-    });
+    }, []);
 
-    const [mode, setMode] = useState('dark');
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Assuming initially user is not authenticated
 
-    const colorMode = useMemo(
-        () => ({
-            toggleColorMode: () => {
-                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-            },
-        }),
-        [],
-    );
 
-    const theme = useMemo(
-        () =>
-            createTheme({
-                palette: {
-                    mode,
-                },
-            }),
-        [mode],
-    );
-
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <CircularProgress />
+            </div>
+        );
+    }
 
     return (
- 
-
-                <BrowserRouter>
-                    <Routes>
-                        {!isAuthenticated && <Route path="*" element={<LandingPage />} />}
+        <BrowserRouter>
+            <Routes>
+                {isAuthenticated && (
+                    <>
+                        <Route path="/habitspage" element={<HabitsPage />} />
+                        <Route path="/editprofile" element={<EditProfile />} />
+                        <Route index element={<Navigate to="/habitspage" />} />
+                        <Route path="*" element={<Navigate to="/habitspage" />} />
+                    </>
+                )}
+                {!isAuthenticated && (
+                    <>
                         <Route path="/landingpage" element={<LandingPage />} />
                         <Route path="/forgotpassword" element={<ForgotPassword />} />
+                        <Route path="/signup" element={<SignUp />} />
                         <Route path="/resetpassword/:token" element={<ResetPassword />} exact/>
                         <Route path="/login" element={<SignIn />} />
-                        {isAuthenticated && (
-                            <>
-                                <Route index element={<HabitsPage />} />
-                                <Route path="/habitspage" element={<HabitsPage />} />
-                                <Route path="/smokinghabit" element={<SmokingHabit />} />
-                                <Route path="/editprofile" element={<EditProfile />} />
-                                <Route path="*" element={<NoPage />} />
-                            </>
-                        )}
-                    </Routes>
-                </BrowserRouter>
-
-
+                        <Route path="*" element={<Navigate to="/landingpage" />} />
+                    </>
+                )}  
+            </Routes>
+        </BrowserRouter>
     );
 }
 

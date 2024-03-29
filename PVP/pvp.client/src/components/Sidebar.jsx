@@ -109,7 +109,7 @@ export default function ClippedDrawer() {
                     <List>
                         {[
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
-                        { text: 'Groups', link: '/groupspage', icon: <GroupsIcon /> }].map((item) => (
+                        /*{ text: 'Groups', link: '/groupspage', icon: <GroupsIcon /> }*/].map((item) => (
                             <ListItem key={item.text} disablePadding sx={{ display: 'block', color: 'white' }}>
                                 <ListItemButton
                                     component={Link}

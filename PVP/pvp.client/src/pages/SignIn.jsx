@@ -13,10 +13,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import MainPage from './MainPage';
+//import MainPage from './MainPage';
 import AppAppBar from '../components/AppAppBar';
 import Footer from '../components/Footer';
 import '../landingpage.css';
+//import HabitsPage from './HabitsPage';
+import { useNavigate } from 'react-router-dom';
 
 
 const signInUpPages = [
@@ -26,6 +28,7 @@ const signInUpPages = [
 
 function SignIn() {
     const [redirect, setRedirect] = useState(false);
+    const navigate = useNavigate();
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -64,8 +67,10 @@ function SignIn() {
         }
     }
     if (redirect) {
-        // Optionally, redirect to another page or component instead of App
-        return <MainPage/>
+        // Redirect to /habitspage after sign-in
+        navigate('/habitspage', { replace: true });
+        // Set isAuthenticated to true in the App component
+        window.dispatchEvent(new Event('login')); // Dispatch a custom event to trigger re-rendering of the App component
     }
 
     return (
@@ -77,7 +82,7 @@ function SignIn() {
                 <div className="circleblue3log"></div>
                 <div className="circleblue4log"></div>
                 <div className="circleblue5log"></div>
-            <Container component="main" maxWidth="xs" sx={{ pt: 10, bgcolor: '#ceeaed', height: '88vh' }}>
+            <Container component="main" maxWidth="xs" sx={{ pt: 10, bgcolor: '#ceeaed', height: '100vh' }}>
                 <CssBaseline />
                 <Box
                     sx={{

@@ -94,7 +94,7 @@ export default function SignUp() {
                 <div className="circleblue3log"></div>
                 <div className="circleblue4log"></div>
                 <div className="circleblue5log"></div>
-                <Container component="main" maxWidth="xs" sx={{ pt: 12, bgcolor: '#ceeaed' }}>
+                <Container component="main" maxWidth="xs" sx={{ pt: 12, bgcolor: '#ceeaed', height: '100vh' }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -102,6 +102,7 @@ export default function SignUp() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        mt: 6,
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

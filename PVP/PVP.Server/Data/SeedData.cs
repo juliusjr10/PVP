@@ -14,23 +14,29 @@ namespace PVP.Server.Data
             var firstUser = new User()
             {
                 Id = 1,
-                Name = "Testas",
-                Lastname = "Testauskas",
+                Name = "Vardenis",
+                Lastname = "Pavardenis",
                 Username = "testuser",
-                Email = "walterheisenberg@gmail.com",
+                Email = "testuser@gmail.com",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 DateOfBirth = DateTime.Parse(dateString)
             };
             var firstHabit = new Habit()
             {
                 Id = 1,
-                Name = "Stop Smoking"
+                Name = "Stop Smoking Habit"
             };
 
             var secondHabit = new Habit()
             {
                 Id = 2,
-                Name = "Stop Masturbating"
+                Name = "Meditation Habit"
+            };
+
+            var thirdHabit = new Habit()
+            {
+                Id = 3,
+                Name = "Water Habit"
             };
 
             var firstUserHabit = new HabitUser()
@@ -39,9 +45,21 @@ namespace PVP.Server.Data
                 HabitId = 1,
                 UserId = 1
             };
+            var secondUserHabit = new HabitUser()
+            {
+                Id = 2,
+                HabitId = 2,
+                UserId = 1
+            };
+            var thirdUserHabit = new HabitUser()
+            {
+                Id = 3,
+                HabitId = 3,
+                UserId = 1
+            };
             var users = new List<User>() { firstUser };
-            var habits = new List<Habit>() { firstHabit, secondHabit };
-            var userhabits = new List<HabitUser> { firstUserHabit };
+            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit };
+            var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
             await context.AddRangeAsync(users);
             await context.AddRangeAsync(habits);
             await context.AddRangeAsync(userhabits);
