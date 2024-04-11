@@ -254,7 +254,7 @@ export default function SmokingHabit() {
                         <div>{checkIns.length} Day{checkIns.length === 1 ? '' : 's'}</div>
                     </CheckInBox>
                     <CheckInBoxWithoutCheckIns>
-                        <div>Days without Check-in</div>
+                        <div>Failed</div>
                         <div>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</div>
                     </CheckInBoxWithoutCheckIns>
                 </CheckInWrapper>
