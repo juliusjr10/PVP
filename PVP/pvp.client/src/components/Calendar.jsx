@@ -5,7 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import { format } from 'date-fns';
 import '../CalendarMoods.css';
 
-const MyCalendar = ({ checkedDates, onCheckDate }) => {
+const MyCalendar = ({ checkedDates, onCheckDate, onDateClick }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     const onChange = date => {
@@ -47,6 +47,10 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
         return '';
     };
 
+    const handleDayClick = date => {
+        onDateClick(date); // Call the onDateClick function passed from parent component
+    };
+
     return (
         <div>
             <Calendar
@@ -55,6 +59,7 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
                 maxDate={new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)} // 30 days after today
                 value={selectedDate}
                 tileClassName={tileClassName}
+                onClickDay={handleDayClick} // Call handleDayClick when a day is clicked
             />
         </div>
     );
@@ -63,6 +68,7 @@ const MyCalendar = ({ checkedDates, onCheckDate }) => {
 MyCalendar.propTypes = {
     checkedDates: PropTypes.array.isRequired,
     onCheckDate: PropTypes.func.isRequired,
+    onDateClick: PropTypes.func.isRequired, // Add onDateClick prop type
 };
 
 export default MyCalendar;
