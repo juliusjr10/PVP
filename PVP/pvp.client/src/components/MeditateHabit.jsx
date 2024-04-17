@@ -15,6 +15,7 @@ import DialogActions from '@mui/material/DialogActions';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import MyStopwatch from './StopWatch';
 
 const SmokingHabitContainer = styled(Box)({
     position: 'fixed',
@@ -259,6 +260,11 @@ export default function SmokingHabit() {
                     onCheckDate={handleCheckDate}
                     onDateClick={handleDateClick}
                 />
+                <Box sx={{
+                    margin:'16px',
+                } }>
+                    <MyStopwatch/>
+                </Box>
             </Box>
         </SmokingHabitContainer>
     );
