@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from "../assets/logo-white.png";
+import Logo from "../assets/logo-white.svg";
 
 
 function AppAppBar({ pages }) {
@@ -59,7 +59,7 @@ function AppAppBar({ pages }) {
                             justifyContent: 'space-between',
                             flexShrink: 0,
                             borderRadius: '0px',
-                            bgcolor: '#24305E',
+                            bgcolor: '#5a00ec',
                             height: 100,
                             border: '1px solid',
                             borderColor: 'divider',
@@ -76,7 +76,7 @@ function AppAppBar({ pages }) {
                             }}
                         >
                             <Link to="/landingpage"> 
-                                <img src={Logo} alt="Logo" style={{ width: '90px' }} />
+                                <img src={Logo} alt="Logo" style={{ width: '180px' }} />
                             </Link>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 {pages.map((page, index) => (

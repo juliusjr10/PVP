@@ -36,6 +36,8 @@
 .excellent.react-calendar-tile--active {
     background-color: #008040; /* Darker Green for active excellent tile */
 }
+
+
 .react-calendar {
     max-width: 600px; /* Adjust the maximum width of the calendar */
     margin: 0 auto; /* Center the calendar horizontally */

@@ -60,6 +60,7 @@ export default function App() {
             background: {
                 default: '#f5f5f5',
             },
+
         },
     });
 

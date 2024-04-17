@@ -86,7 +86,7 @@ export default function SignUp() {
         return <SignIn />;
     }
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <Box>
             <AppAppBar pages={signInUpPages}></AppAppBar>
             <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', }}>
                 <div className="circlebluelog"></div>
@@ -94,7 +94,7 @@ export default function SignUp() {
                 <div className="circleblue3log"></div>
                 <div className="circleblue4log"></div>
                 <div className="circleblue5log"></div>
-                <Container component="main" maxWidth="xs" sx={{ pt: 12, bgcolor: '#ceeaed', height: '100vh' }}>
+                <Container component="main" maxWidth="xs" sx={{ pt: 12, height: '100vh' }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -205,6 +205,6 @@ export default function SignUp() {
                 </Container>
             </Container>
             <Footer></Footer>
-        </ThemeProvider>
+        </Box>
     );
 }
