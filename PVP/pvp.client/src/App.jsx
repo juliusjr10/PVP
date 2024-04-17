@@ -8,6 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
 import EditProfile from './pages/EditProfile';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function App() {
     const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
@@ -47,7 +48,20 @@ export default function App() {
         )();
     }, []);
 
-
+    const theme = createTheme({
+        palette: {
+            mode: 'light',
+            primary: {
+                main: '#5a00ec',
+            },
+            secondary: {
+                main: '#f50057',
+            },
+            background: {
+                default: '#f5f5f5',
+            },
+        },
+    });
 
     if (loading) {
         return (
@@ -58,6 +72,7 @@ export default function App() {
     }
 
     return (
+        <ThemeProvider theme={theme}>
         <BrowserRouter>
             <Routes>
                 {isAuthenticated && (
@@ -79,7 +94,8 @@ export default function App() {
                     </>
                 )}  
             </Routes>
-        </BrowserRouter>
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }
 

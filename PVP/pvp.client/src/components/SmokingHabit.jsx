@@ -12,89 +12,26 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import CheckIcon from '@mui/icons-material/Check';
+
+import ClearIcon from '@mui/icons-material/Clear';
 
 const SmokingHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
     right: 0,
     height: '100%',
-    width: '600px',
+    maxWidth: 'md',
     backgroundColor: '#fff',
     transition: 'transform 0.3s ease-in-out',
     transform: 'translateX(100%) scaleX(1.5)',
     zIndex: 999,
 });
 
-const StreakBox = styled(Box)({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF6F61',
-    color: '#fff',
-    padding: '8px',
-    borderRadius: '4px',
-    marginBottom: '16px',
-    width: '500px',
-    position: 'relative',
-    "& div:first-child": {
-        fontSize: '0.8rem',
-        fontStyle: 'italic',
-        color: '#888',
-    },
-    "&::before": {
-        content: "'🔥'",
-        position: 'absolute',
-        top: '50%',
-        left: '10%',
-        transform: 'translateY(-50%)',
-        fontSize: '1.5rem',
-    }
-});
 
-const CheckInBox = styled(Box)({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#455A64',
-    color: '#fff',
-    padding: '8px',
-    borderRadius: '4px',
-    marginBottom: '16px',
-    width: '150px',
-    position: 'relative',
-    "& div:first-child": {
-        fontSize: '0.8rem',
-        fontStyle: 'italic',
-        color: '#888',
-    },
-});
 
-const CheckInWrapper = styled(Box)({
-    display: 'flex',
-    marginBottom: '16px',
-});
 
-const CheckInBoxWithoutCheckIns = styled(CheckInBox)({
-    marginLeft: '200px',
-});
-
-const Popup = styled('div')`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 300px;
-    padding: 20px;
-    border-radius: 8px;
-    z-index: 1000;
-`;
-
-const PopupContent = styled('div')`
-    text-align: center;
-`;
 
 export default function SmokingHabit() {
     const [isVisible, setIsVisible] = useState(false);
@@ -237,27 +174,56 @@ export default function SmokingHabit() {
     }
 
     return (
-        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)' }}>
-            <div style={{ padding: '16px' }}>
-                <div style={{ textAlign: 'center', marginBottom: '16px', padding: '8px', border: '2px solid #CCCCCC', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08)', background: '#F0F0F0', width: '500px', height: '80px' }}>
-                    <Typography variant="h5" component="div" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
+        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
+            <Box sx={{ padding: '16px'}}>
+                <Box sx={{
+                    textAlign: 'center',
+                }}>
+                    <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
                         Stop Smoking
                     </Typography>
-                </div>
-                <StreakBox>
-                    <div>Current Streak</div>
-                    <div>{streakDays()} Day{streakDays() === 1 ? '' : 's'}</div>
-                </StreakBox>
-                <CheckInWrapper>
-                    <CheckInBox>
-                        <div>Success</div>
-                        <div>{checkIns.length} Day{checkIns.length === 1 ? '' : 's'}</div>
-                    </CheckInBox>
-                    <CheckInBoxWithoutCheckIns>
-                        <div>Failed</div>
-                        <div>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</div>
-                    </CheckInBoxWithoutCheckIns>
-                </CheckInWrapper>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#dec4ff',
+                        padding: '8px',
+                        borderRadius: '10px',
+                        marginTop: '16px',
+                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                        margin: 'auto',
+                        textAlign: 'center',
+                    }}
+                >
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Current Streak</Typography>
+                    <Box sx={{ mb: '8px' }} />    
+                    <Typography variant="h4" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <LocalFireDepartmentIcon sx={{ color: '#FF6F61', fontSize: '2rem', verticalAlign: 'middle' }} />
+                        {streakDays()}
+                    </Typography>
+
+                    <Typography variant="body2" sx={{ fontSize: '0.8rem'}}>Day{streakDays() === 1 ? '' : 's'}</Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        margin: '16px',
+                        
+                    }}
+                >
+                    <Box sx={{ textAlign: 'center', padding: '8px',margin:'8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                        <Typography variant="body1">Success  <CheckIcon /></Typography>
+                        <Typography variant="body2" sx={{ color: '#66bb6a' }} >{checkIns.length} Day{checkIns.length === 1 ? '' : 's'}</Typography>
+                    </Box>
+                    <Box sx={{ textAlign: 'center', padding: '8px', margin: '8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                        <Typography variant="body1">Failed <ClearIcon/></Typography>
+                        <Typography variant="body2" sx={{ color:'#f44336'}}>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</Typography>
+                    </Box>
+                </Box>
 
                 <Dialog open={showPopup} onClose={handleClosePopup}>
                     <DialogTitle>Check-In</DialogTitle>
@@ -275,11 +241,11 @@ export default function SmokingHabit() {
                             }}
                         />
                         <Select value={selectedMood} onChange={handleMoodChange} style={{ width: '100%' }}>
-                            <MenuItem value={0} style={{ color: '#FF0000' }}>Awful</MenuItem>
-                            <MenuItem value={1} style={{ color: '#FFA500' }}>Bad</MenuItem>
-                            <MenuItem value={2} style={{ color: '#FFFF00' }}>Meh</MenuItem>
-                            <MenuItem value={3} style={{ color: '#00FF00' }}>Good</MenuItem>
-                            <MenuItem value={4} style={{ color: '#008000' }}>Excellent</MenuItem>
+                            <MenuItem value={0} style={{ color: '#f44336' }}>Awful</MenuItem>
+                            <MenuItem value={1} style={{ color: '#e57373' }}>Bad</MenuItem>
+                            <MenuItem value={2} style={{ color: '#f57c00' }}>Meh</MenuItem>
+                            <MenuItem value={3} style={{ color: '#81c784' }}>Good</MenuItem>
+                            <MenuItem value={4} style={{ color: '#388e3c' }}>Excellent</MenuItem>
                         </Select>
                     </DialogContent>
 
@@ -292,9 +258,9 @@ export default function SmokingHabit() {
                 <MyCalendar
                     checkedDates={checkedDates}
                     onCheckDate={handleCheckDate}
-                    onDateClick={handleDateClick} // Pass handleDateClick function
+                    onDateClick={handleDateClick}
                 />
-            </div>
+            </Box>
         </SmokingHabitContainer>
     );
 }

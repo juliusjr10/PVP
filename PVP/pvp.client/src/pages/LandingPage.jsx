@@ -32,7 +32,7 @@ export default function LandingPage() {
 
     return (
        
-        <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', bgcolor: '#A8D0E6', }}>
+        <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden' }}>
             <AppAppBar pages={allPages}>
             </AppAppBar>
             {/*<Box sx={{*/}

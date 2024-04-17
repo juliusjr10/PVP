@@ -68,18 +68,11 @@ export default function EditProfile() {
     };
 
     return (
-        <Box sx={{ bgcolor: "#A8D0E6", height: '100vh' }}>
+        <Box sx={{ display: 'flex', height: '120vh' }}>
             <CssBaseline />
             <Sidebar />
             <Box
                 component="main"
-                sx={{
-                    flexGrow: 1,
-                    p: 3,
-                    sm: `calc(100% - ${drawerWidth}px)`,
-                    ml: `${drawerWidth}px`,
-                    width: '50%'
-                }}
             >
                 <Toolbar />
                 <Typography variant="h1">Edit profile</Typography>

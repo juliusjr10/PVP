@@ -88,7 +88,7 @@ export default function SignUp() {
     return (
         <ThemeProvider theme={defaultTheme}>
             <AppAppBar pages={signInUpPages}></AppAppBar>
-            <Container disableGutters maxWidth={false} sx={{ bgcolor: '#A8D0E6', position: 'relative', overflow: 'hidden', }}>
+            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', }}>
                 <div className="circlebluelog"></div>
                 <div className="circleblue2log"></div>
                 <div className="circleblue3log"></div>

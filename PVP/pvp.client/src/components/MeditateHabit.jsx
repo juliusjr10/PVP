@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Calendar from './Calendar';
-import Sidebar from "./Sidebar";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { format } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import Typography from '@mui/material/Typography';
+import MyCalendar from './Calendar';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 
-const CalendarContainer = styled(Box)(({ theme }) => ({
-    position: 'absolute',
-    top: theme.spacing(25),
-    right: theme.spacing(6),
-}));
+const SmokingHabitContainer = styled(Box)({
+    position: 'fixed',
+    top: 50,
+    right: 0,
+    height: '100%',
+    maxWidth: 'md',
+    backgroundColor: '#fff',
+    transition: 'transform 0.3s ease-in-out',
+    transform: 'translateX(100%) scaleX(1.5)',
+    zIndex: 999,
+});
 
-const CheckInContainer = styled(Box)(({ theme }) => ({
-    position: 'absolute',
-    top: theme.spacing(65),
-    right: theme.spacing(6),
-}));
 
-const TitleContainer = styled(Box)(({ theme }) => ({
-    position: 'absolute',
-    top: theme.spacing(10),
-    right: theme.spacing(1),
-}));
+
+
 
 export default function SmokingHabit() {
+    const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
-    const [selectedMood, setSelectedMood] = useState(0); // State to hold the selected mood
-    const [note, setNote] = useState(''); // State to hold the note
+    const [selectedMood, setSelectedMood] = useState(0);
+    const [note, setNote] = useState('');
+    const [showPopup, setShowPopup] = useState(false); // State for showing popup
+    const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
+
+    useEffect(() => {
+        setIsVisible(true);
+    }, []);
 
     useEffect(() => {
         const fetchCheckIns = async () => {
@@ -55,11 +65,26 @@ export default function SmokingHabit() {
         fetchCheckIns();
     }, []);
 
+    const streakDays = () => {
+        let streak = 0;
+        const reversedCheckIns = [...checkIns].reverse();
+        for (let i = 0; i < reversedCheckIns.length; i++) {
+            const currentDate = new Date();
+            const checkInDate = new Date(reversedCheckIns[i].date);
+            if (differenceInDays(currentDate, checkInDate) === streak) {
+                streak++;
+            } else {
+                break;
+            }
+        }
+        return streak;
+    };
+
     const checkedDates = checkIns.map(checkIn => {
         const parsedDate = new Date(checkIn.date);
         return {
             date: format(parsedDate, 'yyyy-MM-dd'),
-            mood: checkIn.mood // Assuming `checkIn` object contains mood property
+            mood: checkIn.mood
         };
     }) ?? [];
 
@@ -79,7 +104,7 @@ export default function SmokingHabit() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    HabitId: 2,
+                    HabitId: 1,
                     Mood: mood,
                     Date: date,
                     Note: note
@@ -98,82 +123,143 @@ export default function SmokingHabit() {
     };
 
     const handleCheckCurrentDate = async () => {
-        const currentDate = new Date(); // Get the current date and time
-        handleCheckDate(currentDate, selectedMood, note); // Pass the note to the function
+        handleCheckDate(selectedDate, selectedMood, note);
+        setShowPopup(false); // Close the popup after checking in
     };
 
     const handleMoodChange = event => {
-        setSelectedMood(event.target.value); // Update selected mood when it changes
+        setSelectedMood(event.target.value);
     };
 
     const handleNoteChange = event => {
-        setNote(event.target.value); // Update note when it changes
+        setNote(event.target.value);
     };
 
+    const handleOpenPopup = () => {
+        setShowPopup(true);
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
+
+    const handleDateClick = date => {
+        const today = new Date();
+        const isToday = date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate();
+
+        if (isToday) {
+            setSelectedDate(date);
+            setShowPopup(true);
+        }
+    };
+
+
+    const firstCheckInDate = checkIns.length > 0 ? new Date(checkIns[0].date) : null;
+    const today = new Date();
+    let daysWithoutCheckIn = 0;
+
+    if (firstCheckInDate) {
+        const startDate = new Date(firstCheckInDate.getFullYear(), firstCheckInDate.getMonth(), firstCheckInDate.getDate());
+        const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        for (let d = startDate; d < endDate; d.setDate(d.getDate() + 1)) {
+            const formattedDate = format(d, 'yyyy-MM-dd');
+            const found = checkedDates.find(item => item.date === formattedDate);
+
+            if (!found) {
+                daysWithoutCheckIn++;
+            }
+        }
+    }
+
     return (
-        <div style={{ display: 'flex', backgroundColor: "#A8D0E6", width: '100%' }}>
-            <CssBaseline />
-            <Sidebar />
-            <div style={{ padding: '16px' }}>
-                <TitleContainer>
-                    <Box sx={{
-                        textAlign: 'center',
-                        marginBottom: '16px',
+        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
+            <Box sx={{ padding: '16px' }}>
+                <Box sx={{
+                    textAlign: 'center',
+                }}>
+                    <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
+                        Meditation
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#dec4ff',
                         padding: '8px',
-                        border: '2px solid #CCCCCC',
-                        borderRadius: '8px',
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08)',
-                        background: '#F0F0F0',
-                        width: '500px',
-                        height: '80px',
-                    }}>
-                        <Typography variant="h5" component="div" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
-                            Meditation Habit Progress
-                        </Typography>
+                        borderRadius: '10px',
+                        marginTop: '16px',
+                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                        margin: 'auto',
+                        textAlign: 'center',
+                    }}
+                >
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Current Streak</Typography>
+                    <Box sx={{ mb: '8px' }} />
+                    <Typography variant="h4" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <LocalFireDepartmentIcon sx={{ color: '#FF6F61', fontSize: '2rem', verticalAlign: 'middle' }} />
+                        {streakDays()}
+                    </Typography>
+
+                    <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>Day{streakDays() === 1 ? '' : 's'}</Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        margin: '16px',
+
+                    }}
+                >
+                    <Box sx={{ textAlign: 'center', padding: '8px', margin: '8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                        <Typography variant="body1">Success  <CheckIcon /></Typography>
+                        <Typography variant="body2" sx={{ color: '#66bb6a' }} >{checkIns.length} Day{checkIns.length === 1 ? '' : 's'}</Typography>
                     </Box>
-                </TitleContainer>
-                <CheckInContainer>
-                    <div style={{ padding: '16px' }}>
+                    <Box sx={{ textAlign: 'center', padding: '8px', margin: '8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                        <Typography variant="body1">Failed <ClearIcon /></Typography>
+                        <Typography variant="body2" sx={{ color: '#f44336' }}>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</Typography>
+                    </Box>
+                </Box>
+
+                <Dialog open={showPopup} onClose={handleClosePopup}>
+                    <DialogTitle>Check-In</DialogTitle>
+                    <DialogContent>
                         <TextareaAutosize
                             value={note}
                             onChange={handleNoteChange}
                             placeholder="Write your note here..."
                             style={{
-                                width: '300px',
-                                height: '150px', // Adjust the height as needed
-                                padding: '8px',
-                                borderRadius: '4px',
+                                width: '100%',
                                 marginBottom: '16px',
+                                border: '1px solid #ccc',
+                                borderRadius: '4px',
+                                padding: '8px',
                             }}
                         />
-                    </div>
-                    <Select
-                        value={selectedMood}
-                        onChange={handleMoodChange}
-                        style={{ width: '115px', marginBottom: '16px' }}
-                        MenuProps={{
-                            PaperProps: {
-                                style: {
-                                    maxHeight: '200px',
-                                    width: '300px', // adjust the width as needed
-                                },
-                            },
-                        }}
-                    >
-                        <MenuItem value={0} style={{ color: '#FF0000' }}>Awful</MenuItem>
-                        <MenuItem value={1} style={{ color: '#FFA500' }}>Bad</MenuItem>
-                        <MenuItem value={2} style={{ color: '#FFFF00' }}>Meh</MenuItem>
-                        <MenuItem value={3} style={{ color: '#00FF00' }}>Good</MenuItem>
-                        <MenuItem value={4} style={{ color: '#008000' }}>Excellent</MenuItem>
-                    </Select>
-                    <Button onClick={handleCheckCurrentDate} variant="contained" style={{ marginLeft: '32px' }}>
-                        Check Current Date
-                    </Button>
-                </CheckInContainer>
-                <CalendarContainer>
-                    <Calendar checkedDates={checkedDates} onCheckDate={handleCheckDate} />
-                </CalendarContainer>
-            </div>
-        </div>
+                        <Select value={selectedMood} onChange={handleMoodChange} style={{ width: '100%' }}>
+                            <MenuItem value={0} style={{ color: '#f44336' }}>Awful</MenuItem>
+                            <MenuItem value={1} style={{ color: '#e57373' }}>Bad</MenuItem>
+                            <MenuItem value={2} style={{ color: '#f57c00' }}>Meh</MenuItem>
+                            <MenuItem value={3} style={{ color: '#81c784' }}>Good</MenuItem>
+                            <MenuItem value={4} style={{ color: '#388e3c' }}>Excellent</MenuItem>
+                        </Select>
+                    </DialogContent>
+
+                    <DialogActions>
+                        <Button onClick={handleClosePopup}>Cancel</Button>
+                        <Button onClick={handleCheckCurrentDate}>Check Current Date</Button>
+                    </DialogActions>
+                </Dialog>
+
+                <MyCalendar
+                    checkedDates={checkedDates}
+                    onCheckDate={handleCheckDate}
+                    onDateClick={handleDateClick}
+                />
+            </Box>
+        </SmokingHabitContainer>
     );
 }
