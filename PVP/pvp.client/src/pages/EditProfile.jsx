@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Sidebar from "../components/Sidebar";
 import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid'; // Grid version 1
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 const drawerWidth = 240;
 
@@ -16,6 +20,8 @@ export default function EditProfile() {
         name: '',
         lastName: '',
     });
+    const [errorText, setErrorText] = useState('');
+    const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
     useEffect(() => {
         (
@@ -43,9 +49,9 @@ export default function EditProfile() {
     };
 
     const handleEdit = async () => {
-        // Perform edit action here, such as making a request to update user profile
-        // Example:
-        console.log(JSON.stringify(formData));
+        setErrorText('');
+        setSuccessDialogOpen(false); // Close success dialog if open
+
         try {
             const response = await fetch('https://localhost:7200/api/Auth/edituser', {
                 method: 'POST',
@@ -54,15 +60,22 @@ export default function EditProfile() {
                 body: JSON.stringify(formData),
             });
             if (response.ok) {
-                // Handle successful edit
-                console.log('Profile updated successfully.');
+                // Show success dialog
+                setSuccessDialogOpen(true);
+            } else if (response.status === 400) {
+                // Handle 400 Bad Request
+                setErrorText('Failed to update profile. Please check your input.');
             } else {
-                // Handle failed edit
+                // Handle other errors
                 console.error('Failed to update profile.');
             }
         } catch (error) {
             console.error('Error:', error);
         }
+    };
+
+    const handleCloseSuccessDialog = () => {
+        setSuccessDialogOpen(false);
     };
 
     return (
@@ -103,13 +116,29 @@ export default function EditProfile() {
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
-                        {/* Use Link to navigate to ChangePasswordPage */}
                         <Button variant="contained" color="secondary" component={Link} to="/changepassword">
                             Change password
                         </Button>
                     </Grid>
+                    {errorText && (
+                        <Grid item xs={12}>
+                            <Typography variant="body2" color="error">{errorText}</Typography>
+                        </Grid>
+                    )}
                 </Grid>
             </Box>
+            {/* Success Dialog */}
+            <Dialog open={successDialogOpen} onClose={handleCloseSuccessDialog}>
+                <DialogTitle>Success</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body1">Profile updated successfully.</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseSuccessDialog} autoFocus>
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }

@@ -7,6 +7,10 @@ import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid'; // Grid version 1
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 const drawerWidth = 240;
 
@@ -16,6 +20,8 @@ export default function ChangePassword() {
         newPassword: '',
         repeatNewPassword: '',
     });
+    const [errorText, setErrorText] = useState('');
+    const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -25,11 +31,8 @@ export default function ChangePassword() {
     };
 
     const handleEdit = async () => {
-        // Log formData as JSON
-        console.log(JSON.stringify(formData));
+        setErrorText(''); // Reset error text before making the request
 
-        // Perform edit action here, such as making a request to update user profile
-        // Example:
         try {
             const response = await fetch('https://localhost:7200/api/Auth/changepassword', {
                 method: 'POST',
@@ -37,16 +40,28 @@ export default function ChangePassword() {
                 credentials: 'include',
                 body: JSON.stringify(formData),
             });
+
             if (response.ok) {
-                // Handle successful edit
-                console.log('Password changed successfully.');
+                // Show success dialog
+                setSuccessDialogOpen(true);
+                // Refresh page after a delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else if (response.status === 400) {
+                // Handle 400 Bad Request
+                setErrorText('Invalid data. Please check your input.');
             } else {
-                // Handle failed edit
+                // Handle other errors
                 console.error('Failed to change password.');
             }
         } catch (error) {
             console.error('Error:', error);
         }
+    };
+
+    const handleCloseSuccessDialog = () => {
+        setSuccessDialogOpen(false);
     };
 
     return (
@@ -94,8 +109,25 @@ export default function ChangePassword() {
                             Edit
                         </Button>
                     </Grid>
+                    {errorText && (
+                        <Grid item xs={12}>
+                            <Typography variant="body2" color="error">{errorText}</Typography>
+                        </Grid>
+                    )}
                 </Grid>
             </Box>
+            {/* Success Dialog */}
+            <Dialog open={successDialogOpen} onClose={handleCloseSuccessDialog}>
+                <DialogTitle>Password Changed</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body1">Your password has been changed successfully.</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseSuccessDialog} autoFocus>
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
