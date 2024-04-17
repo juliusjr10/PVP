@@ -15,6 +15,7 @@ export default function AboutUs() {
                 flexDirection: 'column',
                 pt: { xs: 8, sm: 14 },
                 pb: { xs: 8, sm: 12 },
+
             }}
         >
             <Typography variant="h1" sx={{
@@ -51,7 +52,7 @@ export default function AboutUs() {
 
                         }}
                     >
-                        <Typography variant="h8" sx={{fontSize: '22px' }}>
+                        <Typography sx={{ fontSize: '22px' }}>
                             We are third-year students at Kaunas University of Technology. We aim to motivate people to pursue personal development. To do this, we offer our platform - HabitBook, which not only allows people to track their progress by giving up bad habits or developing good ones but also allows them to interact with other people who have embarked on their personal development journey.
                         </Typography>
                     </Box>

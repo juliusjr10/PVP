@@ -9,6 +9,7 @@ import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
 import EditProfile from './pages/EditProfile';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ChangePassword from './pages/ChangePassword';
 
 export default function App() {
     const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
@@ -60,7 +61,6 @@ export default function App() {
             background: {
                 default: '#f5f5f5',
             },
-
         },
     });
 
@@ -79,7 +79,8 @@ export default function App() {
                 {isAuthenticated && (
                     <>
                         <Route path="/habitspage" element={<HabitsPage />} />
-                        <Route path="/editprofile" element={<EditProfile />} />
+                            <Route path="/editprofile" element={<EditProfile />} />
+                            <Route path="/changepassword" element={<ChangePassword />} />
                         <Route index element={<Navigate to="/habitspage" />} />
                         <Route path="*" element={<Navigate to="/habitspage" />} />
                     </>
