@@ -44,7 +44,7 @@ namespace PVP.Server.Data
             var checkIns = new List<CheckIn>() { };
             DateTime currentDate  = DateTime.ParseExact("2024 03 22 15:20", "yyyy MM dd HH:mm", null).Date;
             Random random = new Random();
-            for (int i = 0; i < 26;i++)
+            for (int i = 0; i < 25;i++)
             {
                     // Incrementing the date by one day
                     currentDate = currentDate.AddDays(1);

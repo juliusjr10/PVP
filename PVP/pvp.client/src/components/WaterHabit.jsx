@@ -68,15 +68,37 @@ export default function SmokingHabit() {
     const streakDays = () => {
         let streak = 0;
         const reversedCheckIns = [...checkIns].reverse();
-        for (let i = 0; i < reversedCheckIns.length; i++) {
-            const currentDate = new Date();
-            const checkInDate = new Date(reversedCheckIns[i].date);
-            if (differenceInDays(currentDate, checkInDate) === streak) {
-                streak++;
+        const currentDate = new Date();
+        const yesterday = new Date(currentDate);
+        yesterday.setDate(currentDate.getDate() - 1);
+
+        if (reversedCheckIns.length > 0) {
+            const firstCheckInDate = new Date(reversedCheckIns[0].date);
+            if (firstCheckInDate.toDateString() === yesterday.toDateString()) {
+                for (let i = 0; i < reversedCheckIns.length; i++) {
+                    const checkInDate = new Date(reversedCheckIns[i].date);
+                    const daysDifference = differenceInDays(yesterday, checkInDate);
+
+                    if (daysDifference <= streak) {
+                        streak = daysDifference === streak ? streak + 1 : streak;
+                    } else {
+                        break;
+                    }
+                }
             } else {
-                break;
+                for (let i = 0; i < reversedCheckIns.length; i++) {
+                    const checkInDate = new Date(reversedCheckIns[i].date);
+                    const daysDifference = differenceInDays(currentDate, checkInDate);
+
+                    if (daysDifference <= streak) {
+                        streak = daysDifference === streak ? streak + 1 : streak;
+                    } else {
+                        break;
+                    }
+                }
             }
         }
+
         return streak;
     };
 
@@ -91,7 +113,7 @@ export default function SmokingHabit() {
     const handleCheckDate = async (date, mood, note) => {
         const formattedDate = format(date, 'yyyy-MM-dd');
 
-        if (checkedDates.includes(formattedDate)) {
+        if (checkedDates.some(check => check.date === formattedDate)) {
             console.log('Already checked in on this date');
             return;
         }
@@ -104,9 +126,9 @@ export default function SmokingHabit() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    HabitId: 1,
+                    HabitId: 3,
                     Mood: mood,
-                    Date: date,
+                    Date: formattedDate,
                     Note: note
                 })
             });
