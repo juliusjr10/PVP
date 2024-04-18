@@ -38,7 +38,7 @@ export default function Hero() {
                         alignSelf: 'center',
                         height: { xs: 200, sm: 400 },
                         width: '80%',
-                        backgroundColor: 'rgba(247, 108, 108, 1)',
+                        backgroundColor: 'white',
                         backgroundSize: 'cover',
                         borderRadius: '10px',
                         outline: '1px solid',
@@ -47,20 +47,24 @@ export default function Hero() {
                             theme.palette.mode === 'light'
                                 ? alpha('#BFCCD9', 0.5)
                                 : alpha('#9CCCFC', 0.1),
-                       boxShadow: `0 0 24px 12px ${alpha('#033363', 0.2)}`,
+                        boxShadow: `0 0 24px 12px ${alpha('#033363', 0.2)}`,
                         display: 'flex', 
                         justifyContent: 'center', 
                         flexDirection: 'column', 
                         textAlign: 'center', 
                     })}
             >
-                <Typography variant="h1" sx={{ color: '#ffffff' }}>
+                <Typography variant="h1" sx={{ fontWeight: 'bold'} }>
                     HabitBook
                 </Typography>
-                <Typography variant="h4" sx={{ color: '#ffffff' }}>
+                <Typography variant="h4" sx={{
+                    fontWeight: 'bold',
+                    fontFamily: 'Roboto',
+                    fontStyle: 'italic'
+                }}>
                     Track, Share, Grow:
                 </Typography>
-                <Typography variant="h4" sx={{ color: '#ffffff' }}>
+                <Typography variant="h4">
                     Achieve Your Goals Together
                 </Typography>
                 <Grid container spacing={2} alignItems="center" marginTop="60px" paddingLeft="38%">
@@ -71,15 +75,9 @@ export default function Hero() {
                             sx={{
                                 width: '200px',
                                 height: '50px',
-                                backgroundColor: '#f8e9a1',
-                                color: '#000000',
                                 borderRadius: '20px',
                                 fontSize: '18px',
-                                textTransform: 'none',
-                               
-                                '&:hover': {
-                                    backgroundColor: '#f7e174',
-                                },
+                                textTransform: 'none'     
                             }}
                         >
                             About
@@ -87,12 +85,9 @@ export default function Hero() {
                     </Grid>
                     <Grid item>
                         <ReplyIcon
-                            sx={{
-                                color: 'white',
-                            }}
                         />
                         <Typography variant="h4" sx={{
-                            color: '#ffffff', fontFamily: 'Arial', fontSize: '16px', transform: 'rotate(-30deg)',
+                            fontFamily: 'Roboto', fontSize: '16px', transform: 'rotate(-30deg)',
                             display: 'inline-block', }}>
                             Learn more
                         </Typography>

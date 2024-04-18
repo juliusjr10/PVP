@@ -32,7 +32,7 @@ export default function HabitBar() {
                     </Grid>
                 </Grid>
             </Box>
-            <Box sx={{ p: 2, bgcolor: "#A8D0E6", flexGrow: 1 }}>
+            <Box sx={{ p: 2, flexGrow: 1 }}>
                 {expandedCard === 'smoking' && <SmokingHabit />}
                 {expandedCard === 'meditation' && <MeditateHabit />}
                 {expandedCard === 'water' && <WaterHabit />}

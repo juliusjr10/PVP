@@ -8,6 +8,8 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
 import EditProfile from './pages/EditProfile';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ChangePassword from './pages/ChangePassword';
 
 export default function App() {
     const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
@@ -47,7 +49,20 @@ export default function App() {
         )();
     }, []);
 
-
+    const theme = createTheme({
+        palette: {
+            mode: 'light',
+            primary: {
+                main: '#5a00ec',
+            },
+            secondary: {
+                main: '#f50057',
+            },
+            background: {
+                default: '#f5f5f5',
+            },
+        },
+    });
 
     if (loading) {
         return (
@@ -58,12 +73,14 @@ export default function App() {
     }
 
     return (
+        <ThemeProvider theme={theme}>
         <BrowserRouter>
             <Routes>
                 {isAuthenticated && (
                     <>
                         <Route path="/habitspage" element={<HabitsPage />} />
-                        <Route path="/editprofile" element={<EditProfile />} />
+                            <Route path="/editprofile" element={<EditProfile />} />
+                            <Route path="/changepassword" element={<ChangePassword />} />
                         <Route index element={<Navigate to="/habitspage" />} />
                         <Route path="*" element={<Navigate to="/habitspage" />} />
                     </>
@@ -79,7 +96,8 @@ export default function App() {
                     </>
                 )}  
             </Routes>
-        </BrowserRouter>
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }
 

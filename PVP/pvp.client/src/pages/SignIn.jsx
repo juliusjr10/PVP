@@ -12,7 +12,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 //import MainPage from './MainPage';
 import AppAppBar from '../components/AppAppBar';
 import Footer from '../components/Footer';
@@ -74,15 +73,15 @@ function SignIn() {
     }
 
     return (
-        <ThemeProvider theme={createTheme()}>
-            <AppAppBar pages={signInUpPages}></AppAppBar>
-            <Container disableGutters maxWidth={false} sx={{ bgcolor: '#A8D0E6', position: 'relative', overflow: 'hidden', }}>
+        <Box>
+            <AppAppBar pages={signInUpPages}/>
+            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', }}>
                 <div className="circlebluelog"></div>
                 <div className="circleblue2log"></div>
                 <div className="circleblue3log"></div>
                 <div className="circleblue4log"></div>
                 <div className="circleblue5log"></div>
-            <Container component="main" maxWidth="xs" sx={{ pt: 10, bgcolor: '#ceeaed', height: '100vh' }}>
+            <Container component="main" maxWidth="xs" sx={{ pt: 10, height: '100vh' }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -147,8 +146,8 @@ function SignIn() {
                 </Box>
                 </Container>
             </Container>
-            <Footer></Footer>
-        </ThemeProvider>
+            <Footer />
+        </Box>
     );
 }
 

@@ -9,7 +9,7 @@ export default function HabitsPage() {
 
 
     return (
-        <Box sx={{ display: 'flex', bgcolor: "#A8D0E6", height: '120vh' }}>
+        <Box component="main" sx={{ display: 'flex'}}>
             <CssBaseline />
             <Sidebar />
             <HabitBar/>

@@ -1,33 +1,92 @@
 import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import GroupsIcon from '@mui/icons-material/Groups';
-import StarIcon from '@mui/icons-material/Star';
-import HomeIcon from '@mui/icons-material/Home';
-import { Link, useLocation } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import AppBar from '@mui/material/AppBar';
-import logo from '../assets/logo-white.svg';
-import ToggleDarkMode from './ToggleDarkMode';
+import { Link, useLocation } from 'react-router-dom';
+import StarIcon from '@mui/icons-material/Star';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-const drawerWidth = 240;
 
-export default function ClippedDrawer() {
+const drawerWidth = 400;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: `-${drawerWidth}px`,
+        ...(open && {
+            transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            marginLeft: 0,
+        }),
+    }),
+);
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+    transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+}));
+
+
+
+
+
+
+export default function PersistentDrawerLeft() {
     const [activePage, setActivePage] = React.useState('');
     const location = useLocation();
     const [username, setUsername] = React.useState('');
-    React.useEffect(() => {
-        setActivePage(location.pathname);
-    }, [location]);
+    const theme = useTheme();
+    const [open, setOpen] = React.useState(false);
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     const handleItemClick = (link) => {
         setActivePage(link);
@@ -42,7 +101,6 @@ export default function ClippedDrawer() {
 
         window.location.href = '/landingpage';
     };
-
     React.useEffect(() => {
         setActivePage(location.pathname);
     }, [location]);
@@ -68,19 +126,24 @@ export default function ClippedDrawer() {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar
-                position="fixed"
-                sx={{
-                    width: `calc(100% - ${drawerWidth}px)`,
-                    ml: `${drawerWidth}px`,
-                    backgroundColor: 'black',
-                }}
-            >
-                <Toolbar sx={{ justifyContent: 'right', bgcolor: '#24305E' }}>
-                    <div /> {/* Empty div for spacing */}
-                   {/* <img className="object-cover h-14 w-28" src={logo} alt="Logo" />*/}
-                    <Avatar alt={username} src="../assets/react.svg"></Avatar>
-                    <Link to='/editprofile'><Typography sx={{ m: 1 }}>{username}</Typography></Link>
+            <AppBar position="fixed" open={open}>
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap component="div">
+                        HabitBook
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
+                        <Avatar alt={username} src="../assets/react.svg" />
+                        <Link to='/editprofile'><Typography sx={{ ml: 1 , color:'white'}}>{username}</Typography></Link>
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -90,87 +153,54 @@ export default function ClippedDrawer() {
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         boxSizing: 'border-box',
-                        backgroundColor: '#24305E',
                     },
                 }}
-                variant="permanent"
+                variant="persistent"
                 anchor="left"
+                open={open}
             >
-                <Toolbar>
-                    <Box sx={{ justifyContent: 'right', pl: 3 }}>
-                        <img className="object-cover h-14 w-28" src={logo} alt="Logo" />
-                    </Box>
-                        {/*<Avatar alt={username} src="../assets/react.svg"></Avatar>*/}
-                        {/*<Link to='/editprofile'><Typography sx={{ m: 1 }}>{username}</Typography></Link>*/}
-                    
-                </Toolbar>
+                <DrawerHeader>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                </DrawerHeader>
                 <Divider />
-                <Box sx={{ overflow: 'auto' }}>
-                    <List>
-                        {[
+                <List>
+                    {[
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
                         /*{ text: 'Groups', link: '/groupspage', icon: <GroupsIcon /> }*/].map((item) => (
-                            <ListItem key={item.text} disablePadding sx={{ display: 'block', color: 'white' }}>
+                            <ListItem key={item.text} disablePadding >
                                 <ListItemButton
                                     component={Link}
                                     to={item.link}
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: 'center',
-                                        px: 2.5,
-                                        borderRadius: 1,
-                                        padding: -10,
-                                        backgroundColor: activePage === item.link ? '#5F77A6' : 'inherit',
-                                        color: 'white',
-                                        '&:hover': {
-                                            backgroundColor: activePage !== item.link ? 'rgba(0, 0, 0, 0.08)' : '#5F77A6',
-                                            color: '#bfbfbf',
-                                        },
-                                    }}
                                     onClick={() => handleItemClick(item.link)}
                                 >
-                                    <ListItemIcon sx={{ color: 'inherit' }}>
+                                    <ListItemIcon>
                                         {item.icon}
                                     </ListItemIcon>
                                     <ListItemText primary={item.text} />
                                 </ListItemButton>
                             </ListItem>
                         ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {[
-                            { text: 'Logout', icon: <ExitToAppIcon /> }].map((item) => (
-                                <ListItem key={item.text} disablePadding sx={{
-                                    color: 'white',
-                                    '&:hover': {
-                                        color: '#bfbfbf',
-                                    }
-                                }}>
-                                    <ListItemButton
-                                        onClick={handleLogout}
-                                        sx={{
-                                            minHeight: 48,
-                                            justifyContent: 'center',
-                                            px: 2.5,
-                                            borderRadius: 1,
-                                            color: 'white',
-                                            '&:hover': {
-                                                backgroundColor: activePage !== item.link ? 'rgba(0, 0, 0, 0.08)' : '#5F77A6',
-                                                color: '#bfbfbf',
-                                            },
-                                        }}
-                                    >
-                                        <ListItemIcon sx={{ color: 'inherit' }}>
-                                            {item.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={item.text} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                    </List>
-                </Box>
+                </List>
+                <Divider />
+                <List>
+                    {[
+                        { text: 'Logout', icon: <ExitToAppIcon /> }].map((item) => (
+                            <ListItem key={item.text} disablePadding>
+                                <ListItemButton onClick={handleLogout}>
+                                    <ListItemIcon>
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                </List>
             </Drawer>
+            <Main open={open}>
+                <DrawerHeader />
+            </Main>
         </Box>
     );
 }

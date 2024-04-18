@@ -155,18 +155,40 @@ namespace PVP.Server.Controllers
 
                 if (dto.Name != null) user.Name = dto.Name;
                 if (dto.Lastname != null) user.Lastname = dto.Lastname;
-                if (dto.Username != null && _repository.IsUsername(dto.Username) == false) user.Username = dto.Username;
-                else if (dto.Username == null) { }
-                else return BadRequest("Duplicate username");
-
-                if (dto.Password != null && dto.Password == dto.ConfirmPassword) user.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
-                else if (dto.Password == null) { }
-                else return BadRequest("Passwords must match");
-
                 _repository.Update(user);
                 return Ok(user);
             }
             catch (Exception _) 
+            {
+                return Unauthorized();
+            }
+        }
+
+        [HttpPost("changepassword")]
+        public IActionResult ChangePassword(ChangePasswordDto dto)
+        {
+
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtService.Verify(jwt);
+                int id = int.Parse(token.Issuer);
+                var user = _repository.GetById(id);
+
+                if (dto.NewPassword != null && dto.RepeatNewPassword != null && dto.RepeatNewPassword == dto.NewPassword && BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+                {
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+                    _repository.Update(user);
+                    Response.Cookies.Delete("jwt");
+                }
+                else
+                {
+                    return BadRequest("Invalid data");
+                }
+                return Ok("Password changed");
+
+            }
+            catch (Exception _)
             {
                 return Unauthorized();
             }

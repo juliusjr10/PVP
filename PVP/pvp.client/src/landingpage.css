@@ -1,5 +1,5 @@
 ﻿.circleblue {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 10em; /* Norimas aukštis */
     width: 10em; /* Norimas plotis */
@@ -8,10 +8,11 @@
     left: 84%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue2 {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
@@ -20,10 +21,11 @@
     left: 95%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue3 {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
@@ -32,10 +34,11 @@
     left: 5%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue4 {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 6em; /* Norimas aukštis */
     width: 6em; /* Norimas plotis */
@@ -43,6 +46,7 @@
     top: 20%; /* Centruojame vertikaliai */
     left: 75%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-container {
@@ -50,7 +54,7 @@
 }
 
 .circlered {
-    background: #F76C6C; /* Jūsų norima spalva */
+    background: #F73378; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 10em; /* Norimas aukštis */
     width: 10em; /* Norimas plotis */
@@ -59,10 +63,11 @@
     left: 76%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circlered2 {
-    background: #F76C6C; /* Jūsų norima spalva */
+    background: #F73378; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
@@ -71,10 +76,11 @@
     left: 92%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circlered3 {
-    background: #F76C6C; /* Jūsų norima spalva */
+    background: #F73378; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
@@ -83,10 +89,11 @@
     left: 5%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circlered4 {
-    background: #F76C6C; /* Jūsų norima spalva */
+    background: #F73378; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 6em; /* Norimas aukštis */
     width: 6em; /* Norimas plotis */
@@ -94,10 +101,11 @@
     top: 58%; /* Centruojame vertikaliai */
     left: 30%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circlebluelog {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 10em; /* Norimas aukštis */
     width: 10em; /* Norimas plotis */
@@ -106,10 +114,11 @@
     left: 74%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue2log {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
@@ -118,10 +127,11 @@
     left: 95%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue3log {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 20em; /* Norimas aukštis */
     width: 20em; /* Norimas plotis */
@@ -130,10 +140,11 @@
     left: 5%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue4log {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 6em; /* Norimas aukštis */
     width: 6em; /* Norimas plotis */
@@ -141,10 +152,11 @@
     top: 80%; /* Centruojame vertikaliai */
     left: 25%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
 
 .circleblue5log {
-    background: #5F77A6; /* Jūsų norima spalva */
+    background: #7B33EF; /* Jūsų norima spalva */
     border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
     height: 10em; /* Norimas aukštis */
     width: 10em; /* Norimas plotis */
@@ -153,4 +165,5 @@
     left: 26%; /* Centruojame horizontaliai */
     transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
     z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
 }
