@@ -396,3 +396,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+PVP/.vs/PVP/v17/.suo
+PVP/PVP.Server/obj/Debug/net8.0/PVP.Server.AssemblyInfo.cs
+PVP/PVP.Server/obj/Debug/net8.0/PVP.Server.AssemblyInfoInputs.cache
+PVP/PVP.Server/obj/Debug/net8.0/PVP.Server.assets.cache
+PVP/PVP.Server/obj/Debug/net8.0/PVP.Server.csproj.AssemblyReference.cache
+PVP/PVP.Server/obj/Debug/net8.0/PVP.Server.GeneratedMSBuildEditorConfig.editorconfig
+PVP/PVP.Server/obj/Debug/net8.0/spa.proxy.json
+PVP/PVP.Server/obj/project.assets.json
+PVP/PVP.Server/obj/project.nuget.cache
+PVP/PVP.Server/obj/PVP.Server.csproj.nuget.dgspec.json
+PVP/PVP.Server/obj/PVP.Server.csproj.nuget.g.props
