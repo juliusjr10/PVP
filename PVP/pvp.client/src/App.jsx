@@ -8,6 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
 import EditProfile from './pages/EditProfile';
+import Groups from './pages/GroupPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ChangePassword from './pages/ChangePassword';
 import AchievementsPage from './pages/AchievementsPage';
@@ -83,6 +84,7 @@ export default function App() {
                         <Route path="/achievementspage" element={<AchievementsPage /> } />
                             <Route path="/editprofile" element={<EditProfile />} />
                             <Route path="/changepassword" element={<ChangePassword />} />
+                            <Route path="/groups" element={<Groups />} />
                         <Route index element={<Navigate to="/habitspage" />} />
                         <Route path="*" element={<Navigate to="/habitspage" />} />
                     </>

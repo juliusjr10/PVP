@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using PVP.Server.Models;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,51 @@ namespace PVP.Server.Data
                 Email = "testuser@gmail.com",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 DateOfBirth = DateTime.Parse(dateString)
+            };
+
+            // Second User
+            var secondUser = new User()
+            {
+                Id = 2,
+                Name = "John",
+                Lastname = "Doe",
+                Username = "johndoe",
+                Email = "johndoe@gmail.com",
+                Password = BCrypt.Net.BCrypt.HashPassword("password"),
+                DateOfBirth = DateTime.Parse(dateString)
+            };
+
+            // Third User
+            var thirdUser = new User()
+            {
+                Id = 3,
+                Name = "Jane",
+                Lastname = "Smith",
+                Username = "janesmith",
+                Email = "janesmith@gmail.com",
+                Password = BCrypt.Net.BCrypt.HashPassword("password"),
+                DateOfBirth = DateTime.Parse(dateString)
+            };
+            // First Group
+            var firstGroup = new Group()
+            {
+                GroupID = 1,
+                Name = "Group 1",
+                Description = "Description of Group 1",
+                AdminUserID = firstUser.Id,
+                CreationDate = DateTime.Now,
+                PrivacyLevel = PrivacyLevel.Public
+            };
+
+            // Second Group
+            var secondGroup = new Group()
+            {
+                GroupID = 2,
+                Name = "Group 2",
+                Description = "Description of Group 2",
+                AdminUserID = secondUser.Id,
+                CreationDate = DateTime.Now,
+                PrivacyLevel = PrivacyLevel.Public
             };
             var firstHabit = new Habit()
             {
@@ -97,14 +143,24 @@ namespace PVP.Server.Data
                 HabitId = 3,
                 UserId = 1
             };
-            var users = new List<User>() { firstUser };
+            var users = new List<User>() { firstUser, secondUser, thirdUser };
+            var groups = new List<Group>() { firstGroup, secondGroup };
             var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit };
             var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
+            var posts = new List<Post>()
+            {
+                new Post() { GroupID = firstGroup.GroupID, UserID = firstUser.Id, Content = "First post in Group 1", Timestamp = DateTime.Now },
+                new Post() { GroupID = firstGroup.GroupID, UserID = secondUser.Id, Content = "Second post in Group 1", Timestamp = DateTime.Now },
+                new Post() { GroupID = secondGroup.GroupID, UserID = thirdUser.Id, Content = "First post in Group 2", Timestamp = DateTime.Now },
+                new Post() { GroupID = secondGroup.GroupID, UserID = firstUser.Id, Content = "Second post in Group 2", Timestamp = DateTime.Now }
+            };
 
             await context.AddRangeAsync(users);
+            await context.AddRangeAsync(groups);
             await context.AddRangeAsync(habits);
             await context.AddRangeAsync(userhabits);
             await context.AddRangeAsync(checkIns);
+            await context.AddRangeAsync(posts);
             await context.SaveChangesAsync();
         }
     }

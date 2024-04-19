@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Link, useLocation } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
+import GroupsIcon from '@mui/icons-material/Groups';
 import Avatar from '@mui/material/Avatar';
 import AchIcon from '@mui/icons-material/EmojiEvents';
 
@@ -169,7 +170,7 @@ export default function PersistentDrawerLeft() {
                 <List>
                     {[
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
-                        /*{ text: 'Groups', link: '/groupspage', icon: <GroupsIcon /> }*/
+                        { text: 'Groups', link: '/groups', icon: <GroupsIcon /> },
                         {text: 'Achievements', link: '/achievementspage', icon: <AchIcon />}].map((item) => (
                             <ListItem key={item.text} disablePadding >
                                 <ListItemButton

@@ -193,6 +193,24 @@ namespace PVP.Server.Controllers
                 return Unauthorized();
             }
         }
+        [HttpGet("user/{userid}")]
+        public ActionResult<User> User(int userid)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = _jwtService.Verify(jwt);
+
+                var user = _repository.GetById(userid);
+
+                return user;
+            }
+            catch (Exception _)
+            {
+                return Unauthorized();
+            }
+        }
         private string CreateRandomToken()
         {
             return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
