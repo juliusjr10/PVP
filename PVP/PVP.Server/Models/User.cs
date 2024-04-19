@@ -19,8 +19,5 @@ namespace PVP.Server.Models
         public DateTime? ResetTokenExpires { get; set; }
 
         public ICollection<HabitUser> HabitUser { get; } = [];
-        public List<Group> Groups { get; } = [];
-
-
     }
 }

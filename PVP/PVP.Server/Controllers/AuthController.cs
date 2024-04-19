@@ -17,7 +17,7 @@ namespace PVP.Server.Controllers
         private readonly IUserRepository _repository;
         private readonly JwtService _jwtService;
         private readonly IEmailService _emailSender;
-        public AuthController(IUserRepository repository, JwtService jwtService, IEmailService emailSenderService) 
+        public AuthController(IUserRepository repository, JwtService jwtService, IEmailService emailSenderService)
         {
             _repository = repository;
             _jwtService = jwtService;
@@ -48,7 +48,7 @@ namespace PVP.Server.Controllers
 
             if (user == null) return BadRequest(new { message = "Invalid Credentials" });
 
-            if(!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
                 return BadRequest(new { message = "Invalid Credentials" });
             }
@@ -66,7 +66,7 @@ namespace PVP.Server.Controllers
             });
 
         }
-        [HttpGet("user")]       
+        [HttpGet("user")]
         public IActionResult User()
         {
             try
@@ -80,7 +80,7 @@ namespace PVP.Server.Controllers
                 var user = _repository.GetById(userId);
 
                 return Ok(user);
-            }catch(Exception _)
+            } catch (Exception _)
             {
                 return Unauthorized();
             }
@@ -100,7 +100,7 @@ namespace PVP.Server.Controllers
         public IActionResult ForgotPassword(string email)
         {
             var user = _repository.GetByEmail(email);
-            if(user == null)
+            if (user == null)
             {
                 return BadRequest("User not found");
             }
@@ -110,14 +110,14 @@ namespace PVP.Server.Controllers
 
             _repository.Update(user);
             _emailSender.SendEmail(email, "Password reset",
-                "<html>"+
-                "<body>"+
-                "<h3>Reset your password!</h3><br>"+
-                "Press this <a href=\"https://localhost:5173/resetpassword/"+user.PasswordResetToken + "\">link</a> to reset your password!" +
-                "</body>"+
+                "<html>" +
+                "<body>" +
+                "<h3>Reset your password!</h3><br>" +
+                "Press this <a href=\"https://localhost:5173/resetpassword/" + user.PasswordResetToken + "\">link</a> to reset your password!" +
+                "</body>" +
                 "</html>"
                 );
-                
+
 
             return Ok("You may now reset your password");
         }
@@ -158,7 +158,7 @@ namespace PVP.Server.Controllers
                 _repository.Update(user);
                 return Ok(user);
             }
-            catch (Exception _) 
+            catch (Exception _)
             {
                 return Unauthorized();
             }
@@ -187,6 +187,24 @@ namespace PVP.Server.Controllers
                 }
                 return Ok("Password changed");
 
+            }
+            catch (Exception _)
+            {
+                return Unauthorized();
+            }
+        }
+        [HttpGet("user/{userid}")]
+        public ActionResult<User> User(int userid)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+
+                var token = _jwtService.Verify(jwt);
+
+                var user = _repository.GetById(userid);
+
+                return user;
             }
             catch (Exception _)
             {

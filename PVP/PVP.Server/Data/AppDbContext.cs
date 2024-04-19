@@ -26,5 +26,11 @@ namespace PVP.Server.Data
         public DbSet<WeekDay> WeekDays { get; set; }
         public DbSet<HabitUser> HabitUser { get; set; }
         public DbSet<CheckIn> CheckIns { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupMember> GroupMembers { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
     }
 }

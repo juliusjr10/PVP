@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
+import GroupsIcon from '@mui/icons-material/Groups';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -168,7 +169,7 @@ export default function PersistentDrawerLeft() {
                 <List>
                     {[
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
-                        /*{ text: 'Groups', link: '/groupspage', icon: <GroupsIcon /> }*/].map((item) => (
+                        { text: 'Groups', link: '/groups', icon: <GroupsIcon /> }].map((item) => (
                             <ListItem key={item.text} disablePadding >
                                 <ListItemButton
                                     component={Link}

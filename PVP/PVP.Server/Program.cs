@@ -21,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IHabitService, HabitService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IPostService, PostService>();
 // Configure JSON serialization options
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
