@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SignIn from './pages/SignIn';
+import Groups from './pages/GroupPage';
 import EditProfile from './pages/EditProfile';
 import Groups from './pages/GroupPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';

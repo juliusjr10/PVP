@@ -79,9 +79,9 @@ const GroupSidebar = ({ onSelectGroup }) => {
                     ))}
                 </List>
                 <Divider />
-                {/*<Button variant="contained" component={Link} to="/create-group" fullWidth>
+                <Button variant="contained" component={Link} to="/create-group" fullWidth>
                     Create New Group
-                </Button>*/}
+                </Button>
                 <Divider />
                 <Button
                     variant="contained"

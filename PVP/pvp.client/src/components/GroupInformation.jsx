@@ -106,7 +106,7 @@ const GroupInformation = ({ groupData }) => {
                         {/* Render posts in reverse order */}
                         {posts.slice().reverse().map((post) => (
                             <Paper key={post.postID} elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
-                                <Typography variant="body1"><strong>{post.user.username}</strong> </Typography>
+                                <Typography variant="body1"><strong>{post.user.name}</strong> </Typography>
                                 <Typography variant="body1">{post.content}</Typography>
                                 <Typography variant="caption" color="textSecondary">
                                     {new Date(post.timestamp).toLocaleString()}
