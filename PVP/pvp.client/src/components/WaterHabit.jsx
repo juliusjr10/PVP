@@ -16,7 +16,7 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 
-const SmokingHabitContainer = styled(Box)({
+const WaterHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
     right: 0,
@@ -32,7 +32,7 @@ const SmokingHabitContainer = styled(Box)({
 
 
 
-export default function SmokingHabit() {
+export default function WaterHabit() {
     const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
@@ -195,7 +195,7 @@ export default function SmokingHabit() {
     }
 
     return (
-        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
+        <WaterHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
@@ -282,6 +282,6 @@ export default function SmokingHabit() {
                     onDateClick={handleDateClick}
                 />
             </Box>
-        </SmokingHabitContainer>
+        </WaterHabitContainer>
     );
 }

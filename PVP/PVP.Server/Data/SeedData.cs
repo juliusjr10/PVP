@@ -41,13 +41,18 @@ namespace PVP.Server.Data
                 Id = 3,
                 Name = "Water Habit"
             };
-            var checkIns = new List<CheckIn>() { };
-            DateTime currentDate  = DateTime.ParseExact("2024 03 22 15:20", "yyyy MM dd HH:mm", null).Date;
-            Random random = new Random();
-            for (int i = 0; i < 25;i++)
+            var fourthHabit = new Habit()
             {
-                    // Incrementing the date by one day
-                    currentDate = currentDate.AddDays(1);
+                Id = 4,
+                Name = "Healthy Food Habit"
+            };
+            var checkIns = new List<CheckIn>() { };
+            DateTime currentDate = DateTime.ParseExact("2024 03 23 15:20", "yyyy MM dd HH:mm", null).Date;
+            Random random = new Random();
+            for (int i = 0; i < 26; i++)
+            {
+                // Incrementing the date by one day
+                currentDate = currentDate.AddDays(1);
                 if (i % 3 == 0)
                 {
                     // Creating a new check-in
@@ -73,19 +78,6 @@ namespace PVP.Server.Data
                     };
                     checkIns.Add(newCheckIn1);
                 }
-                if (i % 2 == 0)
-                {
-                    var newCheckIn2 = new CheckIn()
-                    {
-                        Id = i + 1000, // Assuming the IDs continue from where we left off
-                        HabitUserId = 3,
-                        Mood = (Mood)random.Next(0, 4), // Random mood between 1 and 5
-                        Date = currentDate,
-                        Note = ""
-
-                    };
-                    checkIns.Add(newCheckIn2);
-                }
             }
             var firstUserHabit = new HabitUser()
             {
@@ -106,9 +98,9 @@ namespace PVP.Server.Data
                 UserId = 1
             };
             var users = new List<User>() { firstUser };
-            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit };
+            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit };
             var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
-            
+
             await context.AddRangeAsync(users);
             await context.AddRangeAsync(habits);
             await context.AddRangeAsync(userhabits);

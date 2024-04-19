@@ -197,7 +197,7 @@ export default function SmokingHabit() {
 
     return (
         <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
-            <Box sx={{ padding: '16px'}}>
+            <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
                 }}>
@@ -221,29 +221,29 @@ export default function SmokingHabit() {
                     }}
                 >
                     <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Current Streak</Typography>
-                    <Box sx={{ mb: '8px' }} />    
+                    <Box sx={{ mb: '8px' }} />
                     <Typography variant="h4" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <LocalFireDepartmentIcon sx={{ color: '#FF6F61', fontSize: '2rem', verticalAlign: 'middle' }} />
                         {streakDays()}
                     </Typography>
 
-                    <Typography variant="body2" sx={{ fontSize: '0.8rem'}}>Day{streakDays() === 1 ? '' : 's'}</Typography>
+                    <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>Day{streakDays() === 1 ? '' : 's'}</Typography>
                 </Box>
                 <Box
                     sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         margin: '16px',
-                        
+
                     }}
                 >
-                    <Box sx={{ textAlign: 'center', padding: '8px',margin:'8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                    <Box sx={{ textAlign: 'center', padding: '8px', margin: '8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
                         <Typography variant="body1">Success  <CheckIcon /></Typography>
                         <Typography variant="body2" sx={{ color: '#66bb6a' }} >{checkIns.length} Day{checkIns.length === 1 ? '' : 's'}</Typography>
                     </Box>
                     <Box sx={{ textAlign: 'center', padding: '8px', margin: '8px', borderRadius: '10px', width: '50%', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                        <Typography variant="body1">Failed <ClearIcon/></Typography>
-                        <Typography variant="body2" sx={{ color:'#f44336'}}>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</Typography>
+                        <Typography variant="body1">Failed <ClearIcon /></Typography>
+                        <Typography variant="body2" sx={{ color: '#f44336' }}>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</Typography>
                     </Box>
                 </Box>
 

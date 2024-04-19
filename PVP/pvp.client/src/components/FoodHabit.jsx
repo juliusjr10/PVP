@@ -15,9 +15,10 @@ import DialogActions from '@mui/material/DialogActions';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import MyStopwatch from './StopWatch';
 
-const MeditateHabitContainer = styled(Box)({
+
+
+const SmokingHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
     right: 0,
@@ -29,7 +30,11 @@ const MeditateHabitContainer = styled(Box)({
     zIndex: 999,
 });
 
-export default function MeditateHabit() {
+
+
+
+
+export default function SmokingHabit() {
     const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
@@ -44,7 +49,7 @@ export default function MeditateHabit() {
     useEffect(() => {
         const fetchCheckIns = async () => {
             try {
-                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/2', {
+                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/4', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                 });
@@ -123,7 +128,7 @@ export default function MeditateHabit() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    HabitId: 2,
+                    HabitId: 4,
                     Mood: mood,
                     Date: formattedDate,
                     Note: note
@@ -192,14 +197,13 @@ export default function MeditateHabit() {
     }
 
     return (
-
-        <MeditateHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
+        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
                 }}>
                     <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
-                        Meditation
+                        Food
                     </Typography>
                 </Box>
                 <Box
@@ -279,14 +283,8 @@ export default function MeditateHabit() {
                     onCheckDate={handleCheckDate}
                     onDateClick={handleDateClick}
                 />
-                <Box sx={{
-                    margin: '16px',
-                }}>
-                    <MyStopwatch />
-                </Box>
             </Box>
-
-        </MeditateHabitContainer>
+        </SmokingHabitContainer>
     );
 
 }
