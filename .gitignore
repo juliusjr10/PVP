@@ -407,7 +407,5 @@ PVP/PVP.Server/obj/project.assets.json
 PVP/PVP.Server/obj/project.nuget.cache
 PVP/PVP.Server/obj/PVP.Server.csproj.nuget.dgspec.json
 PVP/PVP.Server/obj/PVP.Server.csproj.nuget.g.props
-.vs/
+PVP/.vs/PVP/v17/.suo
 /PVP/.vs
-/PVP/PVP.Server/obj/Debug
-/PVP/PVP.Server/obj/Debug/net8.0
