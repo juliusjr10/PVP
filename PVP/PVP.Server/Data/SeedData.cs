@@ -86,6 +86,12 @@ namespace PVP.Server.Data
                 Id = 3,
                 Name = "Water Habit"
             };
+
+            var fourthHabit = new Habit()
+            {
+                Id = 4,
+                Name = "Food Habit"
+            };
             var checkIns = new List<CheckIn>() { };
             DateTime currentDate  = DateTime.ParseExact("2024 03 22 15:20", "yyyy MM dd HH:mm", null).Date;
             Random random = new Random();
@@ -151,7 +157,7 @@ namespace PVP.Server.Data
                 UserId = 1
             };
             var users = new List<User>() { firstUser, secondUser, thirdUser };
-            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit };
+            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit };
             var groups = new List<Group>() { firstGroup, secondGroup };
             var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
 
