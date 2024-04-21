@@ -23,6 +23,7 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IFriendsService, FriendsService>();
 // Configure JSON serialization options
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -55,9 +56,7 @@ app.UseCors(options => options
     .AllowAnyMethod()
     .AllowCredentials()
 );
-
 app.UseAuthorization();
-
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",

@@ -22,7 +22,8 @@ namespace PVP.Server.Data
                 Username = "testuser",
                 Email = "testuser@gmail.com",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
-                DateOfBirth = DateTime.Parse(dateString)
+                DateOfBirth = DateTime.Parse(dateString),
+                
             };
 
             // Second User

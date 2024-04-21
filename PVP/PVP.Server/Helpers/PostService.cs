@@ -8,9 +8,9 @@ namespace PVP.Server.Helpers
     public class PostService : IPostService
     {
         private readonly AppDbContext _context;
-        public PostService (AppDbContext context)
+        public PostService(AppDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
         public async Task<Post?> CreatePost(CreatePostDTO dto, int userid)
         {

@@ -33,4 +33,9 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\Interfaces\" />
+    <Folder Include="Helpers\Services\" />
+  </ItemGroup>
+
 </Project>

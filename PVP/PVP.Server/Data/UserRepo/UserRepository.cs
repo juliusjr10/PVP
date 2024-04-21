@@ -1,4 +1,5 @@
 ﻿using PVP.Server.Models;
+using System.Linq;
 
 namespace PVP.Server.Data.UserRepo
 {
@@ -32,6 +33,11 @@ namespace PVP.Server.Data.UserRepo
         public User GetById(int id)
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
+
+        public User GetByUsername(string username)
+        {
+            return _context.Users.FirstOrDefault(u => u.Username == username);
         }
 
         public User GetByPasswordResetToken(string passwordResetToken)

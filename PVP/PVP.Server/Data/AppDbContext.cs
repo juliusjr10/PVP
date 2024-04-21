@@ -20,6 +20,9 @@ namespace PVP.Server.Data
                 .HasConversion(
                     v=>v.ToString(),
                     v=> (Mood)Enum.Parse(typeof(Mood), v));
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Friends)
+                .WithMany();
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Habit>Habits { get; set; }
@@ -32,5 +35,6 @@ namespace PVP.Server.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
     }
 }

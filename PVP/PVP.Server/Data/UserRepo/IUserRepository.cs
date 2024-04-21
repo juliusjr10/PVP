@@ -13,6 +13,7 @@ namespace PVP.Server.Data.UserRepo
 
         User GetByPasswordResetToken(string passwordResetToken);
 
+        User GetByUsername(string username);
         bool IsUsername(string username);
     }
 }
