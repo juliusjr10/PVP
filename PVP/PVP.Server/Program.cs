@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Data;
 using PVP.Server.Data.UserRepo;
-using PVP.Server.Helpers;
+using PVP.Server.Helpers.Interfaces;
+using PVP.Server.Helpers.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.

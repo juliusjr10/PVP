@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace PVP.Server.Helpers
+namespace PVP.Server.Helpers.Services
 {
     public class JwtService
     {

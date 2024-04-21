@@ -1,7 +1,7 @@
 ﻿using PVP.Server.Dtos;
 using PVP.Server.Models;
 
-namespace PVP.Server.Helpers
+namespace PVP.Server.Helpers.Interfaces
 {
     public interface IPostService
     {

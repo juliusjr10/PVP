@@ -12,6 +12,7 @@ import EditProfile from './pages/EditProfile';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ChangePassword from './pages/ChangePassword';
 import AchievementsPage from './pages/AchievementsPage';
+import Friends from './pages/FriendsPage';
 
 export default function App() {
     const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
@@ -85,6 +86,7 @@ export default function App() {
                             <Route path="/editprofile" element={<EditProfile />} />
                             <Route path="/changepassword" element={<ChangePassword />} />
                             <Route path="/groups" element={<Groups />} />
+                            <Route path="/friends" element={<Friends />} />
                         <Route index element={<Navigate to="/habitspage" />} />
                         <Route path="*" element={<Navigate to="/habitspage" />} />
                     </>

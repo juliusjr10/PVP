@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PVP.Server.Helpers;
+using PVP.Server.Helpers.Interfaces;
+using PVP.Server.Helpers.Services;
 
 namespace PVP.Server.Controllers
 {

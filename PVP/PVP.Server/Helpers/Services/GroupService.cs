@@ -6,8 +6,9 @@ using PVP.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Models;
 using PVP.Server.Dtos;
+using PVP.Server.Helpers.Interfaces;
 
-namespace PVP.Server.Helpers
+namespace PVP.Server.Helpers.Services
 {
     public class GroupService : IGroupService
     {
@@ -100,7 +101,7 @@ namespace PVP.Server.Helpers
         public async Task<Group?> GetGroupById(int id)
         {
             var group = await _context.Groups
-                .Include (w => w.GroupMembers)
+                .Include(w => w.GroupMembers)
                 .FirstOrDefaultAsync(w => w.GroupID == id);
             if (group == null) { return null; }
             return group;

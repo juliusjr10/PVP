@@ -1,9 +1,10 @@
 ﻿using MimeKit;
 using MimeKit.Text;
+using PVP.Server.Helpers.Interfaces;
 using System.Net;
 using System.Net.Mail;
 
-namespace PVP.Server.Helpers
+namespace PVP.Server.Helpers.Services
 {
     public class EmailService : IEmailService
     {
@@ -27,7 +28,8 @@ namespace PVP.Server.Helpers
             {
                 smtp.Send(emailSend);
             }
-            catch (SmtpException ex) {
+            catch (SmtpException ex)
+            {
                 Console.WriteLine(ex.ToString());
             }
         }

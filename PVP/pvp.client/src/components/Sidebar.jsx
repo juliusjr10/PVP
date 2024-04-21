@@ -22,6 +22,7 @@ import { Link, useLocation } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 import Avatar from '@mui/material/Avatar';
 import AchIcon from '@mui/icons-material/EmojiEvents';
+import PeopleIcon from '@mui/icons-material/People';
 
 const drawerWidth = 400;
 
@@ -171,6 +172,7 @@ export default function PersistentDrawerLeft() {
                     {[
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
                         { text: 'Groups', link: '/groups', icon: <GroupsIcon /> },
+                        { text: 'Friends', link: '/friends', icon: <PeopleIcon /> },
                         { text: 'Achievements', link: '/achievementspage', icon: <AchIcon /> }].map((item) => (
                             <ListItem key={item.text} disablePadding >
                                 <ListItemButton

@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Data;
 using PVP.Server.Dtos;
-using PVP.Server.Helpers;
+using PVP.Server.Helpers.Interfaces;
+using PVP.Server.Helpers.Services;
 using PVP.Server.Models;
 
 namespace PVP.Server.Controllers

@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Data;
 using PVP.Server.Data.UserRepo;
+using PVP.Server.Helpers.Interfaces;
 using PVP.Server.Models;
 
-namespace PVP.Server.Helpers
+namespace PVP.Server.Helpers.Services
 {
     public class FriendsService : IFriendsService
     {
@@ -49,7 +50,7 @@ namespace PVP.Server.Helpers
                 return false;
             }
 
-            if(userId == friendId)
+            if (userId == friendId)
             {
                 return false;
             }
@@ -85,7 +86,14 @@ namespace PVP.Server.Helpers
 
             if (senderId == receiverId)
             {
-                // Return false if either the sender or receiver doesn't exist
+                // Return false if the sender and receiver are the same user
+                return false;
+            }
+
+            // Check if the sender and receiver are already friends
+            if (sender.Friends.Any(f => f.Id == receiverId) || receiver.Friends.Any(f => f.Id == senderId))
+            {
+                // Return false if the sender and receiver are already friends
                 return false;
             }
 

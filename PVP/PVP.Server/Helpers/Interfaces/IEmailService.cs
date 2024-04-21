@@ -1,4 +1,4 @@
-﻿namespace PVP.Server.Helpers
+﻿namespace PVP.Server.Helpers.Interfaces
 {
     public interface IEmailService
     {

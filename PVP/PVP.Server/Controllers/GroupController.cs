@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Ocsp;
 using PVP.Server.Data;
 using PVP.Server.Dtos;
-using PVP.Server.Helpers;
+using PVP.Server.Helpers.Interfaces;
+using PVP.Server.Helpers.Services;
 using PVP.Server.Models;
 
 namespace PVP.Server.Controllers

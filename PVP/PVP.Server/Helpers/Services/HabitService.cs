@@ -6,8 +6,9 @@ using PVP.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using PVP.Server.Models;
 using PVP.Server.Dtos;
+using PVP.Server.Helpers.Interfaces;
 
-namespace PVP.Server.Helpers
+namespace PVP.Server.Helpers.Services
 {
     public class HabitService : IHabitService
     {
