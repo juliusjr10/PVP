@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PVP.Server.Data.UserRepo;
 using PVP.Server.Helpers.Interfaces;
 using PVP.Server.Helpers.Services;
 
@@ -9,12 +10,14 @@ namespace PVP.Server.Controllers
     public class FriendsController : Controller
     {
         private readonly IFriendsService _friendsService;
+        private readonly IUserRepository _userRepo;
         private readonly JwtService _jwtService;
 
-        public FriendsController(IFriendsService friendsService, JwtService jwtService)
+        public FriendsController(IFriendsService friendsService, JwtService jwtService, IUserRepository userRepository)
         {
             _friendsService = friendsService;
             _jwtService = jwtService;
+            _userRepo = userRepository;
         }
 
         [HttpGet]
@@ -71,7 +74,7 @@ namespace PVP.Server.Controllers
         }
 
         [HttpPost("createfriendrequest")]
-        public async Task<IActionResult> CreateFriendRequest(int receiverId)
+        public async Task<IActionResult> CreateFriendRequest(string username)
         {
             var jwt = Request.Cookies["jwt"];
             if (jwt == null)
@@ -85,7 +88,12 @@ namespace PVP.Server.Controllers
                 return Unauthorized();
             }
 
-            int senderId = int.Parse(token.Issuer);
+            int senderId = int.Parse(token.Issuer);    
+            if(_userRepo.GetByUsername(username) == null)
+            {
+                return BadRequest(new { message = "There is no user with this username." });
+            }
+            int receiverId = _userRepo.GetByUsername(username).Id;
 
             bool success = await _friendsService.CreateFriendRequest(senderId, receiverId);
 
@@ -96,6 +104,8 @@ namespace PVP.Server.Controllers
 
             return Ok(new { message = "Friend request sent successfully." });
         }
+
+
 
         [HttpGet("requests")]
         public async Task<IActionResult> GetFriendRequests()

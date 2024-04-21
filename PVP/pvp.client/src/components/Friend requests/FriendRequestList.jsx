@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList } from 'react-window';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const getCookie = (name) => {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -145,18 +146,16 @@ export default function FriendsRequestList() {
 
     return (
         <Box
-            sx={{
-                position: 'fixed',
-                top: 0,
-                right: 0,
-                width: '20%',
-                height: '60%',
-                bgcolor: 'background.paper',
-                marginTop: '100px',
-                marginRight: '40px',
-                display: 'flex',
-            }}
+            sx={{ width: '20%', height: '80%', bgcolor: 'background.paper', marginTop: '100px', marginRight: '50px', display: 'flex', flexDirection: 'column', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}
         >
+            <Typography variant="h5" gutterBottom sx={{
+                backgroundColor: '#5a00ec',
+                color: 'white',
+                fontWeight: '700',
+                padding: '5px',
+            }}>
+                FRIENDS REQUESTS
+            </Typography>
             <FixedSizeList
                 height={500}
                 width="100%"
