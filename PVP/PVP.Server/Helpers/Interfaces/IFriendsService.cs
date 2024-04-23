@@ -13,5 +13,6 @@ namespace PVP.Server.Helpers.Interfaces
         Task<bool> AcceptFriendRequest(int requestId);
 
         Task<bool> DeclineFriendRequest(int requestId);
+        Task<bool> DeleteFriend(int userId, int friendId);
     }
 }

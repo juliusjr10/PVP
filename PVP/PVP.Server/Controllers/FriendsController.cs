@@ -183,5 +183,32 @@ namespace PVP.Server.Controllers
 
             return Ok(new { message = "Friend request declined successfully." });
         }
+
+        [HttpDelete("delete/{friendId}")]
+        public async Task<IActionResult> DeleteFriend(int friendId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int userId = int.Parse(token.Issuer);
+
+            bool success = await _friendsService.DeleteFriend(userId, friendId);
+
+            if (!success)
+            {
+                return BadRequest(new { message = "Failed to delete friend." });
+            }
+
+            return Ok(new { message = "Friend deleted successfully." });
+        }
     }
 }

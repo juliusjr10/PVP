@@ -18,8 +18,10 @@ namespace PVP.Server.Models
         public string? PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
 
+        public ICollection<User> Friends { get; } = [];
+
         public ICollection<HabitUser> HabitUser { get; } = [];
 
-        public ICollection<User> Friends { get; } = [];
+       
     }
 }

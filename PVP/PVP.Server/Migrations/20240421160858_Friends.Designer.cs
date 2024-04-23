@@ -11,8 +11,8 @@ using PVP.Server.Data;
 namespace PVP.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240421105700_FriendRequest")]
-    partial class FriendRequest
+    [Migration("20240421160858_Friends")]
+    partial class Friends
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

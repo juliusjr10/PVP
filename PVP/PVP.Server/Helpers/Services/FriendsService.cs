@@ -75,8 +75,13 @@ namespace PVP.Server.Helpers.Services
         public async Task<bool> CreateFriendRequest(int senderId, int receiverId)
         {
             // Check if the sender and receiver exist
-            var sender = await _context.Users.FindAsync(senderId);
-            var receiver = await _context.Users.FindAsync(receiverId);
+            var sender = await _context.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == senderId);
+
+            var receiver = await _context.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == receiverId);
 
             if (sender == null || receiver == null)
             {
@@ -91,7 +96,7 @@ namespace PVP.Server.Helpers.Services
             }
 
             // Check if the sender and receiver are already friends
-            if (sender.Friends.Any(f => f.Id == receiverId) || receiver.Friends.Any(f => f.Id == senderId))
+            if (sender.Friends.Any(friend => friend.Id == receiverId) || receiver.Friends.Any(friend => friend.Id == senderId))
             {
                 // Return false if the sender and receiver are already friends
                 return false;
@@ -196,6 +201,48 @@ namespace PVP.Server.Helpers.Services
 
             // Update friend request status to declined
             friendRequest.Status = FriendRequestStatus.Declined;
+
+            try
+            {
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                // Handle exception if saving changes fails
+                return false;
+            }
+        }
+        public async Task<bool> DeleteFriend(int userId, int friendId)
+        {
+            // Check if the user and friend exist
+            var user = await _context.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            var friend = await _context.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == friendId);
+
+            if (user == null || friend == null)
+            {
+                // Return false if either the user or friend doesn't exist
+                return false;
+            }
+
+            // Check if they are friends
+
+            var friendshipToRemove = user.Friends.First(x => x.Id == friendId);
+            if (friendshipToRemove == null)
+            {
+                // Return false if they are not friends
+                return false;
+            }
+
+            // Remove friend relationship
+            user.Friends.Remove(friendshipToRemove);
+            friend.Friends.Remove(user);
 
             try
             {

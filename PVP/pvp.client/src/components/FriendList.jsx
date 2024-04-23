@@ -12,6 +12,36 @@ import TextField from '@mui/material/TextField';
 import { FixedSizeList } from 'react-window';
 
 function renderRow(friend, index, style) {
+    const handleDeleteFriend = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this friend?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`https://localhost:7200/api/Friends/delete/${friend.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getCookie('jwt')}`,
+                },
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete friend');
+            }
+            console.log('Friend deleted successfully');
+
+            // Reload the page after successful deletion
+            window.location.reload();
+        } catch (error) {
+            console.error('Error deleting friend:', error);
+            // Handle error, such as displaying an error message to the user
+        }
+    };
+    const getCookie = (name) => {
+        const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return cookieValue ? cookieValue.pop() : '';
+    };
+
     return (
         <ListItem style={style} key={index} component="div" disablePadding>
             <ListItemButton>
@@ -19,6 +49,9 @@ function renderRow(friend, index, style) {
                     <Avatar alt={friend.username} src="../assets/react.svg" sx={{ width: 32, height: 32 }} />
                 </ListItemAvatar>
                 <ListItemText primary={friend.username} />
+                <Button variant="contained" color="secondary" onClick={handleDeleteFriend}>
+                    Delete
+                </Button>
             </ListItemButton>
         </ListItem>
     );
@@ -28,9 +61,10 @@ export default function FriendsList() {
     const [userFriends, setUserFriends] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        const fetchUserHabits = async () => {
+        const fetchUserFriends = async () => {
             try {
                 const response = await fetch('https://localhost:7200/api/Friends/', {
                     method: 'GET',
@@ -54,7 +88,7 @@ export default function FriendsList() {
             }
         };
 
-        fetchUserHabits();
+        fetchUserFriends();
     }, []);
 
     const getCookie = (name) => {
@@ -85,14 +119,20 @@ export default function FriendsList() {
                 credentials: 'include',
             });
             if (!response.ok) {
-                throw new Error('Failed to add friend');
+                if (response.status === 400) {
+                    const data = await response.json();
+                    setErrorMessage(data.message); // Set error message from response data
+                } else {
+                    throw new Error('Failed to add friend');
+                }
+            } else {
+                console.log('Friend added successfully');
+                setUsername('');
+                setIsModalOpen(false);
             }
-            console.log('Friend added successfully');
-            setUsername('');
-            setIsModalOpen(false);
         } catch (error) {
             console.error('Error adding friend:', error);
-            // Handle error, such as displaying an error message to the user
+            // Handle other errors, if any
         }
     };
 
@@ -152,9 +192,15 @@ export default function FriendsList() {
                         onChange={handleUsernameChange}
                         sx={{ mt: 2 }}
                     />
+                    {errorMessage && (
+                        <Typography variant="body2" color="error" gutterBottom>
+                            {errorMessage}
+                        </Typography>
+                    )}
                     <Button variant="contained" color="primary" onClick={handleAdd} sx={{ mt: 2 }}>
                         Add
                     </Button>
+
                 </Box>
             </Modal>
         </Box>

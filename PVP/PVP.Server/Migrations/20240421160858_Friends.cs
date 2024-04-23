@@ -72,6 +72,35 @@ namespace PVP.Server.Migrations
                 column: "GroupID");
 
             migrationBuilder.CreateTable(
+                name: "FriendRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SenderId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverId = table.Column<int>(type: "int", nullable: false),
+                    RequestDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FriendRequests_Users_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FriendRequests_Users_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "GroupMembers",
                 columns: table => new
                 {
@@ -119,7 +148,7 @@ namespace PVP.Server.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "UserFriends",
+                name: "UserUser",
                 columns: table => new
                 {
                     FriendsId = table.Column<int>(type: "int", nullable: false),
@@ -127,15 +156,15 @@ namespace PVP.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFriends", x => new { x.FriendsId, x.UserId });
+                    table.PrimaryKey("PK_UserUser", x => new { x.FriendsId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_UserFriends_Users_FriendsId",
+                        name: "FK_UserUser_Users_FriendsId",
                         column: x => x.FriendsId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserFriends_Users_UserId",
+                        name: "FK_UserUser_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -224,6 +253,16 @@ namespace PVP.Server.Migrations
                 column: "PostID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FriendRequests_ReceiverId",
+                table: "FriendRequests",
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendRequests_SenderId",
+                table: "FriendRequests",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GroupMembers_GroupID",
                 table: "GroupMembers",
                 column: "GroupID");
@@ -239,8 +278,8 @@ namespace PVP.Server.Migrations
                 column: "GroupID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFriends_UserId",
-                table: "UserFriends",
+                name: "IX_UserUser_UserId",
+                table: "UserUser",
                 column: "UserId");
         }
 
@@ -251,13 +290,16 @@ namespace PVP.Server.Migrations
                 name: "CommentLikes");
 
             migrationBuilder.DropTable(
+                name: "FriendRequests");
+
+            migrationBuilder.DropTable(
                 name: "GroupMembers");
 
             migrationBuilder.DropTable(
                 name: "Likes");
 
             migrationBuilder.DropTable(
-                name: "UserFriends");
+                name: "UserUser");
 
             migrationBuilder.DropTable(
                 name: "Comments");
