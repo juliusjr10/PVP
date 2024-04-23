@@ -16,7 +16,15 @@ function Copyright() {
 export default function Footer() {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{height: '100px', alignItems: 'center', }}>
+            <AppBar position="static" sx={{
+                height: '100px',
+                alignItems: 'center',
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                width: '100%',
+
+            }}>
                 <Copyright sx={{}} ></Copyright>
             </AppBar>
         </Box>

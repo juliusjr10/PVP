@@ -12,13 +12,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-//import MainPage from './MainPage';
 import AppAppBar from '../components/AppAppBar';
 import Footer from '../components/Footer';
-import '../landingpage.css';
-//import HabitsPage from './HabitsPage';
 import { useNavigate } from 'react-router-dom';
-
 
 const signInUpPages = [
     { label: 'Sign in', link: '/login' },
@@ -28,6 +24,7 @@ const signInUpPages = [
 function SignIn() {
     const [redirect, setRedirect] = useState(false);
     const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -65,6 +62,7 @@ function SignIn() {
             alert('Error: Bad request');
         }
     }
+
     if (redirect) {
         // Redirect to /habitspage after sign-in
         navigate('/habitspage', { replace: true });
@@ -74,76 +72,87 @@ function SignIn() {
 
     return (
         <Box>
-            <AppAppBar pages={signInUpPages}/>
-            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', }}>
-                <div className="circlebluelog"></div>
-                <div className="circleblue2log"></div>
-                <div className="circleblue3log"></div>
-                <div className="circleblue4log"></div>
-                <div className="circleblue5log"></div>
-            <Container component="main" maxWidth="xs" sx={{ pt: 10, height: '100vh' }}>
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/forgotpassword" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="*" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
+            <AppAppBar pages={signInUpPages} />
+            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden' }}>
+                <Box sx={{
+                    display: {
+                        xs: 'none',
+                        sm: 'none',
+                        lg: 'flex',
+                        md: 'flex',
+                        xl: 'flex'
+                    }
+                }}>
+                    <Box className="circlebluelog"></Box>
+                    <Box className="circleblue2log"></Box>
+                    <Box className="circleblue3log"></Box>
+                    <Box className="circleblue4log"></Box>
+                    <Box className="circleblue5log"></Box>
                 </Box>
+
+                <Container component="main" maxWidth="xs" sx={{ pt: 10, pb: 8 }}>
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="/forgotpassword" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                                <Grid item>
+                                    <Link href="*" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
                 </Container>
             </Container>
             <Footer />

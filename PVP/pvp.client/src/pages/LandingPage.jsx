@@ -41,17 +41,18 @@ export default function LandingPage() {
             {/*    position: 'relative',*/}
             {/*    overflow: 'hidden',*/}
             {/*}}>*/}
-                <div className="circleblue"></div>
-                <div className="circleblue2"></div>
-                <div className="circleblue3"></div>
-                <div className="circleblue4"></div>
-                <div className="hero-container">
+
+            <Box className="circleblue"></Box>
+            <Box className="circleblue2"></Box>
+            <Box className="circleblue3"></Box>
+            <Box className="circleblue4"></Box>
+            <Box className="hero-container">
                     <Hero sx={{
                         position: 'relative',
                         overflow: 'hidden',
                     }}>
                     </Hero>
-                </div>
+                </Box>
             {/*</Box>*/}
             {/*<Box sx={{*/}
             {/*    bgcolor: '#A8D0E6',*/}
@@ -59,17 +60,28 @@ export default function LandingPage() {
             {/*    position: 'relative',*/}
             {/*    overflow: 'hidden',*/}
             {/*}}>*/}
-                <div className="circlered"></div>
-                <div className="circlered2"></div>
-                <div className="circlered3"></div>
-                <div className="circlered4"></div>
-                <div id="aboutUsSection" className="hero-container">
+            <Box sx={{
+                display: {
+                    xs: 'none',
+                    sm: 'flex',
+                    md: 'flex',
+                    lg: 'flex',
+                    xl: 'flex'
+                }
+}}>
+                <Box className="circlered"></Box>
+                <Box className="circlered2"></Box>
+                <Box className="circlered3"></Box>
+                <Box className="circlered4"></Box>
+            </Box>
+
+            <Box id="aboutUsSection" className="hero-container">
                 <AboutUs sx={{
                         position: 'relative',
-                        overflow: 'hidden',
+                    overflow: 'hidden',
                     }}>
                 </AboutUs>
-                </div>
+                </Box>
            {/* </Box>*/}
             <Footer>
             </Footer>

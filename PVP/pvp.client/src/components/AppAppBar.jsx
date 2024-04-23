@@ -4,15 +4,10 @@ import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
 import Logo from "../assets/logo-white.svg";
-
 
 function AppAppBar({ pages }) {
     const [open, setOpen] = React.useState(false);
@@ -37,6 +32,9 @@ function AppAppBar({ pages }) {
         }
     };
 
+    // Filter out the "About" button from the pages array
+    const filteredPages = pages.filter(page => page.label !== 'About');
+
     return (
         <div>
             <AppBar
@@ -49,8 +47,7 @@ function AppAppBar({ pages }) {
                     mt: 0,
                 }}
             >
-                <Container disableGutters maxWidth={false}
-                >
+                <Container disableGutters maxWidth={false}>
                     <Toolbar
                         variant="regular"
                         sx={{
@@ -75,11 +72,11 @@ function AppAppBar({ pages }) {
                                 px: 0,
                             }}
                         >
-                            <Link to="/landingpage"> 
-                                <img src={Logo} alt="Logo" style={{ width: '180px' }} />
+                            <Link to="/landingpage" style={{ width: '100px' }} >
+                                <img src={Logo} alt="Logo" />
                             </Link>
-                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                                {pages.map((page, index) => (
+                            <Box sx={{ display: 'flex' }}>
+                                {filteredPages.map((page, index) => (
                                     <Link key={index} to={page.link} style={{ textDecoration: 'none' }}>
                                         <MenuItem
                                             sx={{ py: '6px', px: '12px' }}
@@ -100,50 +97,6 @@ function AppAppBar({ pages }) {
                                 alignItems: 'center',
                             }}
                         >
-                           
-                           
-                        </Box>
-                        <Box sx={{ display: { sm: '', md: 'none' } }}>
-                            <Button
-                                variant="text"
-                                color="primary"
-                                aria-label="menu"
-                                onClick={toggleDrawer(true)}
-                                sx={{ minWidth: '30px', p: '4px' }}
-                            >
-                                <MenuIcon />
-                            </Button>
-                            <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-                                <Box
-                                    sx={{
-                                        minWidth: '60dvw',
-                                        p: 2,
-                                        backgroundColor: 'background.paper',
-                                        flexGrow: 1,
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'end',
-                                            flexGrow: 1,
-                                        }}
-                                    >
-                                        
-                                    </Box>
-                                    <MenuItem onClick={() => scrollToSection('features')}>
-                                        About
-                                    </MenuItem>
-                                    <MenuItem onClick={() => scrollToSection('testimonials')}>
-                                        Sign in
-                                    </MenuItem>
-                                    <MenuItem onClick={() => scrollToSection('highlights')}>
-                                        Sign up
-                                    </MenuItem>
-                                    <Divider />
-                                </Box>
-                            </Drawer>
                         </Box>
                     </Toolbar>
                 </Container>

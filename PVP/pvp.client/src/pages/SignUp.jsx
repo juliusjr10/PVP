@@ -20,19 +20,15 @@ import AppAppBar from '../components/AppAppBar';
 import Footer from '../components/Footer';
 import '../landingpage.css';
 
-
-
 const signInUpPages = [
     { label: 'Sign in', link: '/login' },
     { label: 'Sign up', link: '/signup' },
 ];
 
-
-
 export default function SignUp() {
     const [redirect, setRedirect] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(null); // State to store selected date
-    const [error, setError] = useState(null); // State to hold error message
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [error, setError] = useState(null);
 
     const handleSignInClick = () => {
         setRedirect(true);
@@ -51,13 +47,13 @@ export default function SignUp() {
                     Username: data.get('username'),
                     Email: data.get('email'),
                     Password: data.get('password'),
-                    DateOfBirth: selectedDate // Include selected date in the request
+                    DateOfBirth: selectedDate
                 })
             });
 
             if (!response.ok) {
                 if (response.status === 400) {
-                    setError('Bad register data. Please check your input. Password must be atleast 6 characters long');
+                    setError('Bad register data. Please check your input. Password must be at least 6 characters long');
                 } else {
                     throw new Error('Failed to register');
                 }
@@ -66,130 +62,137 @@ export default function SignUp() {
             }
         } catch (error) {
             console.error('Error:', error);
-            // Handle error, e.g., show an error message to the user
         }
     };
 
     if (redirect) {
         return <SignIn />;
     }
+
     return (
         <Box>
             <AppAppBar pages={signInUpPages}></AppAppBar>
-            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', }}>
-                <div className="circlebluelog"></div>
-                <div className="circleblue2log"></div>
-                <div className="circleblue3log"></div>
-                <div className="circleblue4log"></div>
-                <div className="circleblue5log"></div>
-                <Container component="main" maxWidth="xs" sx={{ pt: 12, height: '100vh' }}>
-                <CssBaseline />
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        mt: 6,
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
-                    </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                        {error && (
-                            <Typography variant="body2" color="error" align="center" sx={{ mb: 2 }}>
-                                {error}
-                            </Typography>
-                        )}
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="given-name"
-                                    name="firstName"
-                                    required
-                                    fullWidth
-                                    id="firstName"
-                                    label="First Name"
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="family-name"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="username"
-                                    label="Username"
-                                    name="username"
-                                    autoComplete="username"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DatePicker
-                                        value={selectedDate}
-                                        onChange={(newValue) => setSelectedDate(newValue)} // Update selected date
-                                    />
-                                </LocalizationProvider>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Sign Up
-                        </Button>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item>
-                                <Link onClick={handleSignInClick} variant="body2">
-                                    Already have an account? Sign in
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
+            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', minHeight: '100vh' }}>
+                <Box sx={{
+                    display: {
+                        xs: 'none',
+                        sm: 'none',
+                        lg: 'flex',
+                        md: 'flex',
+                        xl: 'flex'
+                    }
+                }}>
+                    <Box className="circlebluelog"></Box>
+                    <Box className="circleblue2log"></Box>
+                    <Box className="circleblue3log"></Box>
+                    <Box className="circleblue4log"></Box>
+                    <Box className="circleblue5log"></Box>
                 </Box>
+
+                <Container component="main" maxWidth="xs" sx={{ pt: 12, pb: '150px' }}>
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            mt: 6,
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign up
+                        </Typography>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                            {error && (
+                                <Typography variant="body2" color="error" align="center" sx={{ mb: 2 }}>
+                                    {error}
+                                </Typography>
+                            )}
+                            <Grid container spacing={2} >
+                                <Grid item xs={6} sm={6}>
+                                    <TextField
+                                        autoComplete="given-name"
+                                        name="firstName"
+                                        required
+                                        fullWidth
+                                        id="firstName"
+                                        label="First Name"
+                                        autoFocus
+                                    />
+                                </Grid>
+                                <Grid item xs={6} sm={6}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="lastName"
+                                        label="Last Name"
+                                        name="lastName"
+                                        autoComplete="family-name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="username"
+                                        label="Username"
+                                        name="username"
+                                        autoComplete="username"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        name="email"
+                                        autoComplete="email"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="new-password"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DatePicker
+                                            value={selectedDate}
+                                            onChange={(newValue) => setSelectedDate(newValue)}
+                                        />
+                                    </LocalizationProvider>
+                                </Grid>
+
+                            </Grid>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+
+                            >
+                                Sign Up
+                            </Button>
+                            <Grid container justifyContent="flex-end">
+                                <Grid item>
+                                    <Link onClick={handleSignInClick} variant="body2">
+                                        Already have an account? Sign in
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
                 </Container>
             </Container>
             <Footer></Footer>
