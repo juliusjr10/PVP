@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Ocsp;
 using PVP.Server.Data;
 using PVP.Server.Data.UserRepo;
 using PVP.Server.Helpers.Interfaces;
@@ -117,8 +118,7 @@ namespace PVP.Server.Helpers.Services
             {
                 SenderId = senderId,
                 ReceiverId = receiverId,
-                RequestDateTime = DateTime.Now,
-                Status = FriendRequestStatus.Pending // You can set any default status here
+                RequestDateTime = DateTime.Now
             };
 
             try
@@ -140,7 +140,7 @@ namespace PVP.Server.Helpers.Services
             // Retrieve friend requests where the specified user is the receiver
             var friendRequests = await _context.FriendRequests
                 .Include(fr => fr.Sender) // Include sender details
-                .Where(fr => fr.ReceiverId == userId && fr.Status == FriendRequestStatus.Pending)
+                .Where(fr => fr.ReceiverId == userId)
                 .ToListAsync();
 
             return friendRequests;
@@ -151,7 +151,7 @@ namespace PVP.Server.Helpers.Services
             // Find the friend request by its ID
             var friendRequest = await _context.FriendRequests.FindAsync(requestId);
 
-            if (friendRequest == null || friendRequest.Status != FriendRequestStatus.Pending)
+            if (friendRequest == null)
             {
                 // Return false if the friend request doesn't exist or it's not pending
                 return false;
@@ -172,8 +172,7 @@ namespace PVP.Server.Helpers.Services
             // Add receiver to sender's friend list
             sender.Friends.Add(receiver);
 
-            // Update friend request status to accepted
-            friendRequest.Status = FriendRequestStatus.Accepted;
+           _context.FriendRequests.Remove(friendRequest);
 
             try
             {
@@ -193,14 +192,13 @@ namespace PVP.Server.Helpers.Services
             // Find the friend request by its ID
             var friendRequest = await _context.FriendRequests.FindAsync(requestId);
 
-            if (friendRequest == null || friendRequest.Status != FriendRequestStatus.Pending)
+            if (friendRequest == null)
             {
                 // Return false if the friend request doesn't exist or it's not pending
                 return false;
             }
 
-            // Update friend request status to declined
-            friendRequest.Status = FriendRequestStatus.Declined;
+            _context.FriendRequests.Remove(friendRequest);
 
             try
             {
@@ -243,6 +241,8 @@ namespace PVP.Server.Helpers.Services
             // Remove friend relationship
             user.Friends.Remove(friendshipToRemove);
             friend.Friends.Remove(user);
+
+
 
             try
             {

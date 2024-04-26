@@ -20,17 +20,5 @@ namespace PVP.Server.Models
         public User Receiver { get; set; }
 
         public DateTime RequestDateTime { get; set; }
-
-        // Status of the friend request (pending, accepted, declined, etc.)
-        public FriendRequestStatus Status { get; set; }
-    }
-
-    // Define possible status values for a friend request
-    public enum FriendRequestStatus
-    {
-        Pending,
-        Accepted,
-        Declined,
-        Blocked // Optionally add more statuses as needed
     }
 }
