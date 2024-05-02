@@ -4,10 +4,17 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const GroupInformation = ({ groupData }) => {
     const [posts, setPosts] = useState([]);
     const [newPostContent, setNewPostContent] = useState('');
+    const [openConfirmation, setOpenConfirmation] = useState(false);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -37,6 +44,34 @@ const GroupInformation = ({ groupData }) => {
 
         fetchPosts();
     }, [groupData.groupID]);
+
+    const leaveGroup = async () => {
+        try {
+            const response = await fetch(`https://localhost:7200/api/group/leavegroup/${groupData.groupID}`, {
+                method: 'POST',
+                credentials: 'include',
+            });
+            if (response.ok) {
+                // Handle success, maybe redirect or update UI
+                console.log('Left the group successfully');
+                window.location.reload();
+            } else {
+                // Handle failure
+                console.error('Failed to leave the group');
+            }
+        } catch (error) {
+            console.error('Error leaving the group:', error);
+        }
+    };
+
+    const handleLeaveConfirmation = () => {
+        setOpenConfirmation(true);
+    };
+
+    const handleCloseConfirmation = () => {
+        setOpenConfirmation(false);
+    };
+
 
     const handlePostSubmit = async () => {
         try {
@@ -89,6 +124,7 @@ const GroupInformation = ({ groupData }) => {
                     <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                         <Typography variant="body1"><strong>Description:</strong> {groupData.description}</Typography>
                         <Typography variant="body1"><strong>Creation Date:</strong> {new Date(groupData.creationDate).toLocaleDateString()}</Typography>
+                        <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px' }}>Leave Group</Button>
                     </Paper>
                 </Grid>
                 {/* Post feed */}
@@ -99,7 +135,7 @@ const GroupInformation = ({ groupData }) => {
                             value={newPostContent}
                             onChange={(e) => setNewPostContent(e.target.value)}
                             rows="4"
-                            cols="50"
+                            cols="40"
                             placeholder="Write your post here..."
                         />
                         <button onClick={handlePostSubmit}>Submit</button>
@@ -116,6 +152,25 @@ const GroupInformation = ({ groupData }) => {
                     </Paper>
                 </Grid>
             </Grid>
+            <Dialog
+                open={openConfirmation}
+                onClose={handleCloseConfirmation}
+            >
+                <DialogTitle>Leave Group</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to leave this group?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseConfirmation} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={leaveGroup} color="primary" autoFocus>
+                        Leave
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };

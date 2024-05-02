@@ -117,6 +117,19 @@ namespace PVP.Server.Helpers.Services
             return group.GroupMembers;
         }
 
+        public async Task<GroupMember?> LeaveGroup(int groupid, int userid)
+        {
+            try
+            {
+                var groupmember = _context.GroupMembers.FirstOrDefault(w => w.GroupID == groupid && w.UserID == userid);
+                if (groupmember == null) { return null; }
+                _context.GroupMembers.Remove(groupmember);
+                await _context.SaveChangesAsync();
+                return groupmember;
+            }
+            catch (Exception ex) { return null; }
+        }
+
         public async Task<Group?> UpdateGroup(UpdateGroupDTO dto, int userid)
         {
             if (dto == null)

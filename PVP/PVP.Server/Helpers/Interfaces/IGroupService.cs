@@ -12,5 +12,6 @@ namespace PVP.Server.Helpers.Interfaces
         Task<Group?> GetGroupById(int id);
         Task<ICollection<GroupMember>?> GetGroupMembers(GetGroupMembersDTO dto);
         Task<GroupMember?> AddGroupMember(AddGroupMemberDTO dto, int userid);
+        Task<GroupMember?> LeaveGroup(int groupid, int userid);
     }
 }

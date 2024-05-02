@@ -61,7 +61,7 @@ const GroupSidebar = ({ onSelectGroup }) => {
         };
 
         fetchUserGroups();
-    }, []);
+    }, [userGroups]);
 
     return (
         <Container>

@@ -254,6 +254,33 @@ namespace PVP.Server.Controllers
                     "Error checking user's membership in the group");
             }
         }
+        [HttpPost("leavegroup/{groupid}")]
+        public async Task<ActionResult<bool>> LeaveGroup(int groupid)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                if (jwt == null)
+                {
+                    return Unauthorized();
+                }
+                var token = _jwtService.Verify(jwt);
+                if (token == null)
+                {
+                    return Unauthorized();
+                }
+                int userID = int.Parse(token.Issuer);
+
+                await _groupService.LeaveGroup(groupid, userID);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error leaving group");
+            }
+        }
     }
 
 
