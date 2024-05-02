@@ -51,6 +51,15 @@ namespace PVP.Server.Helpers.Services
             }
             return habitList;
         }
+        public async Task<ICollection<Habit>> GetHabitByName(string name)
+        {
+            var habitList = _context.Habits.Where(hu => hu.Name == name).ToList();
+            if (habitList == null || habitList.Count == 0)
+            {
+                return new List<Habit>(); // Return an empty collection
+            }
+            return habitList;
+        }
         public async Task<CheckIn?> CheckIn(CheckInDTO dto, int userId)
         {
             var habitUser = await _context.HabitUser

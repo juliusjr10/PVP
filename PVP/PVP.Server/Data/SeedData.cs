@@ -94,14 +94,12 @@ namespace PVP.Server.Data
                 Name = "Food Habit"
             };
             var checkIns = new List<CheckIn>() { };
-            DateTime currentDate  = DateTime.ParseExact("2024 03 22 15:20", "yyyy MM dd HH:mm", null).Date;
+            DateTime currentDate  = DateTime.ParseExact("2024 04 22 15:20", "yyyy MM dd HH:mm", null).Date;
             Random random = new Random();
-            for (int i = 0; i < 25;i++)
+            for (int i = 0; i < 9;i++)
             {
                     // Incrementing the date by one day
                     currentDate = currentDate.AddDays(1);
-                if (i % 3 == 0)
-                {
                     // Creating a new check-in
                     var newCheckIn = new CheckIn()
                     {
@@ -112,32 +110,6 @@ namespace PVP.Server.Data
                         Note = ""
                     };
                     checkIns.Add(newCheckIn);
-                }
-                if (i % 1 == 0)
-                {
-                    var newCheckIn1 = new CheckIn()
-                    {
-                        Id = i + 100, // Assuming the IDs continue from where we left off
-                        HabitUserId = 2,
-                        Mood = (Mood)random.Next(0, 4), // Random mood between 1 and 5
-                        Date = currentDate,
-                        Note = ""
-                    };
-                    checkIns.Add(newCheckIn1);
-                }
-                if (i % 2 == 0)
-                {
-                    var newCheckIn2 = new CheckIn()
-                    {
-                        Id = i + 1000, // Assuming the IDs continue from where we left off
-                        HabitUserId = 3,
-                        Mood = (Mood)random.Next(0, 4), // Random mood between 1 and 5
-                        Date = currentDate,
-                        Note = ""
-
-                    };
-                    checkIns.Add(newCheckIn2);
-                }
             }
             var firstUserHabit = new HabitUser()
             {
@@ -145,22 +117,10 @@ namespace PVP.Server.Data
                 HabitId = 1,
                 UserId = 1,
             };
-            var secondUserHabit = new HabitUser()
-            {
-                Id = 2,
-                HabitId = 2,
-                UserId = 1
-            };
-            var thirdUserHabit = new HabitUser()
-            {
-                Id = 3,
-                HabitId = 3,
-                UserId = 1
-            };
             var users = new List<User>() { firstUser, secondUser, thirdUser };
             var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit };
             var groups = new List<Group>() { firstGroup, secondGroup };
-            var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
+            var userhabits = new List<HabitUser> { firstUserHabit };
 
             var posts = new List<Post>()
             {

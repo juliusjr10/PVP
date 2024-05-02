@@ -68,7 +68,7 @@ const AddHabitCard = ({ onClick, addUserHabit }) => {
     }, [userHabits]);
 
     useEffect(() => {
-        const filteredHabits = habits.filter(habit => !userHabits.some(userHabit => userHabit.id === habit.id));
+        const filteredHabits = habits.filter(habit => !userHabits.some(userHabit => userHabit.habitId === habit.id));
         setFilteredHabits(filteredHabits);
     }, [habits, userHabits]);
 
@@ -96,6 +96,30 @@ const AddHabitCard = ({ onClick, addUserHabit }) => {
             }
             const newHabit = await response.json();
             addUserHabit(newHabit); // Update the userHabits state with the new habit
+
+            // Fetch user habits from the database after adding the new habit
+            const userHabitsResponse = await fetch('https://localhost:7200/api/habits/getuserhabits', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+            if (!userHabitsResponse.ok) {
+                throw new Error('Failed to fetch user habits');
+            }
+            const newUserHabits = await userHabitsResponse.json();
+            if (newUserHabits && Array.isArray(newUserHabits.$values)) {
+                setUserHabits(newUserHabits.$values);
+            } else {
+                console.error('Invalid data format:', newUserHabits);
+            }
+
+            // Remove the selected habit from the filtered habits list
+            setFilteredHabits(prevFilteredHabits => prevFilteredHabits.filter(habit => habit.id !== selectedHabit));
+
+            // Log the added habit
+            console.log('Added habit:', newHabit);
         } catch (error) {
             console.error('Error adding habit:', error);
         } finally {
@@ -103,7 +127,6 @@ const AddHabitCard = ({ onClick, addUserHabit }) => {
             handleCloseDialog();
         }
     };
-
 
     return (
         <>

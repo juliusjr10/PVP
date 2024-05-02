@@ -10,5 +10,7 @@ namespace PVP.Server.Helpers.Interfaces
         Task<CheckIn> CheckIn(CheckInDTO dto, int userId);
         Task<ICollection<Habit>> GetAllHabits();
         Task<ICollection<CheckIn>> GetUserHabitCheckins(int userId, int habitId);
+
+        Task<ICollection<Habit>> GetHabitByName(string name);
     }
 }

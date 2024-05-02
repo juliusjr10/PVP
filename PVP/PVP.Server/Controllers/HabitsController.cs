@@ -70,6 +70,22 @@ namespace PVP.Server.Controllers
             return Ok(habits);
 
         }
+        [HttpGet("gethabitbyname")]
+        public async Task<IActionResult> GetHabitByName(string name)
+        {
+            // Call the GetHabitByName method from your service/repository layer
+            var habits = await _habitService.GetHabitByName(name);
+
+            // Check if habits are found
+            if (habits.Count > 0)
+            {
+                return Ok(habits); // Return 200 OK with the habits
+            }
+            else
+            {
+                return NotFound(); // Return 404 Not Found if no habits found
+            }
+        }
         [HttpPost("checkin")]
         public async Task<IActionResult> CheckIn(CheckInDTO dto)
         {
