@@ -3,12 +3,14 @@ import Grid from '@mui/material/Grid';
 import AddHabitCard from '../components/AddHabitCard';
 import SmokingCard from '../components/SmokingCard';
 import MeditateCard from '../components/MeditateCard';
+import AlcoholCard from '../components/AlcoholCard';
 import WaterCard from '../components/WaterCard';
 import FoodCard from '../components/FoodCard';
 import SmokingHabit from '../components/SmokingHabit';
 import FoodHabit from '../components/FoodHabit';
 import WaterHabit from '../components/WaterHabit';
 import MeditateHabit from '../components/MeditateHabit';
+import AlcoholHabit from '../components/AlcoholHabit';
 
 export default function HabitBar() {
     const [userHabits, setUserHabits] = useState([]);
@@ -17,6 +19,8 @@ export default function HabitBar() {
     const [showFoodHabit, setShowFoodHabit] = useState(false); // State to manage visibility of FoodHabit
     const [showWaterHabit, setShowWaterHabit] = useState(false); // State to manage visibility of WaterHabit
     const [showMeditateHabit, setShowMeditateHabit] = useState(false); // State to manage visibility of MeditateHabit
+    const [showAlcoholHabit, setShowAlcoholHabit] = useState(false); // State to manage visibility of SmokingHabit
+
 
     // Function to add user habit
     const addUserHabit = (newHabit) => {
@@ -56,6 +60,7 @@ export default function HabitBar() {
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowAlcoholHabit(false); // Close SmokingHabit
     };
 
     // Function to toggle visibility of FoodHabit
@@ -64,6 +69,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowAlcoholHabit(false); // Close SmokingHabit
     };
 
     // Function to toggle visibility of WaterHabit
@@ -72,6 +78,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowFoodHabit(false); // Close FoodHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowAlcoholHabit(false); // Close SmokingHabit
     };
 
     // Function to toggle visibility of MeditateHabit
@@ -80,6 +87,15 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
+        setShowAlcoholHabit(false); // Close SmokingHabit
+    };
+
+    const toggleAlcoholHabit = () => {
+        setShowAlcoholHabit(prev => !prev);
+        setShowFoodHabit(false); // Close FoodHabit
+        setShowWaterHabit(false); // Close WaterHabit
+        setShowMeditateHabit(false); // Close MeditateHabit
+        setShowSmokingHabit(false); // Close SmokingHabit
     };
 
 
@@ -120,6 +136,12 @@ export default function HabitBar() {
                                 <FoodCard onClick={toggleFoodHabit} />
                             </Grid>
                         );
+                    case 5: // Alcoohl
+                        return (
+                            <Grid item xs={1.5} key={index}>
+                                <AlcoholCard onClick={toggleAlcoholHabit} />
+                            </Grid>
+                        );
                     default:
                         return null;
                 }
@@ -155,6 +177,13 @@ export default function HabitBar() {
             {showFoodHabit && (
                 <Grid item xs={12}>
                     <FoodHabit />
+                </Grid>
+            )}
+
+            {/* Render FoodHabit if showFoodHabit is true */}
+            {showAlcoholHabit && (
+                <Grid item xs={12}>
+                    <AlcoholHabit />
                 </Grid>
             )}
         </Grid>

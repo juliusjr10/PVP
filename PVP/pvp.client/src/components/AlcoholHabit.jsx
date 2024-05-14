@@ -14,11 +14,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
+
 import ClearIcon from '@mui/icons-material/Clear';
 
-
-
-const SmokingHabitContainer = styled(Box)({
+const AlcoholHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
     right: 0,
@@ -34,7 +33,7 @@ const SmokingHabitContainer = styled(Box)({
 
 
 
-export default function SmokingHabit() {
+export default function AlcoholHabit() {
     const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
@@ -49,7 +48,7 @@ export default function SmokingHabit() {
     useEffect(() => {
         const fetchCheckIns = async () => {
             try {
-                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/4', {
+                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/5', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                 });
@@ -128,7 +127,7 @@ export default function SmokingHabit() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    HabitId: 4,
+                    HabitId: 5,
                     Mood: mood,
                     Date: formattedDate,
                     Note: note
@@ -197,13 +196,13 @@ export default function SmokingHabit() {
     }
 
     return (
-        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
+        <AlcoholHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
                 }}>
                     <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
-                        Healthy Food
+                        Stop Drinking
                     </Typography>
                 </Box>
                 <Box
@@ -284,7 +283,6 @@ export default function SmokingHabit() {
                     onDateClick={handleDateClick}
                 />
             </Box>
-        </SmokingHabitContainer>
+        </AlcoholHabitContainer>
     );
-
 }
