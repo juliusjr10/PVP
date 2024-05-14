@@ -10,6 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import MainFeaturedGroup from './MainFeaturedGroup';
 
 const GroupInformation = ({ groupData }) => {
     const [posts, setPosts] = useState([]);
@@ -115,20 +116,34 @@ const GroupInformation = ({ groupData }) => {
         }
     };
 
+    const mainFeaturedGroup = {
+        title: groupData.name,
+        description:
+            groupData.description,
+        image: 'https://source.unsplash.com/random?wallpapers',
+        imageText: 'IMAGE TEXTAS',
+    };
+
     return (
-        <Box marginTop={10}>
-            <Typography variant="h6">{groupData.name}</Typography>
+        <Box sx={{
+            position: 'relative',
+            top: -50,
+            witdh: '100%'
+        }}>
+            <MainFeaturedGroup post={mainFeaturedGroup} />
+            <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px', float: 'right', right: 250 }}>Leave Group</Button>
+            {/*<Typography variant="h6">{groupData.name}</Typography>*/}
             <Grid container spacing={3} marginTop={2}>
                 {/* Group description */}
-                <Grid item xs={6}>
-                    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
-                        <Typography variant="body1"><strong>Description:</strong> {groupData.description}</Typography>
-                        <Typography variant="body1"><strong>Creation Date:</strong> {new Date(groupData.creationDate).toLocaleDateString()}</Typography>
-                        <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px' }}>Leave Group</Button>
-                    </Paper>
-                </Grid>
+                {/*<Grid item xs={6}>*/}
+                {/*    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>*/}
+                {/*        <Typography variant="body1"><strong>Description:</strong> {groupData.description}</Typography>*/}
+                {/*        <Typography variant="body1"><strong>Creation Date:</strong> {new Date(groupData.creationDate).toLocaleDateString()}</Typography>*/}
+                {/*        <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px' }}>Leave Group</Button>*/}
+                {/*    </Paper>*/}
+                {/*</Grid>*/}
                 {/* Post feed */}
-                <Grid item xs={6}>
+                <Grid item xs={6} style={{ marginLeft: '300px' }}>
                     <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                         {/* Render post creation form */}
                         <textarea

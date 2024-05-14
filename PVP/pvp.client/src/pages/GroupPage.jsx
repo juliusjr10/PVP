@@ -17,7 +17,7 @@ export default function GroupPage() {
     }, []);*/
 
     return (
-        <Box component="main" sx={{ display: 'flex' }}>
+        <Box component="main">
             <CssBaseline />
             <Sidebar />
             <GroupSidebar onSelectGroup={setSelectedGroupId} /> {/* Pass the setter function as a prop */}

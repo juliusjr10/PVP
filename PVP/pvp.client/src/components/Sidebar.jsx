@@ -143,6 +143,21 @@ export default function PersistentDrawerLeft() {
                     <Typography variant="h6" noWrap component="div">
                         HabitBook
                     </Typography>
+                    <Typography variant="h6" noWrap component="div" sx={{ pl: 20, pr:20, color: '#F3E7FF', maxWidth: '1200px' }}>
+                        <marquee direction="left" style={{ width: '100%', scrollamount:'10' }} >
+                            <span>
+                                Jessica Ennis-Hill: The only one who can tell you "you cannot win" is you and you do not have to listen.
+                            </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>
+                                Gertrude Ederle    : I just knew if it could be done, it had to be done, and I did it.
+                            </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>
+                                Jackie Joyner-Kersee: Age is no barrier. It is a limitation you put on your mind.
+                            </span>
+                        </marquee>
+                    </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                         <Avatar alt={username} src="../assets/react.svg" />
                         <Link to='/editprofile'><Typography sx={{ ml: 1 , color:'white'}}>{username}</Typography></Link>
