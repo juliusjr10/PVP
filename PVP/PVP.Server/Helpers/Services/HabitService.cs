@@ -99,6 +99,41 @@ namespace PVP.Server.Helpers.Services
 
             return checkIns;
         }
+        public async Task<bool> DeleteHabit(int userId, int habitId)
+        {
+            // Find the HabitUser record to delete
+            var habitUserToDelete = await _context.HabitUser
+                .Include(hu => hu.CheckIns) // Include associated check-ins
+                .FirstOrDefaultAsync(hu => hu.UserId == userId && hu.HabitId == habitId);
+
+            // If HabitUser record doesn't exist, return false indicating failure
+            if (habitUserToDelete == null)
+                return false;
+
+            try
+            {
+                // Remove all associated check-ins
+                _context.CheckIns.RemoveRange(habitUserToDelete.CheckIns);
+
+                // Remove the HabitUser record from the context
+                _context.HabitUser.Remove(habitUserToDelete);
+
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+
+                // Return true indicating successful deletion
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions if needed
+                Console.WriteLine($"Error deleting habit: {ex.Message}");
+                return false; // Return false indicating failure
+            }
+        }
+
+
+
 
     }
 }

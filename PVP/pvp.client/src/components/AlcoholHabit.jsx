@@ -48,7 +48,7 @@ export default function AlcoholHabit() {
     useEffect(() => {
         const fetchCheckIns = async () => {
             try {
-                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/5', {
+                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/5npm -v', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                 });

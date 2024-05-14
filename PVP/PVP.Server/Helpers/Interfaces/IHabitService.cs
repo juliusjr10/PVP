@@ -12,5 +12,6 @@ namespace PVP.Server.Helpers.Interfaces
         Task<ICollection<CheckIn>> GetUserHabitCheckins(int userId, int habitId);
 
         Task<ICollection<Habit>> GetHabitByName(string name);
+        Task<bool> DeleteHabit(int userId, int habitId);
     }
 }

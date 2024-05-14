@@ -19,8 +19,12 @@ export default function HabitBar() {
     const [showFoodHabit, setShowFoodHabit] = useState(false); // State to manage visibility of FoodHabit
     const [showWaterHabit, setShowWaterHabit] = useState(false); // State to manage visibility of WaterHabit
     const [showMeditateHabit, setShowMeditateHabit] = useState(false); // State to manage visibility of MeditateHabit
-    const [showAlcoholHabit, setShowAlcoholHabit] = useState(false); // State to manage visibility of SmokingHabit
+    const [showAlcoholHabit, setShowAlcoholHabit] = useState(false); // State to manage visibility of AlcoholHabit
 
+    useEffect(() => {
+        // Close the sidebar whenever userHabits change
+        setOpen(false);
+    }, [userHabits]);
 
     // Function to add user habit
     const addUserHabit = (newHabit) => {
@@ -53,6 +57,43 @@ export default function HabitBar() {
 
         fetchUserHabits();
     }, []);
+    // Function to delete user habit
+    const deleteHabit = async (habitId) => {
+        try {
+            const response = await fetch(`https://localhost:7200/api/habits/deletehabit/${habitId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete habit');
+            }
+            // Remove the deleted habit from userHabits state
+            setUserHabits(prevHabits => prevHabits.filter(habit => habit.habitId !== habitId));
+            // Close the sidebar immediately after deleting the habit if it's the Smoking habit
+            if (habitId === 1) { // Smoking habitId
+                setShowSmokingHabit(false);
+            }
+            if (habitId === 2) { // Smoking habitId
+                setShowMeditateHabit(false);
+            }
+            if (habitId === 3) { // Smoking habitId
+                setShowWaterHabit(false);
+            }
+            if (habitId === 4) { // Smoking habitId
+                setShowFoodHabit(false);
+            }
+            if (habitId === 5) { // Smoking habitId
+                setShowAlcoholHabit(false);
+            }
+            setOpen(false); // Always close the sidebar
+        } catch (error) {
+            console.error('Error deleting habit:', error);
+        }
+    };
+
 
     // Function to toggle visibility of SmokingHabit
     const toggleSmokingHabit = () => {
@@ -98,7 +139,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
     };
 
-
+    const allHabitsPresent = userHabits.length === 5;
     return (
         <Grid
             container
@@ -115,31 +156,50 @@ export default function HabitBar() {
                     case 1: // Smoking
                         return (
                             <Grid item xs={1.5} key={index}>
-                                <SmokingCard onClick={toggleSmokingHabit} />
+                                <SmokingCard
+                                    onClick={toggleSmokingHabit}
+                                    onDelete={deleteHabit} // Add this line
+                                    habitId={habit.habitId} // Add this line
+                                />
                             </Grid>
                         );
                     case 2: // Meditation
                         return (
                             <Grid item xs={1.5} key={index}>
-                                <MeditateCard onClick={toggleMeditateHabit} />
+                                <MeditateCard
+                                    onClick={toggleMeditateHabit}
+                                    onDelete={deleteHabit} // Add this line
+                                    habitId={habit.habitId}
+                                />
                             </Grid>
                         );
                     case 3: // Water
                         return (
                             <Grid item xs={1.5} key={index}>
-                                <WaterCard onClick={toggleWaterHabit} />
+                                <WaterCard
+                                    onClick={toggleWaterHabit}
+                                    onDelete={deleteHabit} // Add this line
+                                    habitId={habit.habitId}                                />
                             </Grid>
                         );
                     case 4: // Food
                         return (
                             <Grid item xs={1.5} key={index}>
-                                <FoodCard onClick={toggleFoodHabit} />
+                                <FoodCard
+                                    onClick={toggleFoodHabit}
+                                    onDelete={deleteHabit} // Add this line
+                                    habitId={habit.habitId}
+                                />
                             </Grid>
                         );
-                    case 5: // Alcoohl
+                    case 5: // Alcohol
                         return (
                             <Grid item xs={1.5} key={index}>
-                                <AlcoholCard onClick={toggleAlcoholHabit} />
+                                <AlcoholCard
+                                    onClick={toggleAlcoholHabit}
+                                    onDelete={deleteHabit} // Add this line
+                                    habitId={habit.habitId}
+                                />
                             </Grid>
                         );
                     default:
@@ -147,10 +207,12 @@ export default function HabitBar() {
                 }
             })}
 
-            {/* Render AddHabitCard */}
-            <Grid item xs={1.5}>
-                <AddHabitCard addUserHabit={addUserHabit} />
-            </Grid>
+
+            {!allHabitsPresent && (
+                <Grid item xs={1.5}>
+                    <AddHabitCard addUserHabit={addUserHabit} />
+                </Grid>
+            )}
 
             {/* Render SmokingHabit if showSmokingHabit is true */}
             {showSmokingHabit && (

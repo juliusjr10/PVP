@@ -159,5 +159,35 @@ namespace PVP.Server.Controllers
             return Ok(checkIns);
 
         }
+        [HttpDelete("deletehabit/{habitId}")]
+        public async Task<IActionResult> DeleteHabit(int habitId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int userId = int.Parse(token.Issuer); // Extract userId from the token
+
+            // Call the DeleteHabit method from your service layer
+            var success = await _habitService.DeleteHabit(userId, habitId);
+
+            if (success)
+            {
+                return Ok(new { message = "Habit deleted successfully." });
+            }
+            else
+            {
+                return NotFound(new { message = "Habit not found or deletion failed." });
+            }
+        }
+
     }
 }
