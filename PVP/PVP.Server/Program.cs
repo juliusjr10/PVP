@@ -25,6 +25,7 @@ builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IFriendsService, FriendsService>();
+builder.Services.AddScoped<IChallengeService, ChallengeService>();
 // Configure JSON serialization options
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

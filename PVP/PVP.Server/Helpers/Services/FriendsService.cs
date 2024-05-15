@@ -12,7 +12,7 @@ namespace PVP.Server.Helpers.Services
     {
         private readonly AppDbContext _context;
 
-        public FriendsService(AppDbContext context, IUserRepository userRepository)
+        public FriendsService(AppDbContext context)
         {
             _context = context;
         }

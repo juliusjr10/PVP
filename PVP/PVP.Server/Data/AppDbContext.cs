@@ -36,5 +36,8 @@ namespace PVP.Server.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
         public DbSet<FriendRequest> FriendRequests { get; set; }
+        public DbSet<Challenge> Challenges { get; set; }
+        public DbSet<ChallengeRequest> ChallengeRequests { get; set; }
+
     }
 }
