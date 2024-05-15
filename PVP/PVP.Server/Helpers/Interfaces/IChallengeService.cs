@@ -11,5 +11,6 @@ namespace PVP.Server.Helpers.Interfaces
 
         Task<ICollection<ChallengeRequest>> GetChallengeRequests(int userId);
         Task<bool> DeclineChallengeRequest(int requestId);
+        Task<ICollection<Challenge>> GetChallengesForUser(int userId);
     }
 }

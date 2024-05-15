@@ -23,6 +23,18 @@ namespace PVP.Server.Data
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Friends)
                 .WithMany();
+            modelBuilder
+                .Entity<Challenge>()
+                .Property(e => e.ChallengeStatus)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ChallengeStatus)Enum.Parse(typeof (ChallengeStatus), v));
+            modelBuilder
+                .Entity<ChallengeRequest>()
+                .Property(e => e.ChallengeType)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ChallengeType)Enum.Parse(typeof(ChallengeType), v));
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Habit>Habits { get; set; }

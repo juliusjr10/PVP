@@ -193,5 +193,23 @@ namespace PVP.Server.Helpers.Services
 
             return challengeRequests;
         }
+
+        public async Task<ICollection<Challenge>> GetChallengesForUser(int userId)
+        {
+            try
+            {
+                // Retrieve challenges where the specified user is either the first or second challenger
+                var challenges = await _context.Challenges
+                    .Where(c => c.FirstChallengerId == userId || c.SecondChallengerId == userId)
+                    .ToListAsync();
+
+                return challenges;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving challenges for user: {ex.Message}");
+                return null; // Return null or handle the error appropriately
+            }
+        }
     }
 }

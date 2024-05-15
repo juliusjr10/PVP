@@ -23,6 +23,7 @@ export default function FriendPopup({ friend, onClose }) {
     const [isLoading, setIsLoading] = useState(false);
     const [showChallengeSection, setShowChallengeSection] = useState(false); // State to control visibility of challenge section
     const [selectedHabitName, setSelectedHabitName] = useState(null); // State to store selected habit name
+    const [selectedHabitId, setSelectedHabitId] = useState(null); // State to store selected habit name
 
     useEffect(() => {
         const fetchUserHabits = async () => {
@@ -43,9 +44,10 @@ export default function FriendPopup({ friend, onClose }) {
         }
     }, [friend]);
 
-    const handleChallengeClick = (habitName) => {
+    const handleChallengeClick = (habitName, habitId) => {
         setShowChallengeSection(true);
         setSelectedHabitName(habitName); // Set the selected habit name
+        setSelectedHabitId(habitId)
     };
 
     return (
@@ -84,8 +86,9 @@ export default function FriendPopup({ friend, onClose }) {
                                 <Grid container spacing={1}> {/* Reduced spacing between Grid items */}
                                     {userHabits.map((habit, index) => {
                                         const habitName = habitIdToNameMap[habit.habitId]; // Get habit name from habitId
+                                        const habitId = habit.habitId;
                                         return (
-                                            <Grid item xs={4} key={index} onClick={() => handleChallengeClick(habitName)}>
+                                            <Grid item xs={4} key={index} onClick={() => handleChallengeClick(habitName, habitId)}>
                                                 {habitName === 'Smoking' && <SmokingCard />}
                                                 {habitName === 'Meditation' && <MeditateCard />}
                                                 {habitName === 'Water' && <WaterCard />}
@@ -105,6 +108,7 @@ export default function FriendPopup({ friend, onClose }) {
                     <ChallengeFriendSection
                         friend={friend}
                         selectedHabitName={selectedHabitName} // Pass selected habit name
+                        selectedHabitId={selectedHabitId}
                         onClose={() => setShowChallengeSection(false)}
                     />
                 )}

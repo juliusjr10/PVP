@@ -188,6 +188,7 @@ export default function PersistentDrawerLeft() {
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
                         { text: 'Groups', link: '/groups', icon: <GroupsIcon /> },
                         { text: 'Friends', link: '/friends', icon: <PeopleIcon /> },
+                        { text: 'Challenges', link: '/challenges', icon: <PeopleIcon /> },
                         { text: 'Achievements', link: '/achievementspage', icon: <AchIcon /> }].map((item) => (
                             <ListItem key={item.text} disablePadding >
                                 <ListItemButton

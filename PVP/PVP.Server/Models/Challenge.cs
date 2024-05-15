@@ -29,9 +29,9 @@ namespace PVP.Server.Models
 
     public enum ChallengeStatus
     {
+        InProgress,
         FirstChallengerWon,
         SecondChallengerWon,
-        InProgress,
         Tie,
 
     }

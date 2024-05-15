@@ -129,6 +129,36 @@ namespace PVP.Server.Data
                 HabitId = 1,
                 UserId = 2,
             };
+            var thirdUserHabit = new HabitUser()
+            {
+                Id = 3,
+                HabitId = 1,
+                UserId = 3,
+            };
+
+            var firstUserChallenge = new Challenge()
+            {
+                Id = 1,
+                Name = "Challenge1",
+                ChallengeType = 0,
+                ChallengeStatus = 0,
+                ChallengeStart = currentDate,
+                FirstChallengerId = 1,
+                SecondChallengerId = 2,
+                HabitId = 1
+            };
+
+            var secondUserChallenge = new Challenge()
+            {
+                Id = 2,
+                Name = "Challenge2",
+                ChallengeType = 0,
+                ChallengeStatus = 0,
+                ChallengeStart = currentDate,
+                FirstChallengerId = 1,
+                SecondChallengerId = 3,
+                HabitId = 1
+            };
 
             var firstFriendRequest = new FriendRequest()
             {
@@ -140,8 +170,9 @@ namespace PVP.Server.Data
             var users = new List<User>() { firstUser, secondUser, thirdUser };
             var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit, fifthHabit };
             var groups = new List<Group>() { firstGroup, secondGroup };
-            var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit };
+            var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
             var friendrequests = new List<FriendRequest> { firstFriendRequest };
+            var challenges = new List<Challenge> { firstUserChallenge, secondUserChallenge };
 
             var posts = new List<Post>()
             {
@@ -158,6 +189,7 @@ namespace PVP.Server.Data
             await context.AddRangeAsync(checkIns);
             await context.AddRangeAsync(posts);
             await context.AddRangeAsync(friendrequests);
+            await context.AddRangeAsync(challenges);
             await context.SaveChangesAsync();
         }
     }

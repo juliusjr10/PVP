@@ -46,8 +46,8 @@ namespace PVP.Server.Controllers
             }
         }
 
-        [HttpPost("request/{habitId}")]
-        public async Task<IActionResult> CreateChallengeRequest(int habitId, CreateChallengeRequestDTO dto)
+        [HttpPost("createrequest/{selectedHabitId}")]
+        public async Task<IActionResult> CreateChallengeRequest(int selectedHabitId, CreateChallengeRequestDTO dto)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace PVP.Server.Controllers
                 }
                 int senderId = int.Parse(token.Issuer);
                 // Call the service to create the challenge request
-                var result = await _challengeService.CreateChallengeRequest(senderId, habitId, dto);
+                var result = await _challengeService.CreateChallengeRequest(senderId, selectedHabitId, dto);
 
                 if (result)
                 {
@@ -167,6 +167,31 @@ namespace PVP.Server.Controllers
             }
 
             return Ok(friendRequests);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Challenges()
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int userID = int.Parse(token.Issuer);
+            var friends = await _challengeService.GetChallengesForUser(userID);
+
+            if (friends == null)
+            {
+                return BadRequest(new { message = "Failed to retrieve user friends." });
+            }
+
+            return Ok(friends);
         }
     }
 }
