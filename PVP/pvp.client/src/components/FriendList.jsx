@@ -1,81 +1,75 @@
-import Avatar from '@mui/material/Avatar';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import MenuItem from '@mui/material/MenuItem';
+import FriendPopup from './FriendPopup'; // Import the FriendPopup component
+
+function renderRow(friend, index, style, onClickFriend, onDeleteFriend) {
+    const handleClickFriend = () => {
+        onClickFriend(friend);
+    };
+
+    const handleDelete = () => {
+        onDeleteFriend(friend);
+    };
+
+    return (
+        <ListItem style={style} key={index} component="div" disablePadding>
+            <ListItemButton onClick={handleClickFriend}>
+                <ListItemAvatar>
+                    <Avatar alt={friend.username} src="../assets/react.svg" sx={{ width: 32, height: 32 }} />
+                </ListItemAvatar>
+                <ListItemText primary={friend.username} />
+                <Button variant="contained" color="secondary" onClick={handleDelete}>
+                    Delete
+                </Button>
+            </ListItemButton>
+        </ListItem>
+    );
+}
 
 export default function FriendsList() {
     const [userFriends, setUserFriends] = useState([]);
+    const [selectedFriend, setSelectedFriend] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [isChallengeModalOpen, setIsChallengeModalOpen] = useState(false);
-    const [challengedFriend, setChallengedFriend] = useState(null);
-    const [challengeType, setChallengeType] = useState('');
-    const [habit, setHabit] = useState('');
-    const [habits, setHabits] = useState([]);
 
     useEffect(() => {
-        // Fetch habits when component mounts
-        fetchHabits();
+        const fetchUserFriends = async () => {
+            try {
+                const response = await fetch('https://localhost:7200/api/Friends/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${getCookie('jwt')}`,
+                    },
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user habits');
+                }
+                const data = await response.json();
+                if (data && Array.isArray(data.$values)) {
+                    setUserFriends(data.$values);
+                } else {
+                    console.error('Invalid data format:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching user habits:', error);
+            }
+        };
+
         fetchUserFriends();
     }, []);
-
-    const fetchHabits = async () => {
-        try {
-            const response = await fetch('https://localhost:7200/api/Habits/getallhabits', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getCookie('jwt')}`,
-                },
-                credentials: 'include',
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch habits');
-            }
-            const data = await response.json();
-            if (data && Array.isArray(data.$values)) {
-                setHabits(data.$values);
-            } else {
-                console.error('Invalid habits data format:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching habits:', error);
-        }
-    };
-
-    const fetchUserFriends = async () => {
-        try {
-            const response = await fetch('https://localhost:7200/api/Friends/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getCookie('jwt')}`,
-                },
-                credentials: 'include',
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch user habits');
-            }
-            const data = await response.json();
-            if (data && Array.isArray(data.$values)) {
-                setUserFriends(data.$values);
-            } else {
-                console.error('Invalid data format:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching user habits:', error);
-        }
-    };
 
     const getCookie = (name) => {
         const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -92,42 +86,6 @@ export default function FriendsList() {
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
-    };
-
-    const handleChallengeFriend = (friend) => {
-        setChallengedFriend(friend);
-        setIsChallengeModalOpen(true);
-    };
-
-    const handleCloseChallengeModal = () => {
-        setIsChallengeModalOpen(false);
-    };
-
-    const handleChallengeTypeChange = (event) => {
-        setChallengeType(event.target.value);
-    };
-
-    const handleHabitChange = (event) => {
-        setHabit(event.target.value);
-    };
-
-    const challengeTypes = [
-        { value: '3day', label: '3 days challenge' },
-        { value: 'week', label: '1 week challenge' },
-        { value: 'month', label: '1 month challenge' },
-        // Add more types as needed
-    ];
-
-    const handleChallengeSubmit = async () => {
-        try {
-            // Send challenge request to the backend
-            // You can use fetch or any other method to send the challenge request
-            console.log(`Challenging ${challengedFriend.username} with ${challengeType} for habit ${habit}`);
-            setIsChallengeModalOpen(false);
-        } catch (error) {
-            console.error('Error sending challenge:', error);
-            // Handle error, if any
-        }
     };
 
     const handleAdd = async () => {
@@ -158,49 +116,30 @@ export default function FriendsList() {
         }
     };
 
-    const renderRow = (friend, index, style, handleChallengeFriend) => {
-        const handleDeleteFriend = async () => {
-            const confirmDelete = window.confirm("Are you sure you want to delete this friend?");
-            if (!confirmDelete) return;
+    const handleDeleteFriend = async (friend) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this friend?");
+        if (!confirmDelete) return;
 
-            try {
-                const response = await fetch(`https://localhost:7200/api/Friends/delete/${friend.id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${getCookie('jwt')}`,
-                    },
-                    credentials: 'include',
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to delete friend');
-                }
-                console.log('Friend deleted successfully');
-
-                // Reload the page after successful deletion
-                window.location.reload();
-            } catch (error) {
-                console.error('Error deleting friend:', error);
-                // Handle error, such as displaying an error message to the user
+        try {
+            const response = await fetch(`https://localhost:7200/api/Friends/delete/${friend.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getCookie('jwt')}`,
+                },
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete friend');
             }
-        };
+            console.log('Friend deleted successfully');
 
-        return (
-            <ListItem style={style} key={index} component="div" disablePadding>
-                <ListItemButton>
-                    <ListItemAvatar>
-                        <Avatar alt={friend.username} src="../assets/react.svg" sx={{ width: 32, height: 32 }} />
-                    </ListItemAvatar>
-                    <ListItemText primary={friend.username} />
-                    <Button variant="contained" color="secondary" onClick={handleDeleteFriend} sx={{ marginRight: '10px' }}>
-                        Delete
-                    </Button>
-                    <Button variant="contained" color="primary" onClick={() => handleChallengeFriend(friend)} sx={{ mr: 1 }}>
-                        Challenge
-                    </Button>
-                </ListItemButton>
-            </ListItem>
-        );
+            // Update userFriends state after successful deletion
+            setUserFriends(userFriends.filter(f => f.id !== friend.id));
+        } catch (error) {
+            console.error('Error deleting friend:', error);
+            // Handle error, such as displaying an error message to the user
+        }
     };
 
     console.log('Friends:', userFriends); // Log the friends array
@@ -224,11 +163,12 @@ export default function FriendsList() {
                 itemCount={userFriends.length}
                 overscanCount={5}
             >
-                {({ index, style }) => renderRow(userFriends[index], index, style, handleChallengeFriend)}
+                {({ index, style }) => renderRow(userFriends[index], index, style, setSelectedFriend, handleDeleteFriend)}
             </FixedSizeList>
             <Button variant="contained" color="primary" onClick={handleAddFriend} sx={{ margin: '10px' }}>
                 Add Friend
             </Button>
+            <FriendPopup friend={selectedFriend} onClose={() => setSelectedFriend(null)} />
             <Modal
                 open={isModalOpen}
                 onClose={handleCloseModal}
@@ -266,65 +206,6 @@ export default function FriendsList() {
                     )}
                     <Button variant="contained" color="primary" onClick={handleAdd} sx={{ mt: 2 }}>
                         Add
-                    </Button>
-
-                </Box>
-            </Modal>
-            <Modal
-                open={isChallengeModalOpen}
-                onClose={handleCloseChallengeModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                        p: 4,
-                    }}
-                >
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Challenge Friend
-                    </Typography>
-                    <TextField
-                        id="challengeType"
-                        select
-                        label="Challenge Type"
-                        value={challengeType}
-                        onChange={handleChallengeTypeChange}
-                        variant="outlined"
-                        fullWidth
-                        sx={{ mt: 2 }}
-                    >
-                        {challengeTypes.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <TextField
-                        id="habit"
-                        select
-                        label="Habit"
-                        value={habit}
-                        onChange={handleHabitChange}
-                        variant="outlined"
-                        fullWidth
-                        sx={{ mt: 2 }}
-                    >
-                        {habits.map((habit) => (
-                            <MenuItem key={habit.id} value={habit.name}>
-                                {habit.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <Button variant="contained" color="primary" onClick={handleChallengeSubmit} sx={{ mt: 2 }}>
-                        Challenge
                     </Button>
                 </Box>
             </Modal>

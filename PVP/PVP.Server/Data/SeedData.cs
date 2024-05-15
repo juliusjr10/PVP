@@ -123,10 +123,25 @@ namespace PVP.Server.Data
                 HabitId = 1,
                 UserId = 1,
             };
+            var secondUserHabit = new HabitUser()
+            {
+                Id = 2,
+                HabitId = 1,
+                UserId = 2,
+            };
+
+            var firstFriendRequest = new FriendRequest()
+            {
+                Id = 1,
+                SenderId = 2,
+                ReceiverId = 1,
+                RequestDateTime = currentDate
+            };
             var users = new List<User>() { firstUser, secondUser, thirdUser };
             var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit, fifthHabit };
             var groups = new List<Group>() { firstGroup, secondGroup };
-            var userhabits = new List<HabitUser> { firstUserHabit };
+            var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit };
+            var friendrequests = new List<FriendRequest> { firstFriendRequest };
 
             var posts = new List<Post>()
             {
@@ -142,6 +157,7 @@ namespace PVP.Server.Data
             await context.AddRangeAsync(userhabits);
             await context.AddRangeAsync(checkIns);
             await context.AddRangeAsync(posts);
+            await context.AddRangeAsync(friendrequests);
             await context.SaveChangesAsync();
         }
     }

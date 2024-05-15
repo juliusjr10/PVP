@@ -70,6 +70,21 @@ namespace PVP.Server.Controllers
             return Ok(habits);
 
         }
+
+        [HttpGet("getuserhabits/{id}")]
+        public async Task<IActionResult> GetAllUserHabits(int id)
+        {
+
+            var habits = await _habitService.GetAllUserHabits(id);
+
+            if (habits == null)
+            {
+                return BadRequest(new { message = "Failed to retrieve user habits." });
+            }
+
+            return Ok(habits);
+
+        }
         [HttpGet("gethabitbyname")]
         public async Task<IActionResult> GetHabitByName(string name)
         {
