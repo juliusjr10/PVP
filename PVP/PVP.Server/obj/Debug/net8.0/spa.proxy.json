@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:5173",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\juliu\\Desktop\\PVP\\PVP\\PVP\\PVP.Server\\..\\pvp.client",
+"WorkingDirectory": "C:\\PVP\\PVP\\PVP.Server\\..\\pvp.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }
