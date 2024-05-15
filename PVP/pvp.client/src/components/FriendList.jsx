@@ -21,17 +21,21 @@ function renderRow(friend, index, style, onClickFriend, onDeleteFriend) {
         onDeleteFriend(friend);
     };
 
+
     return (
         <ListItem style={style} key={index} component="div" disablePadding>
-            <ListItemButton onClick={handleClickFriend}>
+            <ListItem>
                 <ListItemAvatar>
                     <Avatar alt={friend.username} src="../assets/react.svg" sx={{ width: 32, height: 32 }} />
                 </ListItemAvatar>
                 <ListItemText primary={friend.username} />
+                <Button variant="contained" color="primary" onClick={handleClickFriend} sx={{marginRight : "5px"} }>
+                    Challenge
+                </Button >
                 <Button variant="contained" color="secondary" onClick={handleDelete}>
                     Delete
                 </Button>
-            </ListItemButton>
+            </ListItem>
         </ListItem>
     );
 }

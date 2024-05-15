@@ -164,7 +164,7 @@ namespace PVP.Server.Controllers
             }
 
             int userID = int.Parse(token.Issuer);
-            var checkIns = await _habitService.GetUserHabitCheckins(userID,habitID);
+            var checkIns = await _habitService.GetUserHabitCheckins(userID, habitID);
 
             if (checkIns == null)
             {
@@ -201,6 +201,21 @@ namespace PVP.Server.Controllers
             else
             {
                 return NotFound(new { message = "Habit not found or deletion failed." });
+            }
+        }
+
+        [HttpGet("gethabitbyid/{habitId}")]
+        public async Task<IActionResult> GetHabitById(int habitId)
+        {
+            var habit = await _habitService.GetHabitById(habitId);
+
+            if (habit != null)
+            {
+                return Ok(habit); // Return 200 OK with the habit
+            }
+            else
+            {
+                return NotFound(); // Return 404 Not Found if the habit is not found
             }
         }
 

@@ -214,5 +214,24 @@ namespace PVP.Server.Helpers.Services
                 return null; // Return null or handle the error appropriately
             }
         }
+
+        public async Task<Challenge?> GetChallengeById(int challengeId)
+        {
+            try
+            {
+                // Retrieve the challenge by its ID
+                var challenge = await _context.Challenges
+                    .Include(c => c.FirstChallenger) // Include first challenger details
+                    .Include(c => c.SecondChallenger) // Include second challenger details
+                    .FirstOrDefaultAsync(c => c.Id == challengeId);
+
+                return challenge;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving challenge by ID: {ex.Message}");
+                return null; // Return null or handle the error appropriately
+            }
+        }
     }
 }

@@ -132,8 +132,8 @@ namespace PVP.Server.Data
             var thirdUserHabit = new HabitUser()
             {
                 Id = 3,
-                HabitId = 1,
-                UserId = 3,
+                HabitId = 2,
+                UserId = 2,
             };
 
             var firstUserChallenge = new Challenge()

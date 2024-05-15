@@ -31,7 +31,7 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
             const requestBody = {
                 receiverId: friend.id,
                 name: challengeName,
-                challengeType: challengeType || 0 // Use selected challengeType if available, otherwise fallback to 0
+                challengeType: parseInt(challengeType, 10) || 0 // Convert to number, fallback to 0 if NaN
             };
 
             const response = await fetch(`https://localhost:7200/api/Challenge/createrequest/${selectedHabitId}`, {
@@ -45,12 +45,19 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
             });
 
             if (!response.ok) {
+                if (response.status === 400) {
+                    const errorMessage = await response.text(); // Get the error message from the response body
+                    throw new Error(errorMessage);
+                }
                 throw new Error('Failed to request a challenge');
             }
 
-            setShowMessage(true); // Show message on successful challenge request
+            alert('Challenge sent successfuly!');
+            onClose(); // Close the popup window
         } catch (error) {
-            console.error('Error adding friend:', error);
+            console.error('Error sending challenge:', error);
+            // Show error message
+            alert('Error: ' + error.message);
             // Handle other errors, if any
         }
     };
@@ -86,9 +93,9 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
                 <MenuItem value="" disabled>
                     Select Challenge Type
                 </MenuItem>
-                <MenuItem value="Day">Day</MenuItem>
-                <MenuItem value="Week">Week</MenuItem>
-                <MenuItem value="Month">Month</MenuItem>
+                <MenuItem value="2">Three Day</MenuItem>
+                <MenuItem value="0">Week</MenuItem>
+                <MenuItem value="1">Month</MenuItem>
                 {/* Add more challenge types as needed */}
             </Select>
             <Button variant="contained" color="primary" onClick={handleChallengeSend} sx={{ marginTop: '10px' }}>

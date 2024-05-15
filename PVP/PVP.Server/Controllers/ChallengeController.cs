@@ -193,5 +193,26 @@ namespace PVP.Server.Controllers
 
             return Ok(friends);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetChallengeById(int id)
+        {
+            try
+            {
+                // Call the service to retrieve the challenge by its ID
+                var challenge = await _challengeService.GetChallengeById(id);
+
+                if (challenge == null)
+                {
+                    return NotFound(new { message = "Challenge not found" });
+                }
+
+                return Ok(challenge);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle any exceptions here
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

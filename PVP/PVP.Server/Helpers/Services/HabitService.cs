@@ -131,7 +131,20 @@ namespace PVP.Server.Helpers.Services
                 return false; // Return false indicating failure
             }
         }
-
+        public async Task<Habit?> GetHabitById(int habitId)
+        {
+            try
+            {
+                var habit = await _context.Habits.FindAsync(habitId);
+                return habit; // Return the habit if found
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions if needed
+                Console.WriteLine($"Error fetching habit by ID: {ex.Message}");
+                return null; // Return null if an error occurs
+            }
+        }
 
 
 

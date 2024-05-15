@@ -13,5 +13,6 @@ namespace PVP.Server.Helpers.Interfaces
 
         Task<ICollection<Habit>> GetHabitByName(string name);
         Task<bool> DeleteHabit(int userId, int habitId);
+        Task<Habit?> GetHabitById(int habitId);
     }
 }
