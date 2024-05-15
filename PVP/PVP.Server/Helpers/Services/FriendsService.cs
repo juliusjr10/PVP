@@ -230,8 +230,7 @@ namespace PVP.Server.Helpers.Services
             }
 
             // Check if they are friends
-
-            var friendshipToRemove = user.Friends.First(x => x.Id == friendId);
+            var friendshipToRemove = user.Friends.FirstOrDefault(x => x.Id == friendId);
             if (friendshipToRemove == null)
             {
                 // Return false if they are not friends
@@ -242,7 +241,13 @@ namespace PVP.Server.Helpers.Services
             user.Friends.Remove(friendshipToRemove);
             friend.Friends.Remove(user);
 
+            // Remove associated challenges
+            var challengesToRemove = await _context.Challenges
+                .Where(c => (c.FirstChallengerId == userId && c.SecondChallengerId == friendId) ||
+                            (c.FirstChallengerId == friendId && c.SecondChallengerId == userId))
+                .ToListAsync();
 
+            _context.Challenges.RemoveRange(challengesToRemove);
 
             try
             {

@@ -69,6 +69,7 @@ function ChallengesList() {
                             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                                 {challenge.name}
                             </Typography>
+
                             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                                 Start Date: {new Date(challenge.challengeStart).toLocaleString()}
                             </Typography>

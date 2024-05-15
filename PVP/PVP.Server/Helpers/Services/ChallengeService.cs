@@ -59,6 +59,7 @@ namespace PVP.Server.Helpers.Services
                 var sender = await _context.Users.FindAsync(senderId);
                 var receiver = await _context.Users.FindAsync(dto.ReceiverId);
 
+
                 if (sender == null || receiver == null)
                 {
                     Console.WriteLine("Error creating challenge request: Sender or receiver does not exist.");
@@ -74,8 +75,10 @@ namespace PVP.Server.Helpers.Services
                 // Check if both users have a habit
                 var senderHasHabit = _context.HabitUser.Any(hu => hu.UserId == senderId && hu.HabitId == habitId);
                 var receiverHasHabit = _context.HabitUser.Any(hu => hu.UserId == dto.ReceiverId && hu.HabitId == habitId);
-                var receiverHasRequest = _context.ChallengeRequests.Any(hu => hu.SenderId == dto.ReceiverId && hu.HabitId == habitId && hu.ReceiverId == senderId);
-                var senderHasRequest = _context.ChallengeRequests.Any(hu => hu.SenderId == senderId && hu.HabitId == habitId && hu.ReceiverId == dto.ReceiverId);
+                var receiverHasRequest = _context.ChallengeRequests.Any(hu => hu.SenderId == dto.ReceiverId && hu.HabitId == habitId && hu.ReceiverId == senderId && hu.ChallengeType == dto.ChallengeType);
+                var senderHasRequest = _context.ChallengeRequests.Any(hu => hu.SenderId == senderId && hu.HabitId == habitId && hu.ReceiverId == dto.ReceiverId && hu.ChallengeType == dto.ChallengeType);
+                var receiverHasChallenge = _context.Challenges.Any(hu => hu.FirstChallengerId == dto.ReceiverId && hu.HabitId == habitId && hu.SecondChallengerId == senderId && hu.ChallengeType == dto.ChallengeType);
+                var senderHasChallenge = _context.Challenges.Any(hu => hu.FirstChallengerId == senderId && hu.HabitId == habitId && hu.SecondChallengerId == dto.ReceiverId && hu.ChallengeType == dto.ChallengeType);
 
                 if (!senderHasHabit || !receiverHasHabit)
                 {
@@ -83,7 +86,7 @@ namespace PVP.Server.Helpers.Services
                     return false;
                 }
 
-                if (receiverHasRequest || senderHasRequest)
+                if (receiverHasRequest || senderHasRequest || receiverHasChallenge || senderHasChallenge)
                 {
                     Console.WriteLine("Error creating challenge request: sender or receiver already has request");
                     return false;
@@ -112,7 +115,6 @@ namespace PVP.Server.Helpers.Services
                 Console.WriteLine($"Error creating challenge request: {ex.Message}");
                 return false; // Failed to create challenge request
             }
-
         }
         public async Task<bool> AcceptChallenge(int challengeRequestId)
         {

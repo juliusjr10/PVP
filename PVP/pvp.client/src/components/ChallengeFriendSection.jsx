@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, onClose }) => {
     const [challengeName, setChallengeName] = useState('');
     const [challengeType, setChallengeType] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
 
     const handleChallengeNameChange = (event) => {
         setChallengeName(event.target.value);
@@ -30,10 +31,8 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
             const requestBody = {
                 receiverId: friend.id,
                 name: challengeName,
-                challengeType: 0 // Assuming 0 is a default value for challengeType
+                challengeType: challengeType || 0 // Use selected challengeType if available, otherwise fallback to 0
             };
-
-            console.log('Request Body:', requestBody); // Log the request body
 
             const response = await fetch(`https://localhost:7200/api/Challenge/createrequest/${selectedHabitId}`, {
                 method: 'POST',
@@ -44,14 +43,23 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
                 credentials: 'include',
                 body: JSON.stringify(requestBody), // Convert the body to JSON string
             });
+
             if (!response.ok) {
                 throw new Error('Failed to request a challenge');
             }
+
+            setShowMessage(true); // Show message on successful challenge request
         } catch (error) {
             console.error('Error adding friend:', error);
             // Handle other errors, if any
         }
     };
+
+    const handleCloseAndShowMessage = () => {
+        onClose();
+        setShowMessage(false); // Hide the message when closing the popup
+    };
+
     return (
         <Box>
             <Typography variant="h6" gutterBottom>
@@ -86,9 +94,14 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
             <Button variant="contained" color="primary" onClick={handleChallengeSend} sx={{ marginTop: '10px' }}>
                 Send Challenge
             </Button>
-            <Button variant="contained" onClick={onClose} style={{ marginLeft: '10px', marginTop: '10px' }}>
+            <Button variant="contained" onClick={handleCloseAndShowMessage} style={{ marginLeft: '10px', marginTop: '10px' }}>
                 Cancel
             </Button>
+            {showMessage && (
+                <Typography variant="body1" style={{ marginTop: '10px', color: 'green' }}>
+                    Challenge sent successfully!
+                </Typography>
+            )}
         </Box>
     );
 };
