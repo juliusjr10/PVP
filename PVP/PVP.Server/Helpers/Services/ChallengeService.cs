@@ -146,6 +146,7 @@ namespace PVP.Server.Helpers.Services
                 };
 
                 _context.Challenges.Add(newChallenge);
+                _context.ChallengeRequests.Remove(challengeRequest);
                 await _context.SaveChangesAsync();
 
                 return true; // Successfully accepted challenge

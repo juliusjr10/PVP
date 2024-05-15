@@ -148,16 +148,15 @@ namespace PVP.Server.Data
                 HabitId = 1
             };
 
-            var secondUserChallenge = new Challenge()
+            var firstChallengeRequest = new ChallengeRequest()
             {
                 Id = 2,
                 Name = "Challenge2",
+                SenderId = 3,
+                ReceiverId = 1,
+                HabitId = 1,
                 ChallengeType = 0,
-                ChallengeStatus = 0,
-                ChallengeStart = currentDate,
-                FirstChallengerId = 1,
-                SecondChallengerId = 3,
-                HabitId = 1
+                RequestDateTime = currentDate,
             };
 
             var firstFriendRequest = new FriendRequest()
@@ -172,7 +171,8 @@ namespace PVP.Server.Data
             var groups = new List<Group>() { firstGroup, secondGroup };
             var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
             var friendrequests = new List<FriendRequest> { firstFriendRequest };
-            var challenges = new List<Challenge> { firstUserChallenge, secondUserChallenge };
+            var challenges = new List<Challenge> { firstUserChallenge};
+            var challengeRequests = new List<ChallengeRequest> { firstChallengeRequest };
 
             var posts = new List<Post>()
             {
@@ -190,6 +190,7 @@ namespace PVP.Server.Data
             await context.AddRangeAsync(posts);
             await context.AddRangeAsync(friendrequests);
             await context.AddRangeAsync(challenges);
+            await context.AddRangeAsync(challengeRequests);
             await context.SaveChangesAsync();
         }
     }

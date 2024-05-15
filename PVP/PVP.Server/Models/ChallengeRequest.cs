@@ -33,7 +33,7 @@ namespace PVP.Server.Models
     {
         Week,
         Month,
-        Day,
+        ThreeDay,
 
     }
 }
