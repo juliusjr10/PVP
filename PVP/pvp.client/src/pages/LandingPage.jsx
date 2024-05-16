@@ -42,17 +42,13 @@ export default function LandingPage() {
             {/*    overflow: 'hidden',*/}
             {/*}}>*/}
 
-            <Box className="circleblue"></Box>
-            <Box className="circleblue2"></Box>
-            <Box className="circleblue3"></Box>
-            <Box className="circleblue4"></Box>
             <Box className="hero-container">
                     <Hero sx={{
                         position: 'relative',
                         overflow: 'hidden',
                     }}>
                     </Hero>
-                </Box>
+            </Box>
             {/*</Box>*/}
             {/*<Box sx={{*/}
             {/*    bgcolor: '#A8D0E6',*/}
@@ -68,20 +64,24 @@ export default function LandingPage() {
                     lg: 'flex',
                     xl: 'flex'
                 }
-}}>
+            }}>
+                <Box className="circleblue"></Box>
+                <Box className="circleblue2"></Box>
+                <Box className="circleblue3"></Box>
+                <Box className="circleblue4"></Box>
                 <Box className="circlered"></Box>
                 <Box className="circlered2"></Box>
                 <Box className="circlered3"></Box>
                 <Box className="circlered4"></Box>
+                <Box id="aboutUsSection" className="hero-container">
+                    <AboutUs sx={{
+                        position: 'relative',
+                        overflow: 'hidden',
+                    }}>
+                    </AboutUs>
+                </Box>
             </Box>
 
-            <Box id="aboutUsSection" className="hero-container">
-                <AboutUs sx={{
-                        position: 'relative',
-                    overflow: 'hidden',
-                    }}>
-                </AboutUs>
-                </Box>
            {/* </Box>*/}
             <Footer>
             </Footer>

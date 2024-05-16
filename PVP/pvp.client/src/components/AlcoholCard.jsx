@@ -24,7 +24,7 @@ export default function ActionAreaCard({ onClick, onDelete, habitId }) {
                         <LuWineOff style={{ fontSize: '6rem', color: '#5a00ec' }} />
                     </div>
                     <Typography gutterBottom variant="h5" component="div" style={{ marginTop: '20px' }}>
-                        Alcohol
+                        No Alcohol
                     </Typography>
                 </CardContent>
             </CardActionArea>

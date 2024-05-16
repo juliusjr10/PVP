@@ -35,6 +35,7 @@ export default function Hero() {
                 <Box
                     sx={{
                         mt: { xs: 20, sm: 10 },
+                        mb: { xs: 30, sm: 10 },
                         alignSelf: 'center',
                         height: { xs: 300, sm: 400 },
                         width: '80%',

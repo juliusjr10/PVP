@@ -11,6 +11,8 @@ import FoodHabit from '../components/FoodHabit';
 import WaterHabit from '../components/WaterHabit';
 import MeditateHabit from '../components/MeditateHabit';
 import AlcoholHabit from '../components/AlcoholHabit';
+import Box from '@mui/material/Box';
+
 
 export default function HabitBar() {
     const [userHabits, setUserHabits] = useState([]);
@@ -57,6 +59,7 @@ export default function HabitBar() {
 
         fetchUserHabits();
     }, []);
+
     // Function to delete user habit
     const deleteHabit = async (habitId) => {
         try {
@@ -76,16 +79,16 @@ export default function HabitBar() {
             if (habitId === 1) { // Smoking habitId
                 setShowSmokingHabit(false);
             }
-            if (habitId === 2) { // Smoking habitId
+            if (habitId === 2) { // Meditation habitId
                 setShowMeditateHabit(false);
             }
-            if (habitId === 3) { // Smoking habitId
+            if (habitId === 3) { // Water habitId
                 setShowWaterHabit(false);
             }
-            if (habitId === 4) { // Smoking habitId
+            if (habitId === 4) { // Food habitId
                 setShowFoodHabit(false);
             }
-            if (habitId === 5) { // Smoking habitId
+            if (habitId === 5) { // Alcohol habitId
                 setShowAlcoholHabit(false);
             }
             setOpen(false); // Always close the sidebar
@@ -94,14 +97,13 @@ export default function HabitBar() {
         }
     };
 
-
     // Function to toggle visibility of SmokingHabit
     const toggleSmokingHabit = () => {
         setShowSmokingHabit(prev => !prev);
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
-        setShowAlcoholHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
     // Function to toggle visibility of FoodHabit
@@ -110,7 +112,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
-        setShowAlcoholHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
     // Function to toggle visibility of WaterHabit
@@ -119,7 +121,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowFoodHabit(false); // Close FoodHabit
         setShowMeditateHabit(false); // Close MeditateHabit
-        setShowAlcoholHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
     // Function to toggle visibility of MeditateHabit
@@ -128,7 +130,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
-        setShowAlcoholHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
     const toggleAlcoholHabit = () => {
@@ -140,114 +142,118 @@ export default function HabitBar() {
     };
 
     const allHabitsPresent = userHabits.length === 5;
+
     return (
-        <Grid
-            container
-            spacing={0.6}
-            mt={8}
-            ml={open ? 20 : 0} // Adjust marginLeft when sidebar is open
-            sx={{
-                transition: 'margin-left 0.3s ease',
-            }}
-        >
-            {/* Render existing habit cards */}
-            {userHabits.map((habit, index) => {
-                switch (habit.habitId) {
-                    case 1: // Smoking
-                        return (
-                            <Grid item xs={1.5} key={index}>
-                                <SmokingCard
-                                    onClick={toggleSmokingHabit}
-                                    onDelete={deleteHabit} // Add this line
-                                    habitId={habit.habitId} // Add this line
-                                />
-                            </Grid>
-                        );
-                    case 2: // Meditation
-                        return (
-                            <Grid item xs={1.5} key={index}>
-                                <MeditateCard
-                                    onClick={toggleMeditateHabit}
-                                    onDelete={deleteHabit} // Add this line
-                                    habitId={habit.habitId}
-                                />
-                            </Grid>
-                        );
-                    case 3: // Water
-                        return (
-                            <Grid item xs={1.5} key={index}>
-                                <WaterCard
-                                    onClick={toggleWaterHabit}
-                                    onDelete={deleteHabit} // Add this line
-                                    habitId={habit.habitId}                                />
-                            </Grid>
-                        );
-                    case 4: // Food
-                        return (
-                            <Grid item xs={1.5} key={index}>
-                                <FoodCard
-                                    onClick={toggleFoodHabit}
-                                    onDelete={deleteHabit} // Add this line
-                                    habitId={habit.habitId}
-                                />
-                            </Grid>
-                        );
-                    case 5: // Alcohol
-                        return (
-                            <Grid item xs={1.5} key={index}>
-                                <AlcoholCard
-                                    onClick={toggleAlcoholHabit}
-                                    onDelete={deleteHabit} // Add this line
-                                    habitId={habit.habitId}
-                                />
-                            </Grid>
-                        );
-                    default:
-                        return null;
-                }
-            })}
+        <Box sx={{width: "50%"} }>
+            <Grid
+                container
+                spacing={2}
+                mt={8}
+                ml={open ? 20 : 0} // Adjust marginLeft when sidebar is open
+                sx={{
+                    transition: 'margin-left 0.3s ease',
+                }}
+            >
+                {/* Render existing habit cards */}
+                {userHabits.map((habit, index) => {
+                    switch (habit.habitId) {
+                        case 1: // Smoking
+                            return (
+                                <Grid item xs={3} key={index}>
+                                    <SmokingCard
+                                        onClick={toggleSmokingHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId} // Add this line
+                                    />
+                                </Grid>
+                            );
+                        case 2: // Meditation
+                            return (
+                                <Grid item xs={3} key={index}>
+                                    <MeditateCard
+                                        onClick={toggleMeditateHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Grid>
+                            );
+                        case 3: // Water
+                            return (
+                                <Grid item xs={3} key={index}>
+                                    <WaterCard
+                                        onClick={toggleWaterHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Grid>
+                            );
+                        case 4: // Food
+                            return (
+                                <Grid item xs={3} key={index}>
+                                    <FoodCard
+                                        onClick={toggleFoodHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Grid>
+                            );
+                        case 5: // Alcohol
+                            return (
+                                <Grid item xs={3} key={index}>
+                                    <AlcoholCard
+                                        onClick={toggleAlcoholHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Grid>
+                            );
+                        default:
+                            return null;
+                    }
+                })}
 
+                {!allHabitsPresent && (
+                    <Grid item xs={3}>
+                        <AddHabitCard addUserHabit={addUserHabit} />
+                    </Grid>
+                )}
 
-            {!allHabitsPresent && (
-                <Grid item xs={1.5}>
-                    <AddHabitCard addUserHabit={addUserHabit} />
-                </Grid>
-            )}
+                {/* Render SmokingHabit if showSmokingHabit is true */}
+                {showSmokingHabit && (
+                    <Grid item xs={12}>
+                        <SmokingHabit />
+                    </Grid>
+                )}
 
-            {/* Render SmokingHabit if showSmokingHabit is true */}
-            {showSmokingHabit && (
-                <Grid item xs={12}>
-                    <SmokingHabit />
-                </Grid>
-            )}
+                {/* Render MeditateHabit if showMeditateHabit is true */}
+                {showMeditateHabit && (
+                    <Grid item xs={12}>
+                        <MeditateHabit />
+                    </Grid>
+                )}
 
-            {/* Render MeditateHabit if showMeditateHabit is true */}
-            {showMeditateHabit && (
-                <Grid item xs={12}>
-                    <MeditateHabit />
-                </Grid>
-            )}
+                {/* Render WaterHabit if showWaterHabit is true */}
+                {showWaterHabit && (
+                    <Grid item xs={12}>
+                        <WaterHabit />
+                    </Grid>
+                )}
 
-            {/* Render WaterHabit if showWaterHabit is true */}
-            {showWaterHabit && (
-                <Grid item xs={12}>
-                    <WaterHabit />
-                </Grid>
-            )}
+                {/* Render FoodHabit if showFoodHabit is true */}
+                {showFoodHabit && (
+                    <Grid item xs={12}>
+                        <FoodHabit />
+                    </Grid>
+                )}
 
-            {/* Render FoodHabit if showFoodHabit is true */}
-            {showFoodHabit && (
-                <Grid item xs={12}>
-                    <FoodHabit />
-                </Grid>
-            )}
+                {/* Render AlcoholHabit if showAlcoholHabit is true */}
+                {showAlcoholHabit && (
+                    <Grid item xs={12}>
+                        <AlcoholHabit />
+                    </Grid>
 
-            {/* Render FoodHabit if showFoodHabit is true */}
-            {showAlcoholHabit && (
-                <Grid item xs={12}>
-                    <AlcoholHabit />
-                </Grid>
-            )}
-        </Grid>
+                )}
+            </Grid>
+        </Box>
     );
 }

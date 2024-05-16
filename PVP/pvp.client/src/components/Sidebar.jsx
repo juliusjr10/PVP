@@ -23,6 +23,7 @@ import StarIcon from '@mui/icons-material/Star';
 import Avatar from '@mui/material/Avatar';
 import AchIcon from '@mui/icons-material/EmojiEvents';
 import PeopleIcon from '@mui/icons-material/People';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
 const drawerWidth = 400;
 
@@ -156,6 +157,42 @@ export default function PersistentDrawerLeft() {
                             <span>
                                 Jackie Joyner-Kersee: Age is no barrier. It is a limitation you put on your mind.
                             </span>
+                            <span>
+                                Ray Lewis: No matter the circumstances that you may be going through, just push through it.
+                            </span>
+                            <span>
+                                Becky Sauerbrunn: The past does not matter. Take today.
+                            </span>
+                            <span>
+                                Shannon Miller: There is always going to be a reason why you cannot do something; your job is to constantly look for the reasons why you can achieve your dreams.
+                            </span>
+                            <span>
+                                Dwayne "The Rock" Johnson: If something stands between you and your success, move it. Never be denied.
+                            </span>
+                            <span>
+                                Matt Biondi: Persistence can change failure into extraordinary achievement.
+                            </span>
+                            <span>
+                                Frederick Douglass: If there is no struggle, there is no progress.
+                            </span>
+                            <span>
+                                Nido Qubein: Change brings opportunity.
+                            </span>
+                            <span>
+                                Deborah Day: Recognizing that you are not where you want to be is a starting point to begin changing your life.
+                            </span>
+                            <span>
+                                Amanda Gorman: Change is made of choices, and choices are made of character.
+                            </span>
+                            <span>
+                                George Bernard Shaw: Life is not about finding yourself. Life is about creating yourself.
+                            </span>
+                            <span>
+                                Mahatma Gandhi: We must become the change we want to see.
+                            </span>
+                            <span>
+                                Shakespeare: To climb steep hills requires a slow pace at first.
+                            </span>
                         </marquee>
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
@@ -188,7 +225,7 @@ export default function PersistentDrawerLeft() {
                         { text: 'Habits', link: '/habitspage', icon: <StarIcon /> },
                         { text: 'Groups', link: '/groups', icon: <GroupsIcon /> },
                         { text: 'Friends', link: '/friends', icon: <PeopleIcon /> },
-                        { text: 'Challenges', link: '/challenges', icon: <PeopleIcon /> },
+                        { text: 'Challenges', link: '/challenges', icon: <SportsScoreIcon />},
                         { text: 'Achievements', link: '/achievementspage', icon: <AchIcon /> }].map((item) => (
                             <ListItem key={item.text} disablePadding >
                                 <ListItemButton

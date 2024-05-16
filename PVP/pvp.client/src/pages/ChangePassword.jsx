@@ -1,18 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Sidebar from "../components/Sidebar";
 import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid'; // Grid version 1
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 
-const drawerWidth = 240;
+const MainContent = styled(Box)(({ theme }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    backgroundColor: theme.palette.background.default,
+    height: '100vh',
+    overflow: 'auto',
+}));
+
+const FormContainer = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(4),
+    margin: 'auto',
+    maxWidth: 600,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+}));
+
+const Header = styled(Typography)(({ theme }) => ({
+    marginBottom: theme.spacing(3),
+}));
 
 export default function ChangePassword() {
     const [formData, setFormData] = useState({
@@ -65,58 +86,68 @@ export default function ChangePassword() {
     };
 
     return (
-        <Box sx={{ display: 'flex', height: '120vh' }}>
+        <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <Sidebar />
-            <Box
-                component="main"
-            >
+            <MainContent component="main">
                 <Toolbar />
-                <Typography variant="h1">Change password</Typography>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Password"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            name="password"
-                            onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="New password"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            name="newPassword"
-                            onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label="Repeat new password"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            name="repeatNewPassword"
-                            onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" color="primary" onClick={handleEdit}>
-                            Edit
-                        </Button>
-                    </Grid>
-                    {errorText && (
+                <FormContainer elevation={3}>
+                    <Header variant="h4">Change Password</Header>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Typography variant="body2" color="error">{errorText}</Typography>
+                            <TextField
+                                label="Current Password"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                name="password"
+                                type="password"
+                                onChange={handleChange}
+                            />
                         </Grid>
-                    )}
-                </Grid>
-            </Box>
-            {/* Success Dialog */}
+                        <Grid item xs={12}>
+                            <TextField
+                                label="New Password"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                name="newPassword"
+                                type="password"
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Repeat New Password"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                name="repeatNewPassword"
+                                type="password"
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                onClick={handleEdit}
+                                sx={{ marginTop: 2 }}
+                            >
+                                Change Password
+                            </Button>
+                        </Grid>
+                        {errorText && (
+                            <Grid item xs={12}>
+                                <Typography variant="body2" color="error" sx={{ marginTop: 2 }}>
+                                    {errorText}
+                                </Typography>
+                            </Grid>
+                        )}
+                    </Grid>
+                </FormContainer>
+            </MainContent>
             <Dialog open={successDialogOpen} onClose={handleCloseSuccessDialog}>
                 <DialogTitle>Password Changed</DialogTitle>
                 <DialogContent>

@@ -7,34 +7,54 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
-const Container = styled('div')({
-    width: 240,
-    height: '100%',
-    backgroundColor: '#f0f0f0',
-    position: 'fixed', // Position the sidebar fixedly
-    top: 0, // Align the sidebar to the top of the screen
-    right: 0, // Align the sidebar to the far right of the screen
+const Container = styled('div')(({ theme }) => ({
+    width: 280,
+    height: '100vh',
+    backgroundColor: theme.palette.background.paper,
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    boxShadow: '0px 0px 10px rgba(0,0,0,0.1)',
     zIndex: 1000,
-});
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+}));
 
 const Header = styled('div')({
     padding: '16px',
     borderBottom: '1px solid #ddd',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 });
 
 const SidebarContent = styled('div')({
     padding: '16px',
-    marginTop: '35px',
+    flexGrow: 1,
+    overflowY: 'auto',
 });
+
+const Footer = styled('div')({
+    padding: '16px',
+    borderTop: '1px solid #ddd',
+});
+
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+    transition: 'background-color 0.3s, transform 0.3s',
+    '&:hover': {
+        backgroundColor: "#440e9c",
+        transform: 'translateX(5px)',
+    },
+}));
 
 const GroupSidebar = ({ onSelectGroup }) => {
     const [userGroups, setUserGroups] = React.useState([]);
 
     const handleGroupClick = (groupId) => {
-        console.log("as pahandlinu ir krc sitas id:", groupId)
-        onSelectGroup(groupId); // Pass the selected group ID to the parent component
+        onSelectGroup(groupId);
     };
 
     React.useEffect(() => {
@@ -61,41 +81,46 @@ const GroupSidebar = ({ onSelectGroup }) => {
         };
 
         fetchUserGroups();
-    }, [userGroups]);
+    }, []);
 
     return (
         <Container>
-            <Header />
-            <Divider />
-            <SidebarContent>
-                <Typography variant="h6" gutterBottom>
+            <Header>
+                <Typography variant="h6">
                     My Groups
                 </Typography>
+            </Header>
+            <SidebarContent>
                 <List>
+                    <Typography variant="h6">
+                        My Groups
+                    </Typography>
                     {userGroups.map((group) => (
-                        <ListItem key={group.groupID} button onClick={() => handleGroupClick(group.groupID)}>
-                            <ListItemText primary={group.name} />
-                        </ListItem>
+                        <StyledListItem sx={{ backgroundColor: "#5a00ec", borderRadius: "5px" }} key={group.groupID} button onClick={() => handleGroupClick(group.groupID)}>
+                            <ListItemText sx={{ color: "#ffffff" }} primary={group.name} />
+                        </StyledListItem>
                     ))}
                 </List>
-                <Divider />
+            </SidebarContent>
+            <Footer>
                 <Button variant="contained" component={Link} to="/create-group" fullWidth>
                     Create New Group
                 </Button>
-                <Divider />
                 <Button
-                    variant="contained"
+                    variant="outlined"
                     onClick={() => handleGroupClick(null)}
                     fullWidth
-                    style={{ marginTop: '8px' }} // Add margin to the button
+                    style={{ marginTop: '8px' }}
                 >
                     Show Public Groups
                 </Button>
-            </SidebarContent>
+            </Footer>
         </Container>
     );
 };
+
 GroupSidebar.propTypes = {
-    onSelectGroup: PropTypes.func,
+    onSelectGroup: PropTypes.func.isRequired,
 };
+
 export default GroupSidebar;

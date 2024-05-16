@@ -16,6 +16,7 @@ export default function AboutUs() {
                 pt: { xs: 8, sm: 14 },
                 pb: { xs: 8, sm: 12 },
                 marginBottom: '100px', // Add some bottom margin to prevent overlap with footer
+                ml: '150px',
             }}
         >
             <Typography variant="h1" sx={{
@@ -62,7 +63,6 @@ export default function AboutUs() {
                             justifyContent: 'center',
                             flexDirection: 'column',
                             textAlign: 'center',
-                            marginLeft: 9,
                             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Added boxShadow
                         }}
                     >
