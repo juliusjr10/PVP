@@ -214,5 +214,42 @@ namespace PVP.Server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpPost("setstreak/{challengeId}/{streak}")]
+        public async Task<IActionResult> SetChallengerStreak(int challengeId, int streak)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                if (jwt == null)
+                {
+                    return Unauthorized();
+                }
+
+                var token = _jwtService.Verify(jwt);
+                if (token == null)
+                {
+                    return Unauthorized();
+                }
+                int challengerId = int.Parse(token.Issuer);
+
+                // Call the service to set the challenger's streak
+                var result = await _challengeService.SetChallengerStreak(challengeId, challengerId, streak);
+
+                if (result)
+                {
+                    return Ok("Challenger streak updated successfully");
+                }
+                else
+                {
+                    return BadRequest("Failed to update challenger streak");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle any exceptions here
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

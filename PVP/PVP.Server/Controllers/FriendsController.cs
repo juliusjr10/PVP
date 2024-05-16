@@ -210,5 +210,33 @@ namespace PVP.Server.Controllers
 
             return Ok(new { message = "Friend deleted successfully." });
         }
+
+        [HttpGet("{friendId}")]
+        public async Task<IActionResult> GetFriendById(int friendId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int userId = int.Parse(token.Issuer);
+
+            // Call the service method to get the friend by ID
+            var friend = await _friendsService.GetFriendById(userId, friendId);
+
+            if (friend == null)
+            {
+                return NotFound(new { message = "Friend not found." });
+            }
+
+            return Ok(friend);
+        }
     }
 }

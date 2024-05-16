@@ -8,6 +8,7 @@ namespace PVP.Server.Dtos
     {
         [Required]
         public int ReceiverId { get; set; }
+        [Required]
         public string Name { get; set; }
 
         [Required]  

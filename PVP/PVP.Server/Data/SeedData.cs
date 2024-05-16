@@ -100,7 +100,7 @@ namespace PVP.Server.Data
                 Name = "Alcohol Habit"
             };
             var checkIns = new List<CheckIn>() { };
-            DateTime currentDate  = DateTime.ParseExact("2024 04 22 15:20", "yyyy MM dd HH:mm", null).Date;
+            DateTime currentDate  = DateTime.ParseExact("2024 05 06 12:00", "yyyy MM dd HH:mm", null).Date;
             Random random = new Random();
             for (int i = 0; i < 9;i++)
             {

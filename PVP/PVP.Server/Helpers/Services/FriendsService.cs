@@ -261,5 +261,24 @@ namespace PVP.Server.Helpers.Services
                 return false;
             }
         }
+
+        public async Task<User> GetFriendById(int userId, int friendId)
+        {
+            // Check if the user exists
+            var user = await _context.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                // Handle user not found scenario
+                return null;
+            }
+
+            // Find the friend by their ID
+            var friend = user.Friends.FirstOrDefault(f => f.Id == friendId);
+
+            return friend;
+        }
     }
 }

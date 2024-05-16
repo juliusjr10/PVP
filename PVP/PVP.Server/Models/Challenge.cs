@@ -10,7 +10,7 @@ namespace PVP.Server.Models
         public ChallengeType ChallengeType { get; set; }
 
         public ChallengeStatus ChallengeStatus { get; set; }
-        public DateTime ChallengeStart {  get; set; }
+        public DateTime ChallengeStart { get; set; }
         public int FirstChallengerId { get; set; }
         [JsonIgnore]
         public User FirstChallenger { get; set; }
@@ -22,6 +22,9 @@ namespace PVP.Server.Models
         public int HabitId { get; set; }
         [JsonIgnore]
         public Habit Habit { get; set; }
+
+        public int? FirstChallengerStreak { get; set; }
+        public int? SecondChallengerStreak { get;set; }
 
 
 

@@ -12,13 +12,20 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
     const [challengeName, setChallengeName] = useState('');
     const [challengeType, setChallengeType] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+    const [challengeNameError, setChallengeNameError] = useState('');
+    const [challengeTypeError, setChallengeTypeError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleChallengeNameChange = (event) => {
         setChallengeName(event.target.value);
+        // Clear error message when the challenge name is being typed
+        setChallengeNameError('');
     };
 
     const handleChallengeTypeChange = (event) => {
         setChallengeType(event.target.value);
+        // Clear error message when the challenge type is selected
+        setChallengeTypeError('');
     };
 
     const getCookie = (name) => {
@@ -28,6 +35,16 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
 
     const handleChallengeSend = async () => {
         try {
+            if (challengeName.trim() === '') {
+                setChallengeNameError('Please enter a challenge name');
+                return;
+            }
+
+            if (challengeType === '') {
+                setChallengeTypeError('Please select a challenge type');
+                return;
+            }
+
             const requestBody = {
                 receiverId: friend.id,
                 name: challengeName,
@@ -52,7 +69,8 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
                 throw new Error('Failed to request a challenge');
             }
 
-            alert('Challenge sent successfuly!');
+            setShowMessage(true); // Show success message
+            setSuccessMessage('Challenge sent successfully!');
             onClose(); // Close the popup window
         } catch (error) {
             console.error('Error sending challenge:', error);
@@ -72,6 +90,11 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
             <Typography variant="h6" gutterBottom>
                 Challenge {friend.username} in {selectedHabitName}
             </Typography>
+            {showMessage && (
+                <Typography variant="body1" style={{ marginTop: '10px', color: 'green' }}>
+                    {successMessage}
+                </Typography>
+            )}
             <TextField
                 id="challenge-name"
                 label="Challenge Name"
@@ -80,6 +103,8 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
                 fullWidth
                 variant="outlined"
                 margin="normal"
+                error={!!challengeNameError}
+                helperText={challengeNameError}
             />
             <Select
                 id="challenge-type"
@@ -89,6 +114,20 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
                 variant="outlined"
                 margin="normal"
                 displayEmpty
+                error={!!challengeTypeError}
+                renderValue={(value) => {
+                    if (value === '') {
+                        return <em>Select Challenge Type</em>;
+                    }
+                    // Map the numeric value to its corresponding challenge type
+                    const challengeTypes = {
+                        '0': 'Week',
+                        '1': 'Month',
+                        '2': 'Three Day',
+                        // Add more challenge types as needed
+                    };
+                    return challengeTypes[value];
+                }}
             >
                 <MenuItem value="" disabled>
                     Select Challenge Type
@@ -104,11 +143,6 @@ const ChallengeFriendSection = ({ friend, selectedHabitName, selectedHabitId, on
             <Button variant="contained" onClick={handleCloseAndShowMessage} style={{ marginLeft: '10px', marginTop: '10px' }}>
                 Cancel
             </Button>
-            {showMessage && (
-                <Typography variant="body1" style={{ marginTop: '10px', color: 'green' }}>
-                    Challenge sent successfully!
-                </Typography>
-            )}
         </Box>
     );
 };

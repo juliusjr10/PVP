@@ -13,5 +13,7 @@ namespace PVP.Server.Helpers.Interfaces
         Task<bool> DeclineChallengeRequest(int requestId);
         Task<ICollection<Challenge>> GetChallengesForUser(int userId);
         Task<Challenge?> GetChallengeById(int challengeId);
+
+        Task<bool> SetChallengerStreak(int challengeId, int challengerId, int streak);
     }
 }

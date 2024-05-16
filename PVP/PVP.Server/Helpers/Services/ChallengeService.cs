@@ -140,7 +140,7 @@ namespace PVP.Server.Helpers.Services
                     Name = challengeRequest.Name, // Set the name of the challenge as needed
                     ChallengeType = challengeRequest.ChallengeType, // Set the type of the challenge as needed
                     ChallengeStatus = ChallengeStatus.InProgress,
-                    ChallengeStart = DateTime.UtcNow, // Set the start date of the challenge
+                    ChallengeStart = DateTime.Now, // Set the start date of the challenge
                     FirstChallengerId = challengeRequest.SenderId,
                     SecondChallengerId = challengeRequest.ReceiverId,
                     HabitId = challengeRequest.HabitId,
@@ -231,6 +231,48 @@ namespace PVP.Server.Helpers.Services
             {
                 Console.WriteLine($"Error retrieving challenge by ID: {ex.Message}");
                 return null; // Return null or handle the error appropriately
+            }
+        }
+
+        public async Task<bool> SetChallengerStreak(int challengeId, int challengerId, int streak)
+        {
+            try
+            {
+                // Find the challenge by ID
+                var challenge = await _context.Challenges.FindAsync(challengeId);
+
+                if (challenge == null)
+                {
+                    Console.WriteLine("Error setting challenger streak: Challenge not found.");
+                    return false;
+                }
+
+                // Determine which challenger's streak to update
+                if (challenge.FirstChallengerId == challengerId)
+                {
+                    // Update the first challenger's streak
+                    challenge.FirstChallengerStreak = streak;
+                }
+                else if (challenge.SecondChallengerId == challengerId)
+                {
+                    // Update the second challenger's streak
+                    challenge.SecondChallengerStreak = streak;
+                }
+                else
+                {
+                    Console.WriteLine("Error setting challenger streak: Challenger not found in the challenge.");
+                    return false;
+                }
+
+                // Save changes to update the streak
+                await _context.SaveChangesAsync();
+
+                return true; // Successfully set challenger streak
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error setting challenger streak: {ex.Message}");
+                return false; // Failed to set challenger streak
             }
         }
     }
