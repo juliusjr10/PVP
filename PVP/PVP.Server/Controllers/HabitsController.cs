@@ -36,13 +36,14 @@ namespace PVP.Server.Controllers
             }
             int userID = int.Parse(token.Issuer);
 
-            var result = await _habitService.AddUserHabit(userID, dto.HabitId);
+            var result = await _habitService.AddUserHabit(userID, dto.HabitId, dto.IsGoal, dto.Goal, dto.Frequency, dto.Time);
             if (result == null)
             {
                 return NotFound(new { message = "Habit not found" });
             }
             return Ok(result);
         }
+
         [HttpGet("getuserhabits")]
         public async Task<IActionResult> GetAllUserHabits()
         {

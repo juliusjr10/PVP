@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\guoda\\Desktop\\pvp\\PVP\\PVP.Server\\PVP.Server.csproj": {}
+    "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\guoda\\Desktop\\pvp\\PVP\\PVP.Server\\PVP.Server.csproj": {
+    "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\guoda\\Desktop\\pvp\\PVP\\PVP.Server\\PVP.Server.csproj",
+        "projectUniqueName": "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
         "projectName": "PVP.Server",
-        "projectPath": "C:\\Users\\guoda\\Desktop\\pvp\\PVP\\PVP.Server\\PVP.Server.csproj",
-        "packagesPath": "C:\\Users\\guoda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\guoda\\Desktop\\pvp\\PVP\\PVP.Server\\obj\\",
+        "projectPath": "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+        "packagesPath": "C:\\Users\\juliu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\guoda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\juliu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -112,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

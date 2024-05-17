@@ -18,17 +18,35 @@ namespace PVP.Server.Helpers.Services
         {
             _context = context;
         }
-        public async Task<HabitUser?> AddUserHabit(int userId, int habitId)
+        public async Task<HabitUser?> AddUserHabit(int userId, int habitId, bool isGoal = false, int goal = 0, string frequency = "", string time = "")
         {
-            var habitUser = new HabitUser
+            HabitUser habitUser;
+
+            if (isGoal)
             {
-                UserId = userId,
-                HabitId = habitId
-            };
+                habitUser = new GoalHabitUser
+                {
+                    UserId = userId,
+                    HabitId = habitId,
+                    Goal = goal,
+                    Frequency = frequency,
+                    Time = time
+                };
+            }
+            else
+            {
+                habitUser = new HabitUser
+                {
+                    UserId = userId,
+                    HabitId = habitId
+                };
+            }
+
             await _context.HabitUser.AddAsync(habitUser);
             await _context.SaveChangesAsync();
             return habitUser;
         }
+
 
         public async Task<ICollection<HabitUser>> GetAllUserHabits(int userId)
         {
