@@ -12,8 +12,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import AppAppBar from '../components/AppAppBar';
-import Footer from '../components/Footer';
+import NavBar from '../components/LandingPage/LadingPageNavbar';
+import Footer from '../components/LandingPage/Footer';
 import { useNavigate } from 'react-router-dom';
 
 const signInUpPages = [
@@ -72,7 +72,7 @@ function SignIn() {
 
     return (
         <Box>
-            <AppAppBar pages={signInUpPages} />
+            <NavBar pages={signInUpPages} />
             <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden' }}>
                 <Box sx={{
                     display: {

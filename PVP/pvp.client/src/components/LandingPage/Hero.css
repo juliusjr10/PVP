@@ -1,0 +1,75 @@
+﻿.bubbleHover:hover {
+    animation: bubble 0.4s ease-out;
+}
+
+.bubbleBreathing {
+    animation: bubble 5s ease-out infinite normal;
+}
+
+@keyframes bubble {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+.circleblue {
+    background: #7B33EF; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 10em; /* Norimas aukštis */
+    width: 10em; /* Norimas plotis */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
+}
+
+.circleblue2 {
+    background: #7B33EF; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 35%; /* Centruojame vertikaliai */
+    left: 95%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
+}
+
+.circleblue3 {
+    background: #7B33EF; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 20em; /* Norimas aukštis */
+    width: 20em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 32%; /* Centruojame vertikaliai */
+    left: 5%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    z-index: 0;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
+}
+
+.circleblue4 {
+    background: #7B33EF; /* Jūsų norima spalva */
+    border-radius: 50%; /* Kad sukurtumėte apvalų elementą */
+    height: 6em; /* Norimas aukštis */
+    width: 6em; /* Norimas plotis */
+    position: absolute; /* Statybinė pozicija, kad galėtumėte naudoti "top", "left" ir pan. */
+    top: 20%; /* Centruojame vertikaliai */
+    left: 75%; /* Centruojame horizontaliai */
+    transform: translate(-50%, -50%); /* Centruojame atžvilgiu ekrano centrą */
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-container {
+    position: relative;
+}
+

@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\Friend requests\" />
+    <Folder Include="src\components\LandingPage\" />
   </ItemGroup>
 </Project>

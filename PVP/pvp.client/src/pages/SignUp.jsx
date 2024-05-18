@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -16,9 +14,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SignIn from "./SignIn"
-import AppAppBar from '../components/AppAppBar';
-import Footer from '../components/Footer';
+import Footer from '../components/LandingPage/Footer';
 import '../landingpage.css';
+import NavBar from '../components/LandingPage/LadingPageNavbar';
 
 const signInUpPages = [
     { label: 'Sign in', link: '/login' },
@@ -71,7 +69,7 @@ export default function SignUp() {
 
     return (
         <Box>
-            <AppAppBar pages={signInUpPages}></AppAppBar>
+            <NavBar pages={signInUpPages}></NavBar>
             <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', minHeight: '100vh' }}>
                 <Box sx={{
                     display: {

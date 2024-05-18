@@ -19,7 +19,6 @@ export default function Footer() {
             <AppBar position="static" sx={{
                 height: '100px',
                 alignItems: 'center',
-                position: 'fixed',
                 bottom: 0,
                 left: 0,
                 width: '100%',

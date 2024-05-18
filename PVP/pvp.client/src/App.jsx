@@ -14,7 +14,7 @@ import ChangePassword from './pages/ChangePassword';
 import AchievementsPage from './pages/AchievementsPage';
 import Friends from './pages/FriendsPage';
 import Challenges from './pages/ChallengesPage';
-
+import './App.css';
 export default function App() {
     const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
     const [isAuthenticated, setIsAuthenticated] = useState(false); // Assuming initially user is not authenticated
@@ -54,6 +54,9 @@ export default function App() {
     }, []);
 
     const theme = createTheme({
+        typography: {
+            fontFamily: 'Raleway'
+        },
         palette: {
             mode: 'light',
             primary: {
@@ -63,7 +66,7 @@ export default function App() {
                 main: '#f50057',
             },
             background: {
-                default: '#f5f5f5',
+                default: '#f5f5f5',  
             },
         },
     });
