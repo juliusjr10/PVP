@@ -167,7 +167,7 @@ export default function FriendsRequestList() {
             } }>
                 <FixedSizeList
                     height={500}
-                    width='100%'
+                    width="100%"
                     itemSize={46}
                     itemCount={userRequests.length}
                     overscanCount={5}

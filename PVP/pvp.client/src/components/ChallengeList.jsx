@@ -49,13 +49,28 @@ function ChallengesList() {
     };
 
     return (
-        <Box sx={{ flexGrow: 1, p: 2, marginTop: '100px' }}>
+        <Box sx={{
+            width: '50%',
+            flexDirection: 'column',
+            marginBottom: '100px',
+            marginTop: '150px',
+            backgroundColor: '#ffffff'
+
+        }}>
             <Typography variant="h5" gutterBottom sx={{ textAlign: 'center', mb: 2 }}>
                 CHALLENGES
             </Typography>
-            <Grid container spacing={2}>
+            <Box sx={{
+                margin: '0 auto',
+                rowGap: '20px',
+                columnGap: '1.33%',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, 250px)',
+                justifyContent: 'space-around',
+                marginBottom: '10px'
+            }}>
                 {userChallenges.map((challenge, index) => (
-                    <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                    <Box item key={index}>
                         <Box
                             sx={{
                                 bgcolor: 'background.paper',
@@ -80,9 +95,9 @@ function ChallengesList() {
                                 View Details
                             </Button>
                         </Box>
-                    </Grid>
+                    </Box>
                 ))}
-            </Grid>
+            </Box>
             {/* Render the selected challenge details */}
             <ChallengeDetailsPopup challenge={selectedChallenge} onClose={() => setSelectedChallenge(null)} />
         </Box>

@@ -9,8 +9,8 @@ export default function Challenges() {
         <Box component="main" sx={{ display: 'flex', justifyContent: 'space-between'}}>
             <CssBaseline />    
             <Sidebar />
-            <ChallengesList />
-            <ChallengesRequestList />
+                <ChallengesList />
+                <ChallengesRequestList />
         </Box>
     );
 }
