@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -6,20 +7,13 @@ import Typography from '@mui/material/Typography';
 import ReplyIcon from '@mui/icons-material/Reply';
 import './Hero.css';
 
-const scrollToSection = (sectionId) => {
-    const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
-    if (sectionElement) {
-        const targetScroll = sectionElement.offsetTop - offset;
-        sectionElement.scrollIntoView({ behavior: 'smooth' });
-        window.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth',
-        });
-    }
-};
-
 function Hero() {
+    const navigate = useNavigate();
+
+    const handleSignUpClick = () => {
+        navigate('/signup');
+    };
+
     return (
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
             <Box
@@ -101,10 +95,9 @@ function Hero() {
                 }}>
                     Achieve Your goals <u><b>together!</b></u>
                 </Typography>
-                <Box alignItems="center" marginTop="30px" display='flex' marginLeft='14%'>
+                <Box alignItems="center" marginTop="30px" display='flex' marginLeft='12%'>
                     <Button
                         variant="contained"
-                        onClick={() => scrollToSection('aboutUsSection')}
                         sx={{
                             width: '200px',
                             height: '50px',
@@ -119,8 +112,9 @@ function Hero() {
                                 xl: 'flex'
                             }
                         }}
+                        onClick={handleSignUpClick}
                     >
-                        About
+                        Sign up
                     </Button>
                     <ReplyIcon sx={{
                         display: {
@@ -144,7 +138,7 @@ function Hero() {
                             xl: 'inline-block'
                         },
                     }}>
-                        Learn more
+                        Sign up!
                     </Typography>
                 </Box>
             </Box>

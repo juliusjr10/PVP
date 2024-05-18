@@ -306,11 +306,11 @@ const AddHabitCard = ({ addUserHabit }) => {
 
     return (
         <>
-            <Card sx={{ maxWidth: 150, height: 140, margin: 'auto', backgroundColor: '#f5f5f5', marginTop: '30px' }}>
+            <Card sx={{ maxWidth: 150, height: 140, margin: 'auto', backgroundColor: '#ffffff', marginTop: '30px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
                 <CardActionArea onClick={handleCardClick} sx={{ cursor: 'pointer', height: '100%' }}>
                     <CardContent sx={{ textAlign: 'center' }}>
-                        <div style={{ backgroundColor: '#e0e0e0', padding: '6px', borderRadius: '50%', width: 'fit-content', margin: 'auto' }}>
-                            <FaPlus style={{ fontSize: '3rem', margin: 'auto', color: '#757575' }} />
+                        <div style={{ backgroundColor: '#f3e7ff', padding: '6px', borderRadius: '50%', width: 'fit-content', margin: 'auto' }}>
+                            <FaPlus style={{ fontSize: '3rem', margin: 'auto', color: '#5a00ec' }} />
                         </div>
                         <Typography gutterBottom variant="h6" component="div" sx={{ color: '#616161' }}>
                             Add Habit

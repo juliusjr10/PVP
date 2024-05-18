@@ -193,7 +193,7 @@ export default function MeditateHabit() {
 
     return (
 
-        <MeditateHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', }}>
+        <MeditateHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',

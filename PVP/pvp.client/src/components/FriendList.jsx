@@ -150,7 +150,14 @@ export default function FriendsList() {
 
     return (
         <Box
-            sx={{ width: '40%', height: '80%', bgcolor: 'background.paper', marginTop: '100px', marginLeft: '10px', display: 'flex', flexDirection: 'column', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}
+            sx={{
+                width: '400px',
+                bgcolor: 'background.paper',
+                marginTop: '100px',
+                display: 'flex',
+                flexDirection: 'column',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)'
+            }}
         >
             <Typography variant="h5" gutterBottom sx={{
                 backgroundColor: '#5a00ec',

@@ -17,6 +17,7 @@ import SignIn from "./SignIn"
 import Footer from '../components/LandingPage/Footer';
 import '../landingpage.css';
 import NavBar from '../components/LandingPage/LadingPageNavbar';
+import SignUpPhoto from "../assets/SignUpPhoto.svg";
 
 const signInUpPages = [
     { label: 'Sign in', link: '/login' },
@@ -70,32 +71,25 @@ export default function SignUp() {
     return (
         <Box>
             <NavBar pages={signInUpPages}></NavBar>
-            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden', minHeight: '100vh' }}>
-                <Box sx={{
-                    display: {
-                        xs: 'none',
-                        sm: 'none',
-                        lg: 'flex',
-                        md: 'flex',
-                        xl: 'flex'
-                    }
-                }}>
-                    <Box className="circlebluelog"></Box>
-                    <Box className="circleblue2log"></Box>
-                    <Box className="circleblue3log"></Box>
-                    <Box className="circleblue4log"></Box>
-                    <Box className="circleblue5log"></Box>
-                </Box>
+            <Container disableGutters maxWidth={false} sx={{
+                p: 0,
+                minHeight: '100vh',
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
+                <Container component="main" maxWidth="50%" sx={{
+                    pt: 12,
 
-                <Container component="main" maxWidth="xs" sx={{ pt: 12, pb: '150px' }}>
+                }}>
                     <CssBaseline />
                     <Box
                         sx={{
+                            width:'400px',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            justifyContent: 'center',
                             mt: 6,
+                            m: 'auto'
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -191,6 +185,20 @@ export default function SignUp() {
                             </Grid>
                         </Box>
                     </Box>
+                </Container>
+
+                <Container>
+                    <Box
+                        sx={{
+                        m: 'auto',
+                        height: '100%',
+                        display:'flex',
+                            alignItems: 'center',
+                    }}
+                    >
+                        <img src={SignUpPhoto} alt="Connect" />
+                    </Box>
+                        
                 </Container>
             </Container>
             <Footer></Footer>

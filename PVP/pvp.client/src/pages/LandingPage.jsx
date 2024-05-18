@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Hero from '../components/LandingPage/Hero';
 import AboutUs from '../components/LandingPage/AboutUs';
 import Footer from '../components/LandingPage/Footer';
@@ -20,26 +19,7 @@ export default function LandingPage() {
        
         <Container disableGutters maxWidth={false} sx={{}}>
             <NavBar pages={allPages}/>
-            <Hero/>
-            <Box sx={{
-                display: {
-                    xs: 'none',
-                    sm: 'flex',
-                    md: 'flex',
-                    lg: 'flex',
-                    xl: 'flex'
-                }
-            }}>
-                {/*<Box className="circleblue"></Box>*/}
-                {/*<Box className="circleblue2"></Box>*/}
-                {/*<Box className="circleblue3"></Box>*/}
-                {/*<Box className="circleblue4"></Box>*/}
-                {/*<Box className="circlered"></Box>*/}
-                {/*<Box className="circlered2"></Box>*/}
-                {/*<Box className="circlered3"></Box>*/}
-                {/*<Box className="circlered4"></Box>*/}
-
-            </Box>
+            <Hero />
             <AboutUs />
             <OurTeam />
             <Footer/>

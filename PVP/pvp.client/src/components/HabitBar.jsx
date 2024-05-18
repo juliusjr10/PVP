@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid';
 import AddHabitCard from '../components/AddHabitCard';
 import SmokingCard from '../components/SmokingCard';
 import MeditateCard from '../components/MeditateCard';
@@ -12,6 +11,7 @@ import WaterHabit from '../components/WaterHabit';
 import MeditateHabit from '../components/MeditateHabit';
 import AlcoholHabit from '../components/AlcoholHabit';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 
 export default function HabitBar() {
@@ -144,14 +144,35 @@ export default function HabitBar() {
     const allHabitsPresent = userHabits.length === 5;
 
     return (
-        <Box sx={{width: "50%"} }>
-            <Grid
-                container
-                spacing={2}
-                mt={8}
-                ml={open ? 20 : 0} // Adjust marginLeft when sidebar is open
+        <Box sx={{ width: "50%", mt: '75px' }}>
+            <Typography variant='h2' sx={{
+                width:'100%',
+                backgroundColor:'#ffffff',
+                marginBottom: '25px',
+                display: {
+                    xl: 'flex',
+                    lg: 'flex',
+                    md: 'flex',
+                    sm: 'none',
+                    xs: 'none'
+                },
+                justifyContent: 'center',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                borderRadius: '5px',
+                fontWeight:'600'
+            }} >
+                HABITS
+            </Typography>
+            <Box
                 sx={{
                     transition: 'margin-left 0.3s ease',
+                    margin: '0 auto',
+                    rowGap: '20px',
+                    columnGap: '1.33%',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, 200px)',
+                    justifyContent: 'space-around',
+                    marginBottom: '10px'
                 }}
             >
                 {/* Render existing habit cards */}
@@ -159,53 +180,53 @@ export default function HabitBar() {
                     switch (habit.habitId) {
                         case 1: // Smoking
                             return (
-                                <Grid item xs={3} key={index}>
+                                <Box key={index}>
                                     <SmokingCard
                                         onClick={toggleSmokingHabit}
                                         onDelete={deleteHabit} // Add this line
                                         habitId={habit.habitId} // Add this line
                                     />
-                                </Grid>
+                                </Box>
                             );
                         case 2: // Meditation
                             return (
-                                <Grid item xs={3} key={index}>
+                                <Box key={index}>
                                     <MeditateCard
                                         onClick={toggleMeditateHabit}
                                         onDelete={deleteHabit} // Add this line
                                         habitId={habit.habitId}
                                     />
-                                </Grid>
+                                </Box>
                             );
                         case 3: // Water
                             return (
-                                <Grid item xs={3} key={index}>
+                                <Box key={index}>
                                     <WaterCard
                                         onClick={toggleWaterHabit}
                                         onDelete={deleteHabit} // Add this line
                                         habitId={habit.habitId}
                                     />
-                                </Grid>
+                                </Box>
                             );
                         case 4: // Food
                             return (
-                                <Grid item xs={3} key={index}>
+                                <Box key={index}>
                                     <FoodCard
                                         onClick={toggleFoodHabit}
                                         onDelete={deleteHabit} // Add this line
                                         habitId={habit.habitId}
                                     />
-                                </Grid>
+                                </Box>
                             );
                         case 5: // Alcohol
                             return (
-                                <Grid item xs={3} key={index}>
+                                <Box key={index}>
                                     <AlcoholCard
                                         onClick={toggleAlcoholHabit}
                                         onDelete={deleteHabit} // Add this line
                                         habitId={habit.habitId}
                                     />
-                                </Grid>
+                                </Box>
                             );
                         default:
                             return null;
@@ -213,47 +234,26 @@ export default function HabitBar() {
                 })}
 
                 {!allHabitsPresent && (
-                    <Grid item xs={3}>
                         <AddHabitCard addUserHabit={addUserHabit} />
-                    </Grid>
                 )}
-
-                {/* Render SmokingHabit if showSmokingHabit is true */}
                 {showSmokingHabit && (
-                    <Grid item xs={12}>
                         <SmokingHabit />
-                    </Grid>
                 )}
-
-                {/* Render MeditateHabit if showMeditateHabit is true */}
                 {showMeditateHabit && (
-                    <Grid item xs={12}>
                         <MeditateHabit />
-                    </Grid>
                 )}
-
-                {/* Render WaterHabit if showWaterHabit is true */}
                 {showWaterHabit && (
-                    <Grid item xs={12}>
                         <WaterHabit />
-                    </Grid>
                 )}
-
-                {/* Render FoodHabit if showFoodHabit is true */}
                 {showFoodHabit && (
-                    <Grid item xs={12}>
                         <FoodHabit />
-                    </Grid>
                 )}
 
-                {/* Render AlcoholHabit if showAlcoholHabit is true */}
                 {showAlcoholHabit && (
-                    <Grid item xs={12}>
                         <AlcoholHabit />
-                    </Grid>
 
                 )}
-            </Grid>
+            </Box>
         </Box>
     );
 }

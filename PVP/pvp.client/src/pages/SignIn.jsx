@@ -15,6 +15,7 @@ import Container from '@mui/material/Container';
 import NavBar from '../components/LandingPage/LadingPageNavbar';
 import Footer from '../components/LandingPage/Footer';
 import { useNavigate } from 'react-router-dom';
+import SignUpPhoto from "../assets/SignUpPhoto.svg";
 
 const signInUpPages = [
     { label: 'Sign in', link: '/login' },
@@ -73,31 +74,37 @@ function SignIn() {
     return (
         <Box>
             <NavBar pages={signInUpPages} />
-            <Container disableGutters maxWidth={false} sx={{ position: 'relative', overflow: 'hidden' }}>
-                <Box sx={{
-                    display: {
-                        xs: 'none',
-                        sm: 'none',
-                        lg: 'flex',
-                        md: 'flex',
-                        xl: 'flex'
-                    }
-                }}>
-                    <Box className="circlebluelog"></Box>
-                    <Box className="circleblue2log"></Box>
-                    <Box className="circleblue3log"></Box>
-                    <Box className="circleblue4log"></Box>
-                    <Box className="circleblue5log"></Box>
-                </Box>
+            <Container disableGutters maxWidth={false} sx={{
+                m: 0,
+                minHeight: '100vh',
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
 
-                <Container component="main" maxWidth="xs" sx={{ pt: 10, pb: 8 }}>
+                <Container>
+                    <Box
+                        sx={{
+                            m: 'auto',
+                            height: '100%',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <img src={SignUpPhoto} alt="Connect" />
+                    </Box>
+                </Container>
+                <Container component="main" maxWidth="50%" sx={{
+                    pt: 12,
+                }}>
                     <CssBaseline />
                     <Box
                         sx={{
-                            marginTop: 8,
+                            width: '400px',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            mt: 6,
+                            m: 'auto',
+
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

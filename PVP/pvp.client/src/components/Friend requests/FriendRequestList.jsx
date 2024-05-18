@@ -146,7 +146,13 @@ export default function FriendsRequestList() {
 
     return (
         <Box
-            sx={{ width: '20%', height: '80%', bgcolor: 'background.paper', marginTop: '100px', marginRight: '50px', display: 'flex', flexDirection: 'column', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}
+            sx={{
+                bgcolor: 'background.paper',
+                marginTop: '100px',
+                flexDirection: 'column',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                width: '400px'
+            }}
         >
             <Typography variant="h5" gutterBottom sx={{
                 backgroundColor: '#5a00ec',
@@ -156,15 +162,20 @@ export default function FriendsRequestList() {
             }}>
                 FRIENDS REQUESTS
             </Typography>
-            <FixedSizeList
-                height={500}
-                width="100%"
-                itemSize={46}
-                itemCount={userRequests.length}
-                overscanCount={5}
-            >
-                {({ index, style }) => renderRow(userRequests[index], index, style)}
-            </FixedSizeList>
+            <Box sx={{
+                display: 'flex',
+            } }>
+                <FixedSizeList
+                    height={500}
+                    width='100%'
+                    itemSize={46}
+                    itemCount={userRequests.length}
+                    overscanCount={5}
+                >
+                    {({ index, style }) => renderRow(userRequests[index], index, style)}
+                </FixedSizeList>
+            </Box>
+
         </Box>
     );
 }

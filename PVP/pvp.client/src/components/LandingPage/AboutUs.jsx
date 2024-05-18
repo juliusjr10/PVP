@@ -15,6 +15,7 @@ export default function AboutUs() {
                 width: '50%',
                 flexDirection: 'column',
                 marginBottom: '100px',
+                marginTop: '50px'
             }}
         >
             <Typography variant="h2" marginBottom='50px' fontWeight='400' fontStyle='italic'><b>About</b></Typography>
