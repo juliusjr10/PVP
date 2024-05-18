@@ -14,7 +14,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
-
+import Divider from '@mui/material/Divider';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const AlcoholHabitContainer = styled(Box)({
@@ -200,34 +200,35 @@ export default function AlcoholHabit() {
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
+                    mt:'10px'
                 }}>
                     <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
                         Stop Drinking
                     </Typography>
                 </Box>
+                <Divider/>
                 <Box
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: '#dec4ff',
+                        backgroundColor: '#5a00ec',
                         padding: '8px',
                         borderRadius: '10px',
-                        marginTop: '16px',
                         boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                        margin: 'auto',
+                        mt: '10px',
                         textAlign: 'center',
                     }}
                 >
-                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Current Streak</Typography>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#ffffff' }}>Current Streak</Typography>
                     <Box sx={{ mb: '8px' }} />
-                    <Typography variant="h4" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Typography variant="h4" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px', color: '#ffffff' }}>
                         <LocalFireDepartmentIcon sx={{ color: '#FF6F61', fontSize: '2rem', verticalAlign: 'middle' }} />
                         {streakDays()}
                     </Typography>
 
-                    <Typography variant="body2" sx={{ fontSize: '0.8rem' }}>Day{streakDays() === 1 ? '' : 's'}</Typography>
+                    <Typography variant="body2" sx={{ fontSize: '0.8rem', color:'#ffffff' }}>Day{streakDays() === 1 ? '' : 's'}</Typography>
                 </Box>
                 <Box
                     sx={{

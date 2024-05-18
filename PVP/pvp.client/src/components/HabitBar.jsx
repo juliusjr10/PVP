@@ -159,7 +159,8 @@ export default function HabitBar() {
                 justifyContent: 'center',
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                 borderRadius: '5px',
-                fontWeight:'600'
+                fontWeight: '600'
+
             }} >
                 HABITS
             </Typography>
