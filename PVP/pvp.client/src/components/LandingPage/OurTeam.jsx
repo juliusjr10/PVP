@@ -25,7 +25,7 @@ export default function OurTeam() {
                 marginBottom: '10px'
             }}>
                 <Box className='bubbleHover' sx={{
-                    width: '13vh',
+                    width: '120px',
                     backgroundColor:'#FFFFFF' ,
                     padding: '5px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
@@ -38,7 +38,7 @@ export default function OurTeam() {
                 </Box>
 
                 <Box className='bubbleHover' sx={{
-                    width: '13vh',
+                    width: '120px',
                     backgroundColor: '#FFFFFF',
                     padding: '5px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
@@ -51,7 +51,7 @@ export default function OurTeam() {
                 </Box>
 
                 <Box className='bubbleHover' sx={{
-                    width: '13vh',
+                    width: '120px',
                     backgroundColor: '#FFFFFF',
                     padding: '5px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
@@ -63,7 +63,7 @@ export default function OurTeam() {
                     <Typography>Full Stack</Typography>
                 </Box>
                 <Box className='bubbleHover' sx={{
-                    width: '13vh',
+                    width: '120px',
                     backgroundColor: '#FFFFFF',
                     padding: '5px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
@@ -76,7 +76,7 @@ export default function OurTeam() {
                 </Box>
 
                 <Box className='bubbleHover' sx={{
-                    width: '13vh',
+                    width: '120px',
                     backgroundColor: '#FFFFFF',
                     padding: '5px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
@@ -89,7 +89,7 @@ export default function OurTeam() {
                 </Box>
 
                 <Box className='bubbleHover' sx={{
-                    width: '13vh',
+                    width: '120px',
                     backgroundColor: '#FFFFFF',
                     padding: '5px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',

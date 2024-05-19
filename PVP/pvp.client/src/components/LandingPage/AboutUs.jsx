@@ -28,8 +28,8 @@ export default function AboutUs() {
                 marginBottom: '10px'
             }}>
                 <Box className='bubbleHover' sx={{
-                    width: '27vh',
-                    height: '38vh',
+                    width: '250px',
+                    height: '350px',
                     marginBottom:"20px",
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
                     borderRadius: '10px',
@@ -43,8 +43,8 @@ export default function AboutUs() {
                     </Box>
                 </Box>
                 <Box className='bubbleHover' sx={{
-                    width: '27vh',
-                    height: '38vh',
+                    width: '250px',
+                    height: '350px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
@@ -57,8 +57,8 @@ export default function AboutUs() {
                     </Box>
                 </Box>
                 <Box className='bubbleHover' sx={{
-                    width: '27vh',
-                    height: '38vh',
+                    width: '250px',
+                    height: '350px',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
