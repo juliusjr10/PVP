@@ -67,7 +67,7 @@ export default function AboutUs() {
                     <Typography margin='10px' marginBottom='50px' variant='h4'>CHALLENGE</Typography>
                     <Box>
                         <img src={Challenge} alt="Challenge" />
-                        <Typography marginBottom='10px' marginTop='4vh'><u>Challenge</u> other people!</Typography>
+                        <Typography marginBottom='10px' marginTop='43px'><u>Challenge</u> other people!</Typography>
                     </Box>
                 </Box>
             </Box>
