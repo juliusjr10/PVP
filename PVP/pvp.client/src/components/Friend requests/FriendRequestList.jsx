@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { FixedSizeList } from 'react-window';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const getCookie = (name) => {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -73,11 +74,13 @@ function renderRow(request, index, style) {
             </ListItemButton>
         </ListItem>
     );
-};
+}
 
 export default function FriendsRequestList() {
     const [userRequests, setUserRequests] = useState([]);
     const [detailsFetched, setDetailsFetched] = useState(false);
+
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     useEffect(() => {
         const fetchUserRequests = async () => {
@@ -144,6 +147,14 @@ export default function FriendsRequestList() {
 
     console.log('Requests:', userRequests); // Log the friend requests array
 
+    let width;
+
+    if (isSmallScreen) {
+        width = '400px';
+    } else {
+        width = '700px';
+    }
+
     return (
         <Box
             sx={{
@@ -151,7 +162,8 @@ export default function FriendsRequestList() {
                 marginTop: '100px',
                 flexDirection: 'column',
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                width: '400px'
+                marginBottom: '50px',
+                width: width
             }}
         >
             <Typography variant="h5" gutterBottom sx={{

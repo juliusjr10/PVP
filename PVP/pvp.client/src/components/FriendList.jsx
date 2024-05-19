@@ -11,6 +11,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { FixedSizeList } from 'react-window';
 import FriendPopup from './FriendPopup'; // Import the FriendPopup component
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function renderRow(friend, index, style, onClickFriend, onDeleteFriend) {
     const handleClickFriend = () => {
@@ -46,6 +47,8 @@ export default function FriendsList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     useEffect(() => {
         const fetchUserFriends = async () => {
@@ -148,15 +151,22 @@ export default function FriendsList() {
 
     console.log('Friends:', userFriends); // Log the friends array
 
+    let width;
+
+    if (isSmallScreen) {
+        width = '400px';
+    } else {
+        width = '700px';
+    }
+
     return (
         <Box
             sx={{
-                width: '400px',
                 bgcolor: 'background.paper',
                 marginTop: '100px',
-                display: 'flex',
                 flexDirection: 'column',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)'
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                width: width
             }}
         >
             <Typography variant="h5" gutterBottom sx={{
@@ -169,14 +179,15 @@ export default function FriendsList() {
             </Typography>
             <FixedSizeList
                 height={450}
-                width="100%"
+                width='100%'
                 itemSize={46}
                 itemCount={userFriends.length}
                 overscanCount={5}
             >
                 {({ index, style }) => renderRow(userFriends[index], index, style, setSelectedFriend, handleDeleteFriend)}
+
             </FixedSizeList>
-            <Button variant="contained" color="primary" onClick={handleAddFriend} sx={{ margin: '10px' }}>
+            <Button variant="contained" color="primary" onClick={handleAddFriend} sx={{ margin: '7px' }}>
                 Add Friend
             </Button>
             <FriendPopup friend={selectedFriend} onClose={() => setSelectedFriend(null)} />

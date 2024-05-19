@@ -16,6 +16,7 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
 import Divider from '@mui/material/Divider';
 import ClearIcon from '@mui/icons-material/Clear';
+import CloseIcon from '@mui/icons-material/Close';
 
 const AlcoholHabitContainer = styled(Box)({
     position: 'fixed',
@@ -29,9 +30,14 @@ const AlcoholHabitContainer = styled(Box)({
     zIndex: 999,
 });
 
-
-
-
+const CloseButton = styled(Button)({
+    position: 'absolute',
+    top: 20,
+    right: 350,
+    minWidth: 'auto',
+    padding: 0,
+    color: '#333',
+});
 
 export default function AlcoholHabit() {
     const [isVisible, setIsVisible] = useState(false);
@@ -176,6 +182,9 @@ export default function AlcoholHabit() {
         }
     };
 
+    const handleCloseContainer = () => {
+        setIsVisible(false);
+    };
 
     const firstCheckInDate = checkIns.length > 0 ? new Date(checkIns[0].date) : null;
     const today = new Date();
@@ -197,16 +206,19 @@ export default function AlcoholHabit() {
 
     return (
         <AlcoholHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <CloseButton onClick={handleCloseContainer}>
+                <CloseIcon />
+            </CloseButton>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
-                    mt:'10px'
+                    mt: '10px'
                 }}>
                     <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
                         Stop Drinking
                     </Typography>
                 </Box>
-                <Divider/>
+                <Divider />
                 <Box
                     sx={{
                         display: 'flex',
@@ -228,7 +240,7 @@ export default function AlcoholHabit() {
                         {streakDays()}
                     </Typography>
 
-                    <Typography variant="body2" sx={{ fontSize: '0.8rem', color:'#ffffff' }}>Day{streakDays() === 1 ? '' : 's'}</Typography>
+                    <Typography variant="body2" sx={{ fontSize: '0.8rem', color: '#ffffff' }}>Day{streakDays() === 1 ? '' : 's'}</Typography>
                 </Box>
                 <Box
                     sx={{

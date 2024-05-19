@@ -16,6 +16,9 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import Divider from '@mui/material/Divider';
+import CloseIcon from '@mui/icons-material/Close';
+
+
 const WaterHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
@@ -30,6 +33,14 @@ const WaterHabitContainer = styled(Box)({
 
 
 
+const CloseButton = styled(Button)({
+    position: 'absolute',
+    top: 20,
+    right: 350,
+    minWidth: 'auto',
+    padding: 0,
+    color: '#333',
+});
 
 
 export default function WaterHabit() {
@@ -157,9 +168,10 @@ export default function WaterHabit() {
         setNote(event.target.value);
     };
 
-    const handleOpenPopup = () => {
-        setShowPopup(true);
+    const handleCloseContainer = () => {
+        setIsVisible(false);
     };
+
 
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -196,6 +208,9 @@ export default function WaterHabit() {
 
     return (
         <WaterHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <CloseButton onClick={handleCloseContainer}>
+                <CloseIcon />
+            </CloseButton>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',

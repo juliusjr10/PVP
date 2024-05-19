@@ -17,6 +17,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import MyStopwatch from './StopWatch';
 import Divider from '@mui/material/Divider';
+import CloseIcon from '@mui/icons-material/Close';
 
 const MeditateHabitContainer = styled(Box)({
     position: 'fixed',
@@ -28,6 +29,15 @@ const MeditateHabitContainer = styled(Box)({
     transition: 'transform 0.3s ease-in-out',
     transform: 'translateX(100%) scaleX(1.5)',
     zIndex: 999,
+});
+
+const CloseButton = styled(Button)({
+    position: 'absolute',
+    top: 20,
+    right: 350,
+    minWidth: 'auto',
+    padding: 0,
+    color: '#333',
 });
 
 export default function MeditateHabit() {
@@ -159,6 +169,11 @@ export default function MeditateHabit() {
         setShowPopup(true);
     };
 
+    const handleCloseContainer = () => {
+        setIsVisible(false);
+    };
+
+
     const handleClosePopup = () => {
         setShowPopup(false);
     };
@@ -195,6 +210,9 @@ export default function MeditateHabit() {
     return (
 
         <MeditateHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <CloseButton onClick={handleCloseContainer}>
+                <CloseIcon />
+            </CloseButton>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',

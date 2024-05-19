@@ -15,6 +15,7 @@ import DialogActions from '@mui/material/DialogActions';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import CloseIcon from '@mui/icons-material/Close';
 import Divider from '@mui/material/Divider';
 
 
@@ -32,6 +33,14 @@ const SmokingHabitContainer = styled(Box)({
 });
 
 
+const CloseButton = styled(Button)({
+    position: 'absolute',
+    top: 20,
+    right: 350,
+    minWidth: 'auto',
+    padding: 0,
+    color: '#333',
+});
 
 
 
@@ -160,9 +169,6 @@ export default function SmokingHabit() {
         setNote(event.target.value);
     };
 
-    const handleOpenPopup = () => {
-        setShowPopup(true);
-    };
 
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -178,6 +184,9 @@ export default function SmokingHabit() {
         }
     };
 
+    const handleCloseContainer = () => {
+        setIsVisible(false);
+    };
 
     const firstCheckInDate = checkIns.length > 0 ? new Date(checkIns[0].date) : null;
     const today = new Date();
@@ -199,6 +208,9 @@ export default function SmokingHabit() {
 
     return (
         <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <CloseButton onClick={handleCloseContainer}>
+                <CloseIcon />
+            </CloseButton>
             <Box sx={{ padding: '16px' }}>
                 <Box sx={{
                     textAlign: 'center',
