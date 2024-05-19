@@ -12,7 +12,7 @@ export default function AboutUs() {
 
         <Container
             sx={{
-                width: '50%',
+                width: '70%',
                 flexDirection: 'column',
                 marginBottom: '100px',
                 marginTop: '50px'
@@ -21,16 +21,16 @@ export default function AboutUs() {
             <Typography variant="h2" marginBottom='50px' fontWeight='400' fontStyle='italic'><b>About</b></Typography>
             <Box sx={{
                 margin: '0 auto',
-                rowGap: '20px',
-                columnGap: '1.33%',
-                display: 'grid',
-                gridTemplateColumns:'repeat(auto-fill, 250px)',
+                gap: '2%',
+                display:'flex',
+                flexWrap: 'wrap',
                 justifyContent: 'space-around',
                 marginBottom: '10px'
             }}>
                 <Box className='bubbleHover' sx={{
-                    width: '250px',
-                    height: '350px',
+                    width: '27vh',
+                    height: '38vh',
+                    marginBottom:"20px",
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
@@ -43,11 +43,12 @@ export default function AboutUs() {
                     </Box>
                 </Box>
                 <Box className='bubbleHover' sx={{
-                    width: '250px',  
-                    height: '350px',
+                    width: '27vh',
+                    height: '38vh',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
+                    marginBottom: "20px",
                 }}>
                     <Typography margin='10px' variant='h4'>CONNECT</Typography>
                     <Box>
@@ -56,16 +57,17 @@ export default function AboutUs() {
                     </Box>
                 </Box>
                 <Box className='bubbleHover' sx={{
-                    width: '250px',
-                    height: '350px',
+                    width: '27vh',
+                    height: '38vh',
                     boxShadow: '0px 0px 5px 1px rgba(0,0,0,0.25)',
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
+                    marginBottom: "20px",
                 }}>
                     <Typography margin='10px' marginBottom='50px' variant='h4'>CHALLENGE</Typography>
                     <Box>
                         <img src={Challenge} alt="Challenge" />
-                        <Typography marginBottom='10px' marginTop='43px'><u>Challenge</u> other people!</Typography>
+                        <Typography marginBottom='10px' marginTop='4vh'><u>Challenge</u> other people!</Typography>
                     </Box>
                 </Box>
             </Box>
