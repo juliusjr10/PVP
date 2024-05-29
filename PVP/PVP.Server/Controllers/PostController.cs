@@ -60,5 +60,85 @@ namespace PVP.Server.Controllers
             }
             return Ok(result);
         }
+        [HttpPost("likepost")]
+        public async Task<ActionResult> LikePost(int postId, ReactionType reaction)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            string userId = token.Issuer;
+
+            bool result = await _postService.LikePost(postId, userId, reaction);
+            if (!result)
+            {
+                return BadRequest(new { message = "Failed to like post" });
+            }
+            return Ok(new { message = "Post liked successfully" });
+        }
+        [HttpGet("likecount")]
+        public async Task<ActionResult<int>> GetLikesCountByReactionTypeAndPostId(int postId, ReactionType reaction)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int likesCount = await _postService.GetLikesCountByReactionTypeAndPostId(postId, reaction);
+            return Ok(likesCount);
+        }
+        [HttpDelete("deletelike")]
+        public async Task<ActionResult<bool>> DeleteLikeByPostIdAndUserId(int postId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            string userId = token.Issuer;
+            bool result = await _postService.DeleteLikeByPostIdAndUserId(postId, userId);
+            if (!result)
+            {
+                return BadRequest(new { message = "Failed to delete like" });
+            }
+            return Ok(new { message = "Like deleted successfully" });
+        }
+        [HttpGet("reactionscount/{postId}")]
+        public async Task<ActionResult<int>> GetAllReactionsCountByPostId(int postId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int reactionsCount = await _postService.GetAllReactionsCountByPostId(postId);
+            return Ok(reactionsCount);
+        }
+
     }
 }

@@ -9,5 +9,9 @@ namespace PVP.Server.Helpers.Interfaces
         Task<bool?> DeletePost(DeletePostDTO dto, int userid);
         Task<ICollection<Post>?> GetAllPosts(int groupid);
         Task<Post?> GetPostById(int id);
+        Task<bool> LikePost(int postId, string userId, ReactionType reaction);
+        Task<int> GetLikesCountByReactionTypeAndPostId(int postId, ReactionType reaction);
+        Task<bool> DeleteLikeByPostIdAndUserId(int postId, string userId);
+        Task<int> GetAllReactionsCountByPostId(int postId);
     }
 }

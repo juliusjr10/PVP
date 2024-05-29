@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { format } from 'date-fns';
-import '../CalendarMoods.css';
+import '../CalendarMoods.css'; // Ensure this CSS file handles necessary styling
 
 const MyCalendar = ({ checkedDates, onCheckDate, onDateClick }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -12,36 +12,63 @@ const MyCalendar = ({ checkedDates, onCheckDate, onDateClick }) => {
         setSelectedDate(date);
     };
 
-    const tileClassName = ({ date }) => {
-        const formattedDate = format(date, 'yyyy-MM-dd');
-        const checkedDate = checkedDates.find(item => item.date === formattedDate);
+    const tileContent = ({ date, view }) => {
+        if (view === 'month') { // Only modify month view tiles
+            const formattedDate = format(date, 'yyyy-MM-dd');
+            const checkedDate = checkedDates.find(item => item.date === formattedDate);
 
-        if (checkedDate) {
-            const mood = checkedDate.mood;
-            let moodClass = '';
+            if (checkedDate) {
+                const mood = checkedDate.mood;
+                let emoji = '';
 
-            switch (mood) {
-                case 0:
-                    moodClass = 'awful';
-                    break;
-                case 1:
-                    moodClass = 'bad';
-                    break;
-                case 2:
-                    moodClass = 'meh';
-                    break;
-                case 3:
-                    moodClass = 'good';
-                    break;
-                case 4:
-                    moodClass = 'excellent';
-                    break;
-                default:
-                    break;
+                switch (mood) {
+                    case 0:
+                        emoji = '😡'; // Awful
+                        break;
+                    case 1:
+                        emoji = '😞'; // Bad
+                        break;
+                    case 2:
+                        emoji = '😐'; // Meh
+                        break;
+                    case 3:
+                        emoji = '😊'; // Good
+                        break;
+                    case 4:
+                        emoji = '😁'; // Excellent
+                        break;
+                    default:
+                        break;
+                }
+
+                return <div className="emoji-tile">{emoji}</div>;
             }
+        }
 
-            console.log('Mood class:', moodClass); // Log the mood class
-            return moodClass;
+        return null;
+    };
+
+    const tileClassName = ({ date, view }) => {
+        if (view === 'month') { // Only apply classes for month view
+            const formattedDate = format(date, 'yyyy-MM-dd');
+            const checkedDate = checkedDates.find(item => item.date === formattedDate);
+
+            if (checkedDate) {
+                switch (checkedDate.mood) {
+                    case 0:
+                        return 'awful';
+                    case 1:
+                        return 'bad';
+                    case 2:
+                        return 'meh';
+                    case 3:
+                        return 'good';
+                    case 4:
+                        return 'excellent';
+                    default:
+                        return '';
+                }
+            }
         }
 
         return '';
@@ -58,6 +85,7 @@ const MyCalendar = ({ checkedDates, onCheckDate, onDateClick }) => {
                 minDate={new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)} // 30 days before today
                 maxDate={new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)} // 30 days after today
                 value={selectedDate}
+                tileContent={tileContent}
                 tileClassName={tileClassName}
                 onClickDay={handleDayClick} // Call handleDayClick when a day is clicked
             />

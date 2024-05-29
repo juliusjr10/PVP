@@ -55,5 +55,72 @@ namespace PVP.Server.Helpers.Services
             if (group == null) { return null; }
             return group;
         }
+        public async Task<bool> LikePost(int postId, string userId, ReactionType reaction)
+        {
+            // Check if the post exists
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null)
+            {
+                return false; // Post not found
+            }
+
+            // Check if the user has already liked this post
+            var existingLike = await _context.Likes
+                .FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == userId);
+
+            if (existingLike != null)
+            {
+                // Update the reaction if the user has already liked the post
+                existingLike.Reaction = reaction;
+            }
+            else
+            {
+                // Add a new like
+                var like = new Like
+                {
+                    PostID = postId,
+                    UserID = userId,
+                    Reaction = reaction,
+                    Timestamp = DateTime.Now
+                };
+
+                await _context.Likes.AddAsync(like);
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<int> GetLikesCountByReactionTypeAndPostId(int postId, ReactionType reaction)
+        {
+            var likesCount = await _context.Likes
+                .Where(l => l.PostID == postId && l.Reaction == reaction)
+                .CountAsync();
+            return likesCount;
+        }
+        public async Task<bool> DeleteLikeByPostIdAndUserId(int postId, string userId)
+        {
+            // Check if the like exists
+            var like = await _context.Likes
+                .FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == userId);
+
+            if (like == null)
+            {
+                return false; // Like not found
+            }
+
+            _context.Likes.Remove(like);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<int> GetAllReactionsCountByPostId(int postId)
+        {
+            // Get the count of likes for the specified post
+            var likesCount = await _context.Likes
+                .Where(l => l.PostID == postId)
+                .CountAsync();
+
+            return likesCount;
+        }
+
     }
 }

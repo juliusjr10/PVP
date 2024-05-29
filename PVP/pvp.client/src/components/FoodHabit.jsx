@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -278,11 +278,11 @@ export default function SmokingHabit() {
                             }}
                         />
                         <Select value={selectedMood} onChange={handleMoodChange} style={{ width: '100%' }}>
-                            <MenuItem value={0} style={{ color: '#f44336' }}>Awful</MenuItem>
-                            <MenuItem value={1} style={{ color: '#e57373' }}>Bad</MenuItem>
-                            <MenuItem value={2} style={{ color: '#f57c00' }}>Meh</MenuItem>
-                            <MenuItem value={3} style={{ color: '#81c784' }}>Good</MenuItem>
-                            <MenuItem value={4} style={{ color: '#388e3c' }}>Excellent</MenuItem>
+                            <MenuItem value={0} style={{ color: '#f44336' }}>😡 Awful</MenuItem>
+                            <MenuItem value={1} style={{ color: '#e57373' }}>😞 Bad</MenuItem>
+                            <MenuItem value={2} style={{ color: '#f57c00' }}>😐 Meh</MenuItem>
+                            <MenuItem value={3} style={{ color: '#81c784' }}>😊 Good</MenuItem>
+                            <MenuItem value={4} style={{ color: '#388e3c' }}>😁 Excellent</MenuItem>
                         </Select>
                     </DialogContent>
 
