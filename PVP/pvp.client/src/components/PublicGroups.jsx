@@ -5,17 +5,28 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
 
 const Container = styled(Box)({
     padding: '20px',
     minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+});
+
+const GroupsContainer = styled(Box)({
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '20px',
+    width: '100%',
 });
 
 const StyledCard = styled(Card)(({ theme }) => ({
     transition: 'transform 0.3s, box-shadow 0.3s',
+    width: '300px',
     '&:hover': {
         transform: 'scale(1.05)',
         boxShadow: theme.shadows[6],
@@ -47,8 +58,17 @@ const PublicGroups = ({ publicGroups }) => {
                             body: JSON.stringify({ groupId: group.groupID }),
                             credentials: 'include',
                         });
-                        const isMember = await response.json();
-                        newMembershipMap.set(group.groupID, isMember);
+
+                        if (response.ok) {
+                            try {
+                                const isMember = await response.json();
+                                newMembershipMap.set(group.groupID, isMember);
+                            } catch (error) {
+                                console.error('Error parsing JSON:', error);
+                            }
+                        } else {
+                            console.error('Error fetching membership status:', response.statusText);
+                        }
                     });
 
                     await Promise.all(fetchStatus);
@@ -91,37 +111,35 @@ const PublicGroups = ({ publicGroups }) => {
     }
 
     return (
-        <Container sx={{width: "50%"} }>
+        <Container>
             {publicGroups && publicGroups.length > 0 ? (
                 <>
                     <Typography variant="h4" gutterBottom align="center">
                         Public Groups
                     </Typography>
-                    <Grid container spacing={4} pl="200px">
+                    <GroupsContainer>
                         {publicGroups.map((group) => (
-                            <Grid item xs={12} sm={6} md={4} key={group.groupID}>
-                                <StyledCard>
-                                    <StyledCardContent>
-                                        <Typography variant="h6" component="div">
-                                            {group.name}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1, marginBottom: 2 }}>
-                                            {group.description}
-                                        </Typography>
-                                        {!membershipMap.get(group.groupID) && (
-                                            <StyledButton
-                                                variant="contained"
-                                                color="primary"
-                                                onClick={() => handleJoinGroup(group.groupID)}
-                                            >
-                                                Join Group
-                                            </StyledButton>
-                                        )}
-                                    </StyledCardContent>
-                                </StyledCard>
-                            </Grid>
+                            <StyledCard key={group.groupID}>
+                                <StyledCardContent>
+                                    <Typography variant="h6" component="div">
+                                        {group.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1, marginBottom: 2 }}>
+                                        {group.description}
+                                    </Typography>
+                                    {!membershipMap.get(group.groupID) && (
+                                        <StyledButton
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleJoinGroup(group.groupID)}
+                                        >
+                                            Join Group
+                                        </StyledButton>
+                                    )}
+                                </StyledCardContent>
+                            </StyledCard>
                         ))}
-                    </Grid>
+                    </GroupsContainer>
                 </>
             ) : (
                 <Typography variant="h6" align="center">No Public Groups Available</Typography>
