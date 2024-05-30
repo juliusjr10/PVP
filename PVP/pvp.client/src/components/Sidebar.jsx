@@ -141,58 +141,73 @@ export default function PersistentDrawerLeft() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        HabitBook
-                    </Typography>
+                    <Link to="/habitspage" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Typography variant="h6" noWrap component="div">
+                            HabitBook
+                        </Typography>
+                    </Link>
                     <Typography variant="h6" noWrap component="div" sx={{ pl: 20, pr:20, color: '#F3E7FF', maxWidth: '1200px' }}>
                         <marquee direction="left" style={{ width: '100%', scrollamount:'10' }} >
                             <span>
-                                Jessica Ennis-Hill: The only one who can tell you "you cannot win" is you and you do not have to listen.
+                                Jessica Ennis-Hill: The only one who can tell you "you cannot win" is you and you do not have to listen. 
                             </span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Gertrude Ederle    : I just knew if it could be done, it had to be done, and I did it.
+                                Gertrude Ederle    : I just knew if it could be done, it had to be done, and I did it. 
                             </span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Jackie Joyner-Kersee: Age is no barrier. It is a limitation you put on your mind.
+                                Jackie Joyner-Kersee: Age is no barrier. It is a limitation you put on your mind. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Ray Lewis: No matter the circumstances that you may be going through, just push through it.
+                                Ray Lewis: No matter the circumstances that you may be going through, just push through it. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Becky Sauerbrunn: The past does not matter. Take today.
+                                Becky Sauerbrunn: The past does not matter. Take today. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Shannon Miller: There is always going to be a reason why you cannot do something; your job is to constantly look for the reasons why you can achieve your dreams.
+                                Shannon Miller: There is always going to be a reason why you cannot do something; your job is to constantly look for the reasons why you can achieve your dreams. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Dwayne "The Rock" Johnson: If something stands between you and your success, move it. Never be denied.
+                                Dwayne "The Rock" Johnson: If something stands between you and your success, move it. Never be denied. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Matt Biondi: Persistence can change failure into extraordinary achievement.
+                                Matt Biondi: Persistence can change failure into extraordinary achievement. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Frederick Douglass: If there is no struggle, there is no progress.
+                                Frederick Douglass: If there is no struggle, there is no progress. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Nido Qubein: Change brings opportunity.
+                                Nido Qubein: Change brings opportunity. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                            <span> 
+                                Deborah Day: Recognizing that you are not where you want to be is a starting point to begin changing your life. 
+                            </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Deborah Day: Recognizing that you are not where you want to be is a starting point to begin changing your life.
+                                Amanda Gorman: Change is made of choices, and choices are made of character. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Amanda Gorman: Change is made of choices, and choices are made of character.
+                                George Bernard Shaw: Life is not about finding yourself. Life is about creating yourself. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                George Bernard Shaw: Life is not about finding yourself. Life is about creating yourself.
+                                Mahatma Gandhi: We must become the change we want to see. 
                             </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                             <span>
-                                Mahatma Gandhi: We must become the change we want to see.
+                                Shakespeare: To climb steep hills requires a slow pace at first. 
                             </span>
-                            <span>
-                                Shakespeare: To climb steep hills requires a slow pace at first.
-                            </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                         </marquee>
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
