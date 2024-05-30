@@ -299,7 +299,54 @@ const AddHabitCard = ({ addUserHabit }) => {
                     </Box>
                 </>
             );
-        } else {
+        }
+        else if (selectedHabit === 6) { // Reading habit
+                return (
+                    <>
+                        <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
+                            Goal
+                        </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px', marginLeft: '3px' }}>
+                            <TextField
+                                type="number"
+                                variant="outlined"
+                                fullWidth
+                                value={tempSelectedValue}
+                                onChange={(e) => setTempSelectedValue(e.target.value)}
+                                InputProps={{ inputProps: { min: 1 } }} // Set minimum value to 1
+                            />
+                            <FormControl sx={{ minWidth: 120 }}>
+                                <Select
+                                    value={tempSelectedUnit}
+                                    onChange={(e) => setTempSelectedUnit(e.target.value)}
+                                    fullWidth
+                                >
+                                    <MenuItem value="Pages">
+                                        Pages
+                                    </MenuItem>
+                                    <MenuItem value="mins">Mins</MenuItem>
+                                    <MenuItem value="hours">
+                                        Hours
+                                    </MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl sx={{ minWidth: 130 }}>
+                                <Select
+                                    value={tempSelectedGoal}
+                                    onChange={(e) => setTempSelectedGoal(e.target.value)}
+                                    fullWidth
+                                >
+                                    <MenuItem value="Per day">
+                                        Per day
+                                    </MenuItem>
+                                    <MenuItem value="Per week">Per week</MenuItem>
+                                    <MenuItem value="Per month">Per month</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </>
+                );
+            } else {
             return null;
         }
     };

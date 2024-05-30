@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddHabitCard from '../components/AddHabitCard';
 import SmokingCard from '../components/SmokingCard';
 import MeditateCard from '../components/MeditateCard';
+import ReadingCard from '../components/ReadingCard';
 import AlcoholCard from '../components/AlcoholCard';
 import WaterCard from '../components/WaterCard';
 import FoodCard from '../components/FoodCard';
@@ -9,6 +10,7 @@ import SmokingHabit from '../components/SmokingHabit';
 import FoodHabit from '../components/FoodHabit';
 import WaterHabit from '../components/WaterHabit';
 import MeditateHabit from '../components/MeditateHabit';
+import ReadingHabit from '../components/ReadingHabit';
 import AlcoholHabit from '../components/AlcoholHabit';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -21,6 +23,7 @@ export default function HabitBar() {
     const [showFoodHabit, setShowFoodHabit] = useState(false); // State to manage visibility of FoodHabit
     const [showWaterHabit, setShowWaterHabit] = useState(false); // State to manage visibility of WaterHabit
     const [showMeditateHabit, setShowMeditateHabit] = useState(false); // State to manage visibility of MeditateHabit
+    const [showReadingHabit, setShowReadingHabit] = useState(false); // State to manage visibility of ReadingHabit
     const [showAlcoholHabit, setShowAlcoholHabit] = useState(false); // State to manage visibility of AlcoholHabit
 
     useEffect(() => {
@@ -91,6 +94,9 @@ export default function HabitBar() {
             if (habitId === 5) { // Alcohol habitId
                 setShowAlcoholHabit(false);
             }
+            if (habitId === 6) { // Reading habitId
+                setShowReadingHabit(false);
+            }
             setOpen(false); // Always close the sidebar
         } catch (error) {
             console.error('Error deleting habit:', error);
@@ -103,6 +109,7 @@ export default function HabitBar() {
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowReadingHabit(false); // Close ReadingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
@@ -112,6 +119,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowReadingHabit(false); // Close ReadingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
@@ -121,6 +129,7 @@ export default function HabitBar() {
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowFoodHabit(false); // Close FoodHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowReadingHabit(false); // Close ReadingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
@@ -128,6 +137,7 @@ export default function HabitBar() {
     const toggleMeditateHabit = () => {
         setShowMeditateHabit(prev => !prev);
         setShowSmokingHabit(false); // Close SmokingHabit
+        setShowReadingHabit(false); // Close ReadingHabit
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
@@ -138,7 +148,16 @@ export default function HabitBar() {
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowMeditateHabit(false); // Close MeditateHabit
+        setShowReadingHabit(false); // Close ReadingHabit
         setShowSmokingHabit(false); // Close SmokingHabit
+    };
+    const toggleReadingHabit = () => {
+        setShowReadingHabit(prev => !prev);
+        setShowFoodHabit(false); // Close FoodHabit
+        setShowWaterHabit(false); // Close WaterHabit
+        setShowMeditateHabit(false); // Close MeditateHabit
+        setShowSmokingHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
     const allHabitsPresent = userHabits.length === 5;
@@ -229,6 +248,16 @@ export default function HabitBar() {
                                     />
                                 </Box>
                             );
+                        case 6: // Reading
+                            return (
+                                <Box key={index}>
+                                    <ReadingCard
+                                        onClick={toggleReadingHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Box>
+                            );
                         default:
                             return null;
                     }
@@ -249,10 +278,12 @@ export default function HabitBar() {
                 {showFoodHabit && (
                         <FoodHabit />
                 )}
-
                 {showAlcoholHabit && (
                         <AlcoholHabit />
 
+                )}
+                {showReadingHabit && (
+                    <ReadingHabit />
                 )}
             </Box>
         </Box>

@@ -271,7 +271,7 @@ const GroupInformation = ({ groupData }) => {
     return (
         <Box sx={{ position: 'relative', top: -50, width: '100%' }}>
             <MainFeaturedGroup post={mainFeaturedGroup} />
-            <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px', left: '1100px' }}>Leave Group</Button>
+            <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px', float: 'right' }}>Leave Group</Button>
             <Grid container spacing={3} marginTop={2}>
                 <Grid item xs={6} style={{ marginLeft: '300px' }}>
                     <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
@@ -281,8 +281,11 @@ const GroupInformation = ({ groupData }) => {
                             rows="4"
                             cols="40"
                             placeholder="Write your post here..."
+                            style={{ border: '1px solid #7830ED', borderRadius: '5px', width: '100%' }}
                         />
-                        <button onClick={handlePostSubmit}>Send</button>
+                        <button style={{ width: '100%', marginTop: '20px' }} onClick={handlePostSubmit}>Send</button>
+                    </Paper>
+                    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                         {posts.slice().reverse().map((post) => (
                             <Paper key={post.postID} elevation={3} style={{ position: 'relative', padding: '20px', marginTop: '20px' }}>
                                 <Typography variant="body1"><strong>{post.user.username}</strong> </Typography>

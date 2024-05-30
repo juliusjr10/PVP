@@ -99,6 +99,11 @@ namespace PVP.Server.Data
                 Id = 5,
                 Name = "Alcohol Habit"
             };
+            var sixthHabit = new Habit()
+            {
+                Id = 6,
+                Name = "Reading Habit"
+            };
             var checkIns = new List<CheckIn>() { };
             DateTime currentDate  = DateTime.ParseExact("2024 05 06 12:00", "yyyy MM dd HH:mm", null).Date;
             Random random = new Random();
