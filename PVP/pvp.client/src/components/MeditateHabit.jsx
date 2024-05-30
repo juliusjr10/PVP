@@ -45,8 +45,12 @@ export default function MeditateHabit() {
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
     const [note, setNote] = useState('');
-    const [showPopup, setShowPopup] = useState(false); // State for showing popup
-    const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [goal, setGoal] = useState('');
+    const [frequency, setFrequency] = useState('');
+    const [time, setTime] = useState('');
+    const [userHabitId, setUserHabitId] = useState(null);
 
     useEffect(() => {
         setIsVisible(true);
@@ -72,6 +76,50 @@ export default function MeditateHabit() {
 
         fetchCheckIns();
     }, []);
+    useEffect(() => {
+        const fetchHabitId = async () => {
+            try {
+                const response = await fetch('https://localhost:7200/api/Habits/gethabituseridbyhabitidanduserid?habitId=2', {
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch habitId');
+                }
+                const data = await response.json();
+                console.log("aaaaaaa" + data.habitUserId);
+                setUserHabitId(data.habitUserId); // Assuming the habitId is returned as 'HabitUserId'
+            } catch (error) {
+                console.error('Error fetching habitId:', error);
+            }
+        };
+        fetchHabitId();
+    }, []);
+
+
+    useEffect(() => {
+        if (userHabitId !== null) {
+            const fetchGoalFrequencyTime = async () => {
+                try {
+                    console.log("Id yra = "+userHabitId);
+                    const response = await fetch(`https://localhost:7200/api/Habits/getgoalfrequencytime/${userHabitId}`, {
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch goal, frequency, and time');
+                    }
+                    const data = await response.json();
+                    setGoal(data.goal);
+                    setFrequency(data.frequency);
+                    setTime(data.time);
+                } catch (error) {
+                    console.error('Error fetching goal, frequency, and time:', error);
+                }
+            };
+            fetchGoalFrequencyTime();
+        }
+    }, [userHabitId]);
 
     const streakDays = () => {
         let streak = 0;
@@ -154,7 +202,7 @@ export default function MeditateHabit() {
 
     const handleCheckCurrentDate = async () => {
         handleCheckDate(selectedDate, selectedMood, note);
-        setShowPopup(false); // Close the popup after checking in
+        setShowPopup(false);
     };
 
     const handleMoodChange = event => {
@@ -173,7 +221,6 @@ export default function MeditateHabit() {
         setIsVisible(false);
     };
 
-
     const handleClosePopup = () => {
         setShowPopup(false);
     };
@@ -187,7 +234,6 @@ export default function MeditateHabit() {
             setShowPopup(true);
         }
     };
-
 
     const firstCheckInDate = checkIns.length > 0 ? new Date(checkIns[0].date) : null;
     const today = new Date();
@@ -208,7 +254,6 @@ export default function MeditateHabit() {
     }
 
     return (
-
         <MeditateHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
             <CloseButton onClick={handleCloseContainer}>
                 <CloseIcon />
@@ -222,6 +267,14 @@ export default function MeditateHabit() {
                         Meditation
                     </Typography>
                     <Divider />
+                </Box>
+                <Box sx={{
+                    textAlign: 'center',
+                    mt: '10px',
+                    mb: '20px'
+                }}>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Your goal:</Typography>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Meditate {goal} {frequency.toLowerCase()} {time.toLowerCase()}</Typography>
                 </Box>
                 <Box
                     sx={{

@@ -22,9 +22,8 @@ namespace PVP.Server.Helpers.Services
         {
             HabitUser habitUser;
 
-            if (isGoal)
-            {
-                habitUser = new GoalHabitUser
+
+                habitUser = new HabitUser
                 {
                     UserId = userId,
                     HabitId = habitId,
@@ -32,15 +31,6 @@ namespace PVP.Server.Helpers.Services
                     Frequency = frequency,
                     Time = time
                 };
-            }
-            else
-            {
-                habitUser = new HabitUser
-                {
-                    UserId = userId,
-                    HabitId = habitId
-                };
-            }
 
             await _context.HabitUser.AddAsync(habitUser);
             await _context.SaveChangesAsync();
@@ -163,7 +153,43 @@ namespace PVP.Server.Helpers.Services
                 return null; // Return null if an error occurs
             }
         }
+        public async Task<(int? Goal, string Frequency, string Time)?> GetGoalFrequencyTimeByHabitUserId(int habitUserId)
+        {
+            try
+            {
+                var habitUser = await _context.HabitUser
+                    .FirstOrDefaultAsync(hu => hu.Id == habitUserId);
 
+                if (habitUser == null)
+                {
+                    return null; // If the habit user is not found or is not a GoalHabitUser, return null
+                }
+
+                return (habitUser.Goal, habitUser.Frequency, habitUser.Time);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if needed
+                Console.WriteLine($"Error fetching goal, frequency, and time: {ex.Message}");
+                return null; // Return null in case of an error
+            }
+        }
+        public async Task<int?> GetHabitUserIdByHabitIdAndUserId(int userId, int habitId)
+        {
+            try
+            {
+                var habitUser = await _context.HabitUser
+                    .FirstOrDefaultAsync(hu => hu.UserId == userId && hu.HabitId == habitId);
+
+                return habitUser?.Id;
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions if needed
+                Console.WriteLine($"Error fetching HabitUserId by HabitId and UserId: {ex.Message}");
+                return null; // Return null if an error occurs
+            }
+        }
 
 
     }

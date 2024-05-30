@@ -219,6 +219,66 @@ namespace PVP.Server.Controllers
                 return NotFound(); // Return 404 Not Found if the habit is not found
             }
         }
+        [HttpGet("getgoalfrequencytime/{habitUserId}")]
+        public async Task<IActionResult> GetGoalFrequencyTimeByHabitUserId(int habitUserId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            int userID = int.Parse(token.Issuer);
+
+            // Call the service method
+            var result = await _habitService.GetGoalFrequencyTimeByHabitUserId(habitUserId);
+
+            if (result == null)
+            {
+                return NotFound(new { message = "Habit user not found or is not a goal-based habit user." });
+            }
+
+            var (goal, frequency, time) = result.Value;
+            return Ok(new { Goal = goal, Frequency = frequency, Time = time });
+        }
+        [HttpGet("gethabituseridbyhabitidanduserid")]
+        public async Task<IActionResult> GetHabitUserIdByHabitIdAndUserId(int habitId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            // Extract userId from the token
+            int userId = int.Parse(token.Issuer);
+
+
+            // Call the service method to get the HabitUserId
+            var habitUserId = await _habitService.GetHabitUserIdByHabitIdAndUserId(userId, habitId);
+
+            if (habitUserId.HasValue)
+            {
+                return Ok(new { HabitUserId = habitUserId.Value });
+            }
+            else
+            {
+                return NotFound(new { message = "Habit user not found." });
+            }
+        }
+
 
     }
 }
