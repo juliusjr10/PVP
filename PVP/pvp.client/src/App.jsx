@@ -15,6 +15,7 @@ import ChangePassword from './pages/ChangePassword';
 import AchievementsPage from './pages/AchievementsPage';
 import Friends from './pages/FriendsPage';
 import Challenges from './pages/ChallengesPage';
+import ReportsPage from './pages/ReportsPage';
 import './App.css';
 export default function App() {
     const [loading, setLoading] = useState(true); // Indicates whether authentication status is being checked
@@ -94,6 +95,7 @@ export default function App() {
                             <Route path="/groups/:groupid" element={<SingleGroup />} />
                             <Route path="/friends" element={<Friends />} />
                             <Route path="/challenges" element={<Challenges />} />
+                            <Route path="/reports" element={<ReportsPage />} />
                         <Route index element={<Navigate to="/habitspage" />} />
                         <Route path="*" element={<Navigate to="/habitspage" />} />
                     </>

@@ -24,6 +24,7 @@ import Avatar from '@mui/material/Avatar';
 import AchIcon from '@mui/icons-material/EmojiEvents';
 import PeopleIcon from '@mui/icons-material/People';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const drawerWidth = 400;
 
@@ -241,7 +242,8 @@ export default function PersistentDrawerLeft() {
                         { text: 'Groups', link: '/groups', icon: <GroupsIcon /> },
                         { text: 'Friends', link: '/friends', icon: <PeopleIcon /> },
                         { text: 'Challenges', link: '/challenges', icon: <SportsScoreIcon />},
-                        { text: 'Achievements', link: '/achievementspage', icon: <AchIcon /> }].map((item) => (
+                        { text: 'Achievements', link: '/achievementspage', icon: <AchIcon /> },
+                        { text: 'Reports', link: '/reports', icon: <AssessmentIcon /> }].map((item) => (
                             <ListItem key={item.text} disablePadding >
                                 <ListItemButton
                                     component={Link}

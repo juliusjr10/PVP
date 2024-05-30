@@ -1,0 +1,4 @@
+.postContent {
+    word-wrap: break-word; /* Ensure long words break and wrap to the next line */
+    overflow-wrap: break-word; /* Compatibility with different browsers */
+}

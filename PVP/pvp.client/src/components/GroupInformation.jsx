@@ -11,6 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MainFeaturedGroup from './MainFeaturedGroup';
+import Avatar from '@mui/material/Avatar';
 
 const GroupInformation = ({ groupData }) => {
     const [posts, setPosts] = useState([]);
@@ -81,6 +82,7 @@ const GroupInformation = ({ groupData }) => {
             console.error('Error fetching user reactions:', error);
         }
     };
+
     const leaveGroup = async () => {
         try {
             const response = await fetch(`https://localhost:7200/api/group/leavegroup/${groupData.groupID}`, {
@@ -98,7 +100,6 @@ const GroupInformation = ({ groupData }) => {
             console.error('Error leaving the group:', error);
         }
     };
-
 
     const handleLeaveConfirmation = () => {
         setOpenConfirmation(true);
@@ -153,6 +154,7 @@ const GroupInformation = ({ groupData }) => {
             }));
         }
     };
+
     const fetchReactionsCount = async (postId) => {
         try {
             const response = await fetch(`https://localhost:7200/api/post/reactionscount/${postId}`, {
@@ -209,10 +211,6 @@ const GroupInformation = ({ groupData }) => {
         }
     };
 
-
-    // Function to remove user reaction
-    // Function to remove user reaction
-    // Function to remove user reaction
     const deleteReaction = async (postId) => {
         try {
             const response = await fetch(`https://localhost:7200/api/Post/deletelike?postId=${postId}`, {
@@ -241,11 +239,6 @@ const GroupInformation = ({ groupData }) => {
         }
     };
 
-
-
-
-
-
     const mainFeaturedGroup = {
         title: groupData.name,
         description: groupData.description,
@@ -273,21 +266,26 @@ const GroupInformation = ({ groupData }) => {
                     <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                         {posts.slice().reverse().map((post) => (
                             <Paper key={post.postID} elevation={3} style={{ position: 'relative', padding: '20px', marginTop: '20px' }}>
-                                <Typography variant="body1"><strong>{post.user.username}</strong> </Typography>
-                                <Typography variant="body1">{post.content}</Typography>
-                                <Typography variant="caption" color="textSecondary">
-                                    {new Date(post.timestamp).toLocaleString()}
-                                </Typography>
+                                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                                    <Avatar sx={{ width: 64, height: 64, marginRight: '16px' }} src={`https://source.unsplash.com/random?wallpapers${post.id}`} />
+                                    <div>
+                                        <Typography variant="body1"><strong>{post.user.username}</strong></Typography>
+                                        <Typography variant="caption" color="textSecondary">{new Date(post.timestamp).toLocaleString()}</Typography>
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'right', marginLeft: '12%', marginBottom: '20px' }}>
+                                    <Typography variant="body1">{post.content}</Typography>
+                                </div>
                                 {!userReactions[post.postID] && !showReactionOptions[post.postID] && (
+                                    <div style={{ display: 'flex', alignItems: 'right', marginLeft: '80%' }}>
                                     <Button
                                         onClick={() => toggleReactionOptions(post.postID, true)}
                                         style={{ position: 'absolute', bottom: '1px' }}
                                     >
                                         Like
-                                    </Button>
-
+                                        </Button>
+                                    </div>
                                 )}
-
                                 {showReactionOptions[post.postID] && (
                                     <div>
                                         {!userReactions[post.postID] && (
@@ -298,21 +296,14 @@ const GroupInformation = ({ groupData }) => {
                                         )}
                                     </div>
                                 )}
-
-
-
                                 <Typography variant="caption" color="textSecondary" style={{ position: 'absolute', bottom: 0, right: 0 }}>
                                     Reactions: {reactionsCounts[post.postID] || 0}
                                 </Typography>
-                                {/* Render the user's reaction */}
                                 {userReactions[post.postID] && (
                                     <Typography variant="caption" color="textSecondary" style={{ position: 'absolute', bottom: 0, left: 0 }}>
                                         You reacted: {userReactions[post.postID] === 1 ? '👍' : '❤️'}
-                                        {userReactions[post.postID] && (
-                                            <Button onClick={() => deleteReaction(post.postID)}>Undo Reaction</Button>
-                                        )}
+                                        <Button onClick={() => deleteReaction(post.postID)}>Undo Reaction</Button>
                                     </Typography>
-
                                 )}
                             </Paper>
                         ))}
@@ -333,7 +324,6 @@ const GroupInformation = ({ groupData }) => {
             </Dialog>
         </Box>
     );
-
 };
 
 GroupInformation.propTypes = {
@@ -348,4 +338,3 @@ GroupInformation.propTypes = {
 };
 
 export default GroupInformation;
-
