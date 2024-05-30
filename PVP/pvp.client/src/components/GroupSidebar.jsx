@@ -169,19 +169,6 @@ const GroupSidebar = ({ onSelectGroup }) => {
                         value={groupInfo.description}
                         onChange={(e) => setGroupInfo({ ...groupInfo, description: e.target.value })}
                     />
-                    <TextField
-                        select
-                        margin="dense"
-                        id="group-privacy-level"
-                        label="Privacy Level"
-                        fullWidth
-                        value={groupInfo.privacyLevel}
-                        onChange={(e) => setGroupInfo({ ...groupInfo, privacyLevel: e.target.value })}
-                    >
-                        <MenuItem value="InviteOnly">Invite Only</MenuItem>
-                        <MenuItem value="Public">Public</MenuItem>
-                        {/* Add more options as needed */}
-                    </TextField>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleDialogClose}>Cancel</Button>
