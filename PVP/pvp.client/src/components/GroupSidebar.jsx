@@ -76,26 +76,18 @@ const GroupSidebar = ({ onSelectGroup }) => {
         <Container>
             <SidebarContent>
                 <List>
-                    <Typography variant="h6">
+                    <Typography style={{marginTop:"80px",paddingBottom:"30px"}} variant="h6">
                         My Groups
                     </Typography>
                     {userGroups.map((group) => (
-                        <StyledListItem sx={{ backgroundColor: "#5a00ec", borderRadius: "5px" }} key={group.groupID} button onClick={() => handleGroupClick(group.groupID)}>
+                        <StyledListItem sx={{ backgroundColor: "#5a00ec", borderRadius: "5px", marginBottom:"20px" }} key={group.groupID} button onClick={() => handleGroupClick(group.groupID)}>
                             <ListItemText sx={{ color: "#ffffff" }} primary={group.name} />
                         </StyledListItem>
                     ))}
                 </List>
             </SidebarContent>
-            <Button variant="contained" component={Link} to="/create-group" fullWidth>
+            <Button variant="contained" style={{ marginBottom: "30px" }} component={Link} to="/create-group" fullWidth>
                 Create New Group
-            </Button>
-            <Button
-                variant="outlined"
-                onClick={() => handleGroupClick(null)}
-                fullWidth
-                style={{ marginTop: '8px' }}
-            >
-                Show Public Groups
             </Button>
         </Container>
     );

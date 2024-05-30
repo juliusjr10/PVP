@@ -81,6 +81,8 @@ const AddHabitCard = ({ addUserHabit }) => {
             setTempSelectedValue(1);
         } else if (selectedHabit === 3) { // Water habit
             setTempSelectedValue(2000);
+        } else if (selectedHabit === 6) { // Reading habit
+            setTempSelectedValue(1);
         } else {
             setTempSelectedValue(3); // Default value
         }
@@ -168,10 +170,8 @@ const AddHabitCard = ({ addUserHabit }) => {
         }
     };
 
-
-
     const renderGoalSection = () => {
-        if (selectedHabit === 2) { // Meditation habit
+        if (selectedHabit === 2 || selectedHabit === 3 || selectedHabit === 6) { // Meditation, Water, or Reading habit
             return (
                 <>
                     <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
@@ -195,7 +195,9 @@ const AddHabitCard = ({ addUserHabit }) => {
                                 <MenuItem value="Times">
                                     Times
                                 </MenuItem>
-                                <MenuItem value="mins">Mins</MenuItem>
+                                {selectedHabit === 6 && <MenuItem value="mins">Mins</MenuItem>} {/* For the reading habit */}
+                                {selectedHabit !== 6 && <MenuItem value="Ml">Ml</MenuItem>} {/* For other habits */}
+                                {selectedHabit !== 6 && <MenuItem value="L">L</MenuItem>} {/* For other habits */}
                             </Select>
                         </FormControl>
                         <FormControl sx={{ minWidth: 130 }}>
@@ -205,7 +207,7 @@ const AddHabitCard = ({ addUserHabit }) => {
                                 fullWidth
                             >
                                 <MenuItem value="Per day">
-                                 Per day
+                                    Per day
                                 </MenuItem>
                                 <MenuItem value="Per week">Per week</MenuItem>
                                 <MenuItem value="Per month">Per month</MenuItem>
@@ -214,136 +216,7 @@ const AddHabitCard = ({ addUserHabit }) => {
                     </Box>
                 </>
             );
-        } else if (selectedHabit === 3) { // Water habit
-            return (
-                <>
-                    <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
-                        Goal
-                    </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px', marginLeft: '3px' }}>
-                        <TextField
-                            type="number"
-                            variant="outlined"
-                            fullWidth
-                            value={tempSelectedValue}
-                            onChange={(e) => setTempSelectedValue(e.target.value)}
-                            InputProps={{ inputProps: { min: 100 } }}
-                        />
-                        <FormControl sx={{ minWidth: 120 }}>
-                            <Select
-                                value={tempSelectedUnit}
-                                onChange={(e) => setTempSelectedUnit(e.target.value)}
-                                fullWidth
-                            >
-                                <MenuItem value="Ml">
-                                Ml
-                                </MenuItem>
-                                <MenuItem value="L">L</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ minWidth: 130 }}>
-                            <Select
-                                value={tempSelectedGoal}
-                                onChange={(e) => setTempSelectedGoal(e.target.value)}
-                                fullWidth
-                            >
-                                <MenuItem value="Per day">
-                                Per day
-                                </MenuItem>
-                                <MenuItem value="week">Per week</MenuItem>
-                                <MenuItem value="month">Per month</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </>
-            );
-        } else if (selectedHabit === 4) { // Food habit
-            return (
-                <>
-                    <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
-                        Goal
-                    </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px', marginLeft: '3px' }}>
-                        <TextField
-                            type="number"
-                            variant="outlined"
-                            fullWidth
-                            value={tempSelectedValue}
-                            onChange={(e) => setTempSelectedValue(e.target.value)}
-                            InputProps={{ inputProps: { min: 1 } }} // Set minimum value to 1
-                        />
-                        <FormControl sx={{ minWidth: 120 }}>
-                            <Select
-                                value={tempSelectedUnit}
-                                onChange={(e) => setTempSelectedUnit(e.target.value)}
-                                fullWidth
-                            >
-                                <MenuItem value="Times">
-                                Times
-                                </MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ minWidth: 130 }}>
-                            <Select
-                                value={tempSelectedGoal}
-                                onChange={(e) => setTempSelectedGoal(e.target.value)}
-                                fullWidth
-                            >
-                                <MenuItem value="Per day">
-                                Per day
-                                </MenuItem>
-                                <MenuItem value="Per week">Per week</MenuItem>
-                                <MenuItem value="Per month">Per month</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </>
-            );
-        }
-        else if (selectedHabit === 6) { // Reading habit
-                return (
-                    <>
-                        <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
-                            Goal
-                        </Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px', marginLeft: '3px' }}>
-                            <TextField
-                                type="number"
-                                variant="outlined"
-                                fullWidth
-                                value={tempSelectedValue}
-                                onChange={(e) => setTempSelectedValue(e.target.value)}
-                                InputProps={{ inputProps: { min: 1 } }} // Set minimum value to 1
-                            />
-                            <FormControl sx={{ minWidth: 120 }}>
-                                <Select
-                                    value={tempSelectedUnit}
-                                    onChange={(e) => setTempSelectedUnit(e.target.value)}
-                                    fullWidth
-                                >
-                                    <MenuItem value="Times">
-                                        Times
-                                    </MenuItem>
-                                    <MenuItem value="mins">Mins</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl sx={{ minWidth: 130 }}>
-                                <Select
-                                    value={tempSelectedGoal}
-                                    onChange={(e) => setTempSelectedGoal(e.target.value)}
-                                    fullWidth
-                                >
-                                    <MenuItem value="Per day">
-                                        Per day
-                                    </MenuItem>
-                                    <MenuItem value="Per week">Per week</MenuItem>
-                                    <MenuItem value="Per month">Per month</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Box>
-                    </>
-                );
-            } else {
+        } else {
             return null;
         }
     };
@@ -384,7 +257,7 @@ const AddHabitCard = ({ addUserHabit }) => {
                         </FormControl>
                     </Box>
                     {renderGoalSection()}
-                    {(selectedHabit !== 2 && selectedHabit !== 3 && selectedHabit !== 4) ? <div style={{ height: '10px' }} /> : null}
+                    {(selectedHabit !== 2 && selectedHabit !== 3 && selectedHabit !== 6) ? <div style={{ height: '10px' }} /> : null}
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button onClick={handleCloseDialog} variant="contained" color="secondary">
                             Cancel
@@ -395,7 +268,7 @@ const AddHabitCard = ({ addUserHabit }) => {
                             color="primary"
                             disabled={
                                 selectedHabit === '' ||
-                                ((selectedHabit === 2 || selectedHabit === 3 || selectedHabit === 4) &&
+                                ((selectedHabit === 2 || selectedHabit === 3 || selectedHabit === 6) &&
                                     (!tempSelectedValue || !tempSelectedUnit || !tempSelectedGoal))
                             }
                         >
@@ -413,3 +286,4 @@ AddHabitCard.propTypes = {
 };
 
 export default AddHabitCard;
+
