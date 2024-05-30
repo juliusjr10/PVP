@@ -190,6 +190,36 @@ namespace PVP.Server.Helpers.Services
                 return null; // Return null if an error occurs
             }
         }
+        public async Task<ICollection<(string Note, DateTime Date)>> NotesByUserIdAndHabitId(int userId, int habitId)
+        {
+            try
+            {
+                var habitUser = await _context.HabitUser
+                    .Include(hu => hu.CheckIns)
+                    .FirstOrDefaultAsync(hu => hu.UserId == userId && hu.HabitId == habitId);
+
+                if (habitUser == null)
+                {
+                    return new List<(string, DateTime)>(); // Return an empty collection if habit user not found
+                }
+
+                // Extract notes and dates from check-ins
+                var notesWithDates = habitUser.CheckIns
+                    .Where(ci => !string.IsNullOrEmpty(ci.Note))
+                    .Select(ci => (ci.Note, ci.Date))
+                    .ToList();
+
+                return notesWithDates;
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions if needed
+                Console.WriteLine($"Error fetching notes by UserId and HabitId: {ex.Message}");
+                return new List<(string, DateTime)>(); // Return an empty collection in case of an error
+            }
+        }
+
+
 
 
     }

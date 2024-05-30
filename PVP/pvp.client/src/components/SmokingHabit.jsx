@@ -30,7 +30,6 @@ const SmokingHabitContainer = styled(Box)({
     zIndex: 999,
 });
 
-
 const CloseButton = styled(Button)({
     position: 'absolute',
     top: 20,
@@ -40,14 +39,15 @@ const CloseButton = styled(Button)({
     color: '#333',
 });
 
-
 export default function SmokingHabit() {
     const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
     const [note, setNote] = useState('');
-    const [showPopup, setShowPopup] = useState(false); // State for showing popup
-    const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [notes, setNotes] = useState([]);
+
 
     useEffect(() => {
         setIsVisible(true);
@@ -73,6 +73,31 @@ export default function SmokingHabit() {
 
         fetchCheckIns();
     }, []);
+
+    const fetchNotes = async () => {
+        try {
+            const response = await fetch(`https://localhost:7200/api/Habits/notesbyuseridandhabitid?habitId=1`, {
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch notes');
+            }
+            const data = await response.json();
+            const notesArray = data.notes && data.notes['$values'] ? data.notes['$values'] : [];
+            const datesArray = data.dates && data.dates['$values'] ? data.dates['$values'] : [];
+
+            // Combine notes and dates into an array of tuples
+            const combinedNotes = notesArray.map((note, index) => [note, datesArray[index]]);
+
+            setNotes(combinedNotes);
+        } catch (error) {
+            console.error('Error fetching notes:', error);
+        }
+    };
+
+
+
 
     const streakDays = () => {
         let streak = 0;
@@ -115,10 +140,10 @@ export default function SmokingHabit() {
         const parsedDate = new Date(checkIn.date);
         return {
             date: format(parsedDate, 'yyyy-MM-dd'),
-            mood: checkIn.mood
+            mood: checkIn.mood,
+            note: checkIn.note
         };
     }) ?? [];
-
     const handleCheckDate = async (date, mood, note) => {
         const formattedDate = format(date, 'yyyy-MM-dd');
 
@@ -155,7 +180,7 @@ export default function SmokingHabit() {
 
     const handleCheckCurrentDate = async () => {
         handleCheckDate(selectedDate, selectedMood, note);
-        setShowPopup(false); // Close the popup after checking in
+        setShowPopup(false);
     };
 
     const handleMoodChange = event => {
@@ -186,7 +211,15 @@ export default function SmokingHabit() {
         }
     };
 
+    const handleViewNotes = async () => {
+        await fetchNotes();
+        setShowNotesDialog(true); // Open the dialog
+    };
 
+    const handleCloseNotesDialog = () => {
+        setShowNotesDialog(false); // Close the dialog
+    };
+    const [showNotesDialog, setShowNotesDialog] = useState(false);
     const firstCheckInDate = checkIns.length > 0 ? new Date(checkIns[0].date) : null;
     const today = new Date();
     let daysWithoutCheckIn = 0;
@@ -218,7 +251,7 @@ export default function SmokingHabit() {
                     <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
                         Stop Smoking
                     </Typography>
-                    <Divider/>
+                    <Divider />
                 </Box>
                 <Box
                     sx={{
@@ -260,6 +293,9 @@ export default function SmokingHabit() {
                         <Typography variant="body2" sx={{ color: '#f44336' }}>{daysWithoutCheckIn} Day{daysWithoutCheckIn === 1 ? '' : 's'}</Typography>
                     </Box>
                 </Box>
+                <Box sx={{ textAlign: 'center', margin: '16px' }}>
+                    <Button variant="outlined" onClick={handleViewNotes}>View Notes</Button>
+                </Box>
 
                 <Dialog open={showPopup} onClose={handleClosePopup}>
                     <DialogTitle>Check-In</DialogTitle>
@@ -297,6 +333,46 @@ export default function SmokingHabit() {
                     onDateClick={handleDateClick}
                 />
             </Box>
+            <Dialog open={showNotesDialog} onClose={handleCloseNotesDialog}>
+    <DialogTitle>Notes</DialogTitle>
+                <DialogContent>
+                    {Array.isArray(notes) && notes.length > 0 ? (
+                        notes.map((noteTuple, index) => {
+                            // Calculate the width based on the length of the note text
+                            const textLength = noteTuple[0].length;
+                            const lines = Math.ceil(textLength / 70); // Calculate number of lines needed
+                            const width = lines * 200; // Adjust this multiplier as needed
+                            return (
+                                <Box key={index} sx={{
+                                    marginBottom: '16px',
+                                    border: '1px solid #ccc',
+                                    borderRadius: '20px',
+                                    padding: '8px',
+                                    width: `${width}px`, // Set the width dynamically
+                                    wordWrap: 'break-word' // Allow words to break
+                                }}>
+                                    <Typography>{noteTuple[0]}</Typography>
+                                    <Typography variant="body2" sx={{ color: '#888', marginTop: '4px' }}>
+                                        {format(new Date(noteTuple[1]), 'dd/MM/yyyy')} {/* Format the date as needed */}
+                                    </Typography>
+                                </Box>
+                            );
+                        })
+                    ) : (
+                        <Typography>No notes available.</Typography>
+                    )}
+                </DialogContent>
+
+
+
+
+
+
+    <DialogActions>
+        <Button onClick={handleCloseNotesDialog}>Close</Button>
+    </DialogActions>
+</Dialog>
         </SmokingHabitContainer>
     );
 }
+
