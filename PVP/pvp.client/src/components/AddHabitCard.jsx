@@ -321,13 +321,10 @@ const AddHabitCard = ({ addUserHabit }) => {
                                     onChange={(e) => setTempSelectedUnit(e.target.value)}
                                     fullWidth
                                 >
-                                    <MenuItem value="Pages">
-                                        Pages
+                                    <MenuItem value="Times">
+                                        Times
                                     </MenuItem>
                                     <MenuItem value="mins">Mins</MenuItem>
-                                    <MenuItem value="hours">
-                                        Hours
-                                    </MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl sx={{ minWidth: 130 }}>
@@ -404,9 +401,6 @@ const AddHabitCard = ({ addUserHabit }) => {
                         >
                             Add Habit
                         </Button>
-
-
-
                     </Box>
                 </DialogContent>
             </Dialog>

@@ -172,7 +172,7 @@ namespace PVP.Server.Data
                 RequestDateTime = currentDate
             };
             var users = new List<User>() { firstUser, secondUser, thirdUser };
-            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit, fifthHabit };
+            var habits = new List<Habit>() { firstHabit, secondHabit, thirdHabit, fourthHabit, fifthHabit, sixthHabit };
             var groups = new List<Group>() { firstGroup, secondGroup };
             var userhabits = new List<HabitUser> { firstUserHabit, secondUserHabit, thirdUserHabit };
             var friendrequests = new List<FriendRequest> { firstFriendRequest };
