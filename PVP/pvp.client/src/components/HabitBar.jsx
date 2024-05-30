@@ -160,7 +160,7 @@ export default function HabitBar() {
         setShowAlcoholHabit(false); // Close AlcoholHabit
     };
 
-    const allHabitsPresent = userHabits.length === 5;
+    const allHabitsPresent = userHabits.length === 6;
 
     return (
         <Box sx={{ width: "50%", mt: '75px' }}>

@@ -171,7 +171,7 @@ const AddHabitCard = ({ addUserHabit }) => {
     };
 
     const renderGoalSection = () => {
-        if (selectedHabit === 2 || selectedHabit === 3 || selectedHabit === 6) { // Meditation, Water, or Reading habit
+        if (selectedHabit === 2 || selectedHabit === 3 || selectedHabit === 6 || selectedHabit ===4) { // Meditation, Water, or Reading habit
             return (
                 <>
                     <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
@@ -192,12 +192,11 @@ const AddHabitCard = ({ addUserHabit }) => {
                                 onChange={(e) => setTempSelectedUnit(e.target.value)}
                                 fullWidth
                             >
-                                <MenuItem value="Times">
-                                    Times
-                                </MenuItem>
-                                {selectedHabit === 6 && <MenuItem value="mins">Mins</MenuItem>} {/* For the reading habit */}
-                                {selectedHabit !== 6 && <MenuItem value="Ml">Ml</MenuItem>} {/* For other habits */}
-                                {selectedHabit !== 6 && <MenuItem value="L">L</MenuItem>} {/* For other habits */}
+                                {(selectedHabit === 6 || selectedHabit === 2) && <MenuItem value="Mins">Mins</MenuItem>}
+                                {(selectedHabit === 6 || selectedHabit === 2) && <MenuItem value="Hours">Hours</MenuItem>}
+                                {selectedHabit == 3 && <MenuItem value="Ml">Ml</MenuItem>} {/* For other habits */}
+                                {selectedHabit == 3 && <MenuItem value="L">L</MenuItem>} {/* For other habits */}
+                                {selectedHabit == 4 && <MenuItem value="Times">Times</MenuItem>} {/* For other habits */}
                             </Select>
                         </FormControl>
                         <FormControl sx={{ minWidth: 130 }}>

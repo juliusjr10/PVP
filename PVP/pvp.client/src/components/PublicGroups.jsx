@@ -100,7 +100,7 @@ const PublicGroups = ({ publicGroups }) => {
                 body: JSON.stringify({ GroupID: groupId }),
                 credentials: 'include',
             });
-
+            window.location.reload();
             setMembershipMap(new Map(membershipMap.set(groupId, true)));
         } catch (error) {
             console.error('Error joining group:', error);

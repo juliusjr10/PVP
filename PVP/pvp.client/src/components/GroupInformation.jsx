@@ -11,6 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MainFeaturedGroup from './MainFeaturedGroup';
+import { useNavigate } from 'react-router-dom';
 
 const GroupInformation = ({ groupData }) => {
     const [posts, setPosts] = useState([]);
@@ -25,6 +26,7 @@ const GroupInformation = ({ groupData }) => {
         fetchPosts();
         fetchUserReactions(); // Fetch user's reactions for all posts
     }, [groupData.groupID]);
+    const navigate = useNavigate();
 
     const fetchPosts = async () => {
         try {
@@ -96,7 +98,6 @@ const GroupInformation = ({ groupData }) => {
             console.error('Error fetching reactions counts:', error);
         }
     };
-
     const leaveGroup = async () => {
         try {
             const response = await fetch(`https://localhost:7200/api/group/leavegroup/${groupData.groupID}`, {
@@ -105,7 +106,7 @@ const GroupInformation = ({ groupData }) => {
             });
             if (response.ok) {
                 console.log('Left the group successfully');
-                window.location.reload();
+                navigate('/groups');
             } else {
                 console.error('Failed to leave the group');
             }
@@ -113,6 +114,7 @@ const GroupInformation = ({ groupData }) => {
             console.error('Error leaving the group:', error);
         }
     };
+
 
     const handleLeaveConfirmation = () => {
         setOpenConfirmation(true);
