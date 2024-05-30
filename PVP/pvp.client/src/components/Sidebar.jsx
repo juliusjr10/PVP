@@ -211,7 +211,7 @@ export default function PersistentDrawerLeft() {
                         </marquee>
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-                        <Avatar alt={username} src="../assets/react.svg" />
+                        <Avatar alt={username} src="https://source.unsplash.com/random?wallpapers" />
                         <Link to='/editprofile'><Typography sx={{ ml: 1 , color:'white'}}>{username}</Typography></Link>
                     </Box>
                 </Toolbar>
