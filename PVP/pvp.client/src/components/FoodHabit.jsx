@@ -51,6 +51,10 @@ export default function SmokingHabit() {
     const [note, setNote] = useState('');
     const [showPopup, setShowPopup] = useState(false); // State for showing popup
     const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
+    const [goal, setGoal] = useState('');
+    const [frequency, setFrequency] = useState('');
+    const [time, setTime] = useState('');
+    const [userHabitId, setUserHabitId] = useState(null);
 
     useEffect(() => {
         setIsVisible(true);
@@ -76,7 +80,50 @@ export default function SmokingHabit() {
 
         fetchCheckIns();
     }, []);
+    useEffect(() => {
+        const fetchHabitId = async () => {
+            try {
+                const response = await fetch('https://localhost:7200/api/Habits/gethabituseridbyhabitidanduserid?habitId=4', {
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch habitId');
+                }
+                const data = await response.json();
+                console.log("aaaaaaa" + data.habitUserId);
+                setUserHabitId(data.habitUserId); // Assuming the habitId is returned as 'HabitUserId'
+            } catch (error) {
+                console.error('Error fetching habitId:', error);
+            }
+        };
+        fetchHabitId();
+    }, []);
 
+
+    useEffect(() => {
+        if (userHabitId !== null) {
+            const fetchGoalFrequencyTime = async () => {
+                try {
+                    console.log("Id yra = " + userHabitId);
+                    const response = await fetch(`https://localhost:7200/api/Habits/getgoalfrequencytime/${userHabitId}`, {
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch goal, frequency, and time');
+                    }
+                    const data = await response.json();
+                    setGoal(data.goal);
+                    setFrequency(data.frequency);
+                    setTime(data.time);
+                } catch (error) {
+                    console.error('Error fetching goal, frequency, and time:', error);
+                }
+            };
+            fetchGoalFrequencyTime();
+        }
+    }, [userHabitId]);
     const streakDays = () => {
         let streak = 0;
         const reversedCheckIns = [...checkIns].reverse();
@@ -220,6 +267,14 @@ export default function SmokingHabit() {
                         Healthy Food
                     </Typography>
                     <Divider/>
+                </Box>
+                <Box sx={{
+                    textAlign: 'center',
+                    mt: '10px',
+                    mb: '20px'
+                }}>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Your goal:</Typography>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Eat healthy {goal} {frequency.toLowerCase()} {time.toLowerCase()}</Typography>
                 </Box>
                 <Box
                     sx={{

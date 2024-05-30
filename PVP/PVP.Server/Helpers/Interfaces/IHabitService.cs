@@ -14,5 +14,7 @@ namespace PVP.Server.Helpers.Interfaces
         Task<ICollection<Habit>> GetHabitByName(string name);
         Task<bool> DeleteHabit(int userId, int habitId);
         Task<Habit?> GetHabitById(int habitId);
+        Task<(int? Goal, string Frequency, string Time)?> GetGoalFrequencyTimeByHabitUserId(int habitUserId);
+        Task<int?> GetHabitUserIdByHabitIdAndUserId(int userId, int habitId);
     }
 }
