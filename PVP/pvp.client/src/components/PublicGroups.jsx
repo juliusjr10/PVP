@@ -21,12 +21,18 @@ const GroupsContainer = styled(Box)({
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: '20px',
-    width: '100%',
+    width: 'calc(100% - 300px)', // Account for the 200px empty space on the right
+    marginRight: '300px', // Add the 200px empty space on the right
+    boxSizing: 'border-box',
+    // Ensure there are exactly 3 cards per row
+    '& > div': {
+        flexBasis: 'calc((100% - 40px) / 3)', // Adjust flex-basis to fit 3 cards per row with gaps
+    },
 });
 
 const StyledCard = styled(Card)(({ theme }) => ({
     transition: 'transform 0.3s, box-shadow 0.3s',
-    width: '300px',
+    width: '100%', // Set to 100% to fill the allocated flex-basis
     '&:hover': {
         transform: 'scale(1.05)',
         boxShadow: theme.shadows[6],
