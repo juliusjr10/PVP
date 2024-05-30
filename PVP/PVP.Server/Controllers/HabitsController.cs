@@ -278,6 +278,49 @@ namespace PVP.Server.Controllers
                 return NotFound(new { message = "Habit user not found." });
             }
         }
+        [HttpGet("notesbyuseridandhabitid")]
+        public async Task<IActionResult> NotesByUserIdAndHabitId(int habitId)
+        {
+            
+            var jwt = Request.Cookies["jwt"];
+            
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            int userId = int.Parse(token.Issuer);
+            int issuerUserId = int.Parse(token.Issuer);
+
+            if (issuerUserId != userId)
+            {
+                return Forbid();
+            }
+            
+            // Call the service method to get notes by user ID and habit ID
+            var notesWithDates = await _habitService.NotesByUserIdAndHabitId(userId, habitId);
+
+            if (notesWithDates != null)
+            {
+                // Extract only notes for response
+                var notes = notesWithDates.Select(tuple => tuple.Note).ToList();
+
+                // Return 200 OK with the notes
+                return Ok(new { Notes = notes, Dates = notesWithDates.Select(tuple => tuple.Date).ToList() });
+            }
+            else
+            {
+                // Return 404 Not Found if notes are not found
+                return NotFound(new { message = "Failed to retrieve notes for the user and habit." });
+            }
+        }
+
 
 
     }
