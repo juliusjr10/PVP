@@ -16,7 +16,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Container = styled('div')(({ theme }) => ({
     width: 280,
-    height: '100vh',
+    height: '100%',
     backgroundColor: theme.palette.background.paper,
     position: 'fixed',
     top: 0,

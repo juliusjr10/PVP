@@ -17,10 +17,10 @@ export default function GroupPage() {
     }, []);*/
 
     return (
-        <Box component="main"npm>
+        <Box component="main" sx={{ display: 'flex'}}>
             <CssBaseline />
             <Sidebar />
-            <GroupSidebar onSelectGroup={setSelectedGroupId} /> {/* Pass the setter function as a prop */}
+
             <Groups selectedGroupId={selectedGroupId} /> {/* Pass the selected group ID as a prop */}
         </Box>
     );

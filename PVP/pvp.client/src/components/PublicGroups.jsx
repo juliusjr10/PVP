@@ -7,38 +7,33 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from '@mui/material/styles';
-
+import GroupSidebar from '../components/GroupSidebar';
+import Avatar from '@mui/material/Avatar'; // Import Avatar component
 const Container = styled(Box)({
     padding: '20px',
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+
 });
 
 const GroupsContainer = styled(Box)({
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    flexWrap: 'wrap', // Allow cards to wrap to the next row if necessary
     gap: '20px',
-    width: 'calc(100% - 300px - 300px)', // Account for the 200px empty space on the right
-    marginRight: '300px', // Add the 200px empty space on the right
-    marginLeft: '300px',
-    boxSizing: 'border-box',
-    // Ensure there are exactly 3 cards per row
-    '& > div': {
-        flexBasis: 'calc((100% - 40px) / 3)', // Adjust flex-basis to fit 3 cards per row with gaps
-    },
+    width: '80%',
+    maxWidth: '1200px', // Set maximum width to prevent cards from stretching too much
+    margin: '0 auto', // Center the container horizontally
 });
 
 const StyledCard = styled(Card)(({ theme }) => ({
     transition: 'transform 0.3s, box-shadow 0.3s',
-    width: '100%', // Set to 100% to fill the allocated flex-basis
     '&:hover': {
         transform: 'scale(1.05)',
         boxShadow: theme.shadows[6],
     },
 }));
+
 
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -51,7 +46,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const PublicGroups = ({ publicGroups }) => {
     const [membershipMap, setMembershipMap] = useState(new Map());
     const [loading, setLoading] = useState(true);
-
+    const [selectedGroupId, setSelectedGroupId] = useState(null);
     useEffect(() => {
         const fetchMembershipStatus = async () => {
             if (publicGroups && publicGroups.length > 0) {
@@ -131,31 +126,44 @@ const PublicGroups = ({ publicGroups }) => {
                     </Typography>
                     <GroupsContainer>
                         {publicGroups.map((group) => (
-                            <StyledCard key={group.groupID}>
-                                <StyledCardContent>
-                                    <Typography variant="h6" component="div">
-                                        {group.name}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1, marginBottom: 2 }}>
-                                        {group.description}
-                                    </Typography>
-                                    {!membershipMap.get(group.groupID) && (
-                                        <StyledButton
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => handleJoinGroup(group.groupID)}
-                                        >
-                                            Join Group
-                                        </StyledButton>
-                                    )}
+                            <StyledCard key={group.groupID} sx={{
+                                width: '100%',
+                            }}>
+                                <StyledCardContent sx={{ display: 'flex'} }>
+                                    <Avatar sx={{ width: 128, height: 128, marginRight: '16px' }} src={`https://source.unsplash.com/random?wallpapers&${group.groupID}`} /> {/* Group photo */}
+                                    <Box sx={{ justifyContent: 'space-between', width: '100%' }}>
+                                        <Box sx={{float:'left'} }>
+                                            <Typography variant="h3" >
+                                                {group.name}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" sx={{ margin: 'auto' }}>
+                                                {group.description}
+                                            </Typography>
+                                        </Box>
+
+                                        {!membershipMap.get(group.groupID) && (
+                                            <StyledButton
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() => handleJoinGroup(group.groupID)}
+                                                sx={{float:'right'} }
+                                            >
+
+                                                Join Group
+                                            </StyledButton>
+                                        )}
+                                    </Box>
+
                                 </StyledCardContent>
                             </StyledCard>
                         ))}
                     </GroupsContainer>
+
                 </>
             ) : (
                 <Typography variant="h6" align="center">No Public Groups Available</Typography>
             )}
+            <GroupSidebar onSelectGroup={setSelectedGroupId} /> {/* Pass the setter function as a prop */}
         </Container>
     );
 };
