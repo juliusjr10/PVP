@@ -6,15 +6,17 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import { styled } from '@mui/material/styles';
 import GroupSidebar from '../components/GroupSidebar';
 import Avatar from '@mui/material/Avatar'; // Import Avatar component
+import InputBase from '@mui/material/InputBase';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+
 const Container = styled(Box)({
     padding: '20px',
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
-
 });
 
 const GroupsContainer = styled(Box)({
@@ -24,6 +26,7 @@ const GroupsContainer = styled(Box)({
     width: '80%',
     maxWidth: '1200px', // Set maximum width to prevent cards from stretching too much
     margin: '0 auto', // Center the container horizontally
+    minHeight: '300px', // Add a minimum height to maintain layout consistency
 });
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -34,7 +37,6 @@ const StyledCard = styled(Card)(({ theme }) => ({
     },
 }));
 
-
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
     padding: theme.spacing(3),
 }));
@@ -43,13 +45,45 @@ const StyledButton = styled(Button)(({ theme }) => ({
     marginTop: theme.spacing(2),
 }));
 
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha('#7931EE', 0.15),
+    '&:hover': {
+        backgroundColor: alpha('#7931EE', 0.25),
+    },
+    marginLeft: 0,
+    width: '30%',
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    width: '100%',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    },
+}));
+
 const PublicGroups = ({ publicGroups }) => {
     const [membershipMap, setMembershipMap] = useState(new Map());
     const [loading, setLoading] = useState(true);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
+    const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
+
     useEffect(() => {
         const fetchMembershipStatus = async () => {
-            if (publicGroups && publicGroups.length > 0) {
+            if (publicGroups && publicGroups.length > 0) { // Add null check for publicGroups
                 try {
                     const newMembershipMap = new Map();
 
@@ -92,7 +126,8 @@ const PublicGroups = ({ publicGroups }) => {
         };
 
         fetchMembershipStatus();
-    }, [publicGroups]);
+    }, [publicGroups?.length]); // Add null check for publicGroups
+
 
     const handleJoinGroup = async (groupId) => {
         try {
@@ -109,6 +144,15 @@ const PublicGroups = ({ publicGroups }) => {
         }
     };
 
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredGroups = publicGroups && publicGroups.filter((group) =>
+        group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        group.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     if (loading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
@@ -124,41 +168,46 @@ const PublicGroups = ({ publicGroups }) => {
                     <Typography variant="h4" gutterBottom align="center">
                         Public Groups
                     </Typography>
+                    <Search sx={{ mb: 5 }}>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search..."
+                            inputProps={{ 'aria-label': 'search' }}
+                            value={searchQuery} // Bind the search query state
+                            onChange={handleSearchChange} // Update search query state on change
+                        />
+                    </Search>
                     <GroupsContainer>
-                        {publicGroups.map((group) => (
-                            <StyledCard key={group.groupID} sx={{
-                                width: '100%',
-                            }}>
-                                <StyledCardContent sx={{ display: 'flex'} }>
+                        {filteredGroups.map((group) => (
+                            <StyledCard key={group.groupID} sx={{ width: '100%' }}>
+                                <StyledCardContent sx={{ display: 'flex' }}>
                                     <Avatar sx={{ width: 128, height: 128, marginRight: '16px' }} src={`https://source.unsplash.com/random?wallpapers&${group.groupID}`} /> {/* Group photo */}
                                     <Box sx={{ justifyContent: 'space-between', width: '100%' }}>
-                                        <Box sx={{float:'left'} }>
-                                            <Typography variant="h3" >
+                                        <Box sx={{ float: 'left' }}>
+                                            <Typography variant="h3">
                                                 {group.name}
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" sx={{ margin: 'auto' }}>
                                                 {group.description}
                                             </Typography>
                                         </Box>
-
                                         {!membershipMap.get(group.groupID) && (
                                             <StyledButton
                                                 variant="contained"
                                                 color="primary"
                                                 onClick={() => handleJoinGroup(group.groupID)}
-                                                sx={{float:'right'} }
+                                                sx={{ float: 'right' }}
                                             >
-
                                                 Join Group
                                             </StyledButton>
                                         )}
                                     </Box>
-
                                 </StyledCardContent>
                             </StyledCard>
                         ))}
                     </GroupsContainer>
-
                 </>
             ) : (
                 <Typography variant="h6" align="center">No Public Groups Available</Typography>

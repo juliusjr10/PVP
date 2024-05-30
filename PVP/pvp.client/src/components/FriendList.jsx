@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
@@ -12,6 +12,9 @@ import TextField from '@mui/material/TextField';
 import { FixedSizeList } from 'react-window';
 import FriendPopup from './FriendPopup'; // Import the FriendPopup component
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 
 function renderRow(friend, index, style, onClickFriend, onDeleteFriend) {
     const handleClickFriend = () => {
@@ -22,7 +25,6 @@ function renderRow(friend, index, style, onClickFriend, onDeleteFriend) {
         onDeleteFriend(friend);
     };
 
-
     return (
         <ListItem style={style} key={index} component="div" disablePadding>
             <ListItem>
@@ -30,9 +32,9 @@ function renderRow(friend, index, style, onClickFriend, onDeleteFriend) {
                     <Avatar alt={friend.username} src="../assets/react.svg" sx={{ width: 32, height: 32 }} />
                 </ListItemAvatar>
                 <ListItemText primary={friend.username} />
-                <Button variant="contained" color="primary" onClick={handleClickFriend} sx={{marginRight : "5px"} }>
+                <Button variant="contained" color="primary" onClick={handleClickFriend} sx={{ marginRight: "5px" }}>
                     Challenge
-                </Button >
+                </Button>
                 <Button variant="contained" color="secondary" onClick={handleDelete}>
                     Delete
                 </Button>
@@ -47,8 +49,10 @@ export default function FriendsList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const searchInputRef = useRef(null);
 
     useEffect(() => {
         const fetchUserFriends = async () => {
@@ -149,15 +153,49 @@ export default function FriendsList() {
         }
     };
 
-    console.log('Friends:', userFriends); // Log the friends array
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
-    let width;
+    useEffect(() => {
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, [searchQuery]);
 
-    if (isSmallScreen) {
-        width = '400px';
-    } else {
-        width = '700px';
-    }
+    const filteredFriends = userFriends.filter((friend) =>
+        friend.username.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const Search = styled('div')(({ theme }) => ({
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha('#7931EE', 0.15),
+        '&:hover': {
+            backgroundColor: alpha('#7931EE', 0.25),
+        },
+        width: '80%',
+        marginLeft: '10%',
+    }));
+
+    const SearchIconWrapper = styled('div')(({ theme }) => ({
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }));
+
+    const StyledInputBase = styled(InputBase)(({ theme }) => ({
+        color: 'inherit',
+        width: '100%',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        },
+    }));
 
     return (
         <Box
@@ -166,7 +204,7 @@ export default function FriendsList() {
                 marginTop: '100px',
                 flexDirection: 'column',
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                width: width
+                width: isSmallScreen ? '400px' : '700px'
             }}
         >
             <Typography variant="h5" gutterBottom sx={{
@@ -177,15 +215,28 @@ export default function FriendsList() {
             }}>
                 FRIENDS
             </Typography>
+            <Search sx={{ mb: 5 }}>
+                <SearchIconWrapper>
+                    <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                    placeholder="Search..."
+                    inputProps={{ 'aria-label': 'search' }}
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    inputRef={searchInputRef} // Attach ref here
+                />
+            </Search>
             <FixedSizeList
                 height={450}
-                width='100%'
+                width="100%"
                 itemSize={46}
-                itemCount={userFriends.length}
+                itemCount={filteredFriends.length} // Render filteredFriends instead of userFriends
                 overscanCount={5}
             >
-                {({ index, style }) => renderRow(userFriends[index], index, style, setSelectedFriend, handleDeleteFriend)}
-
+                {({ index, style }) =>
+                    renderRow(filteredFriends[index], index, style, setSelectedFriend, handleDeleteFriend)
+                }
             </FixedSizeList>
             <Button variant="contained" color="primary" onClick={handleAddFriend} sx={{ margin: '7px' }}>
                 Add Friend
