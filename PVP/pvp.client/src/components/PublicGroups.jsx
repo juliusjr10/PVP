@@ -61,8 +61,13 @@ const PublicGroups = ({ publicGroups }) => {
 
                         if (response.ok) {
                             try {
-                                const isMember = await response.json();
-                                newMembershipMap.set(group.groupID, isMember);
+                                const text = await response.text();
+                                if (text) {
+                                    const isMember = JSON.parse(text);
+                                    newMembershipMap.set(group.groupID, isMember);
+                                } else {
+                                    console.error('Empty response body');
+                                }
                             } catch (error) {
                                 console.error('Error parsing JSON:', error);
                             }

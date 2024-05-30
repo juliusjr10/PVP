@@ -1,13 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Container = styled('div')(({ theme }) => ({
     width: 280,
@@ -23,23 +22,10 @@ const Container = styled('div')(({ theme }) => ({
     justifyContent: 'space-between',
 }));
 
-const Header = styled('div')({
-    padding: '16px',
-    borderBottom: '1px solid #ddd',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-});
-
 const SidebarContent = styled('div')({
     padding: '16px',
     flexGrow: 1,
     overflowY: 'auto',
-});
-
-const Footer = styled('div')({
-    padding: '16px',
-    borderTop: '1px solid #ddd',
 });
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
@@ -52,9 +38,12 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 
 const GroupSidebar = ({ onSelectGroup }) => {
     const [userGroups, setUserGroups] = React.useState([]);
+    const navigate = useNavigate();
 
     const handleGroupClick = (groupId) => {
         onSelectGroup(groupId);
+        console.log("Selected Group:", groupId); // Print the selected group ID
+        navigate(`/groups/${groupId}`);
     };
 
     React.useEffect(() => {
@@ -85,11 +74,6 @@ const GroupSidebar = ({ onSelectGroup }) => {
 
     return (
         <Container>
-            <Header>
-                <Typography variant="h6">
-                    My Groups
-                </Typography>
-            </Header>
             <SidebarContent>
                 <List>
                     <Typography variant="h6">
@@ -102,19 +86,17 @@ const GroupSidebar = ({ onSelectGroup }) => {
                     ))}
                 </List>
             </SidebarContent>
-            <Footer>
-                <Button variant="contained" component={Link} to="/create-group" fullWidth>
-                    Create New Group
-                </Button>
-                <Button
-                    variant="outlined"
-                    onClick={() => handleGroupClick(null)}
-                    fullWidth
-                    style={{ marginTop: '8px' }}
-                >
-                    Show Public Groups
-                </Button>
-            </Footer>
+            <Button variant="contained" component={Link} to="/create-group" fullWidth>
+                Create New Group
+            </Button>
+            <Button
+                variant="outlined"
+                onClick={() => handleGroupClick(null)}
+                fullWidth
+                style={{ marginTop: '8px' }}
+            >
+                Show Public Groups
+            </Button>
         </Container>
     );
 };

@@ -3702,11 +3702,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\juliu\\Desktop\\PVP\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+      "projectUniqueName": "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
       "projectName": "PVP.Server",
-      "projectPath": "C:\\Users\\juliu\\Desktop\\PVP\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
+      "projectPath": "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\PVP.Server.csproj",
       "packagesPath": "C:\\Users\\juliu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\juliu\\Desktop\\PVP\\PVP\\PVP\\PVP.Server\\obj\\",
+      "outputPath": "C:\\Users\\juliu\\Desktop\\pvp\\PVP\\PVP\\PVP.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
