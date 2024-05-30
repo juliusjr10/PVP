@@ -139,6 +139,31 @@ namespace PVP.Server.Controllers
             int reactionsCount = await _postService.GetAllReactionsCountByPostId(postId);
             return Ok(reactionsCount);
         }
+        [HttpGet("userreaction/{postId}")]
+        public async Task<ActionResult<Like>> GetUserReactionOnPost(int postId)
+        {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtService.Verify(jwt);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            string userId = token.Issuer;
+
+            var like = await _postService.GetUserReactionOnPost(postId, userId);
+            if (like == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(like);
+        }
 
     }
 }

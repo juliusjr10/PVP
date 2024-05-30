@@ -13,5 +13,6 @@ namespace PVP.Server.Helpers.Interfaces
         Task<int> GetLikesCountByReactionTypeAndPostId(int postId, ReactionType reaction);
         Task<bool> DeleteLikeByPostIdAndUserId(int postId, string userId);
         Task<int> GetAllReactionsCountByPostId(int postId);
+        Task<Like?> GetUserReactionOnPost(int postId, string userId);
     }
 }

@@ -11,7 +11,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MainFeaturedGroup from './MainFeaturedGroup';
-import { useNavigate } from 'react-router-dom';
 
 const GroupInformation = ({ groupData }) => {
     const [posts, setPosts] = useState([]);
@@ -23,10 +22,23 @@ const GroupInformation = ({ groupData }) => {
     const reactionTimeouts = useRef({});
 
     useEffect(() => {
+        const storedUserReactions = localStorage.getItem('userReactions');
+        if (storedUserReactions) {
+            setUserReactions(JSON.parse(storedUserReactions));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('userReactions', JSON.stringify(userReactions));
+    }, [userReactions]);
+
+    useEffect(() => {
         fetchPosts();
-        fetchUserReactions(); // Fetch user's reactions for all posts
     }, [groupData.groupID]);
-    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchUserReactions();
+    }, [posts]);
 
     const fetchPosts = async () => {
         try {
@@ -53,49 +65,20 @@ const GroupInformation = ({ groupData }) => {
 
     const fetchUserReactions = async () => {
         try {
-            const userReactionsData = {};
-            await Promise.all(posts.map(async (post) => {
-                const response = await fetch(`https://localhost:7200/api/Post/userreaction?postId=${post.postID}`, {
+            const updatedUserReactions = {};
+            for (const post of posts) {
+                const response = await fetch(`https://localhost:7200/api/post/userreaction/${post.postID}`, {
                     method: 'GET',
                     credentials: 'include',
                 });
-                if (response.ok) {
-                    const reactionData = await response.json();
-                    if (reactionData.reactionType !== null) {
-                        userReactionsData[post.postID] = reactionData.reactionType;
-                    }
-                } else {
-                    console.error(`Failed to fetch user reaction for post ${post.postID}`);
+                const data = await response.json();
+                if (data.reaction) {
+                    updatedUserReactions[post.postID] = data.reaction;
                 }
-            }));
-            setUserReactions(userReactionsData);
+            }
+            setUserReactions(updatedUserReactions);
         } catch (error) {
             console.error('Error fetching user reactions:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchReactionsCounts();
-    }, [posts]);
-
-    const fetchReactionsCounts = async () => {
-        try {
-            const counts = {};
-            await Promise.all(posts.map(async (post) => {
-                const response = await fetch(`https://localhost:7200/api/Post/reactionscount/${post.postID}`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                if (response.ok) {
-                    const count = await response.json();
-                    counts[post.postID] = count;
-                } else {
-                    console.error(`Failed to fetch reactions count for post ${post.postID}`);
-                }
-            }));
-            setReactionsCounts(counts);
-        } catch (error) {
-            console.error('Error fetching reactions counts:', error);
         }
     };
     const leaveGroup = async () => {
@@ -106,7 +89,8 @@ const GroupInformation = ({ groupData }) => {
             });
             if (response.ok) {
                 console.log('Left the group successfully');
-                navigate('/groups');
+                // Redirect to /groups
+                window.location.href = '/groups';
             } else {
                 console.error('Failed to leave the group');
             }
@@ -163,105 +147,104 @@ const GroupInformation = ({ groupData }) => {
 
     const toggleReactionOptions = (postId, show) => {
         if (!userReactions[postId]) {
-            if (show) {
-                setShowReactionOptions((prev) => ({
-                    ...prev,
-                    [postId]: true,
-                }));
-                if (reactionTimeouts.current[postId]) {
-                    clearTimeout(reactionTimeouts.current[postId]);
-                }
-            } else {
-                reactionTimeouts.current[postId] = setTimeout(() => {
-                    setShowReactionOptions((prev) => ({
-                        ...prev,
-                        [postId]: false,
-                    }));
-                }, 1500);
-            }
+            setShowReactionOptions((prev) => ({
+                ...prev,
+                [postId]: show,
+            }));
         }
     };
-
-    const reactToPost = async (postId, reaction) => {
+    const fetchReactionsCount = async (postId) => {
         try {
-            let endpoint = '';
-            if (reaction === 1) {
-                endpoint = `https://localhost:7200/api/Post/likepost?postId=${postId}&reaction=1`;
-            } else if (reaction === 2) {
-                endpoint = `https://localhost:7200/api/Post/likepost?postId=${postId}&reaction=2`;
-            } else {
-                console.error('Invalid reaction type');
-                return;
-            }
-
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                credentials: 'include',
-            });
-
-            if (response.ok) {
-                console.log('Post reacted successfully');
-                if (userReactions[postId] === reaction) {
-                    // If the same reaction is clicked again, delete the reaction
-                    deleteReaction(postId, reaction);
-                } else {
-                    // If a different reaction is clicked, set the new reaction
-                    fetchReactionCount(postId, reaction);
-                    setUserReactions((prev) => ({
-                        ...prev,
-                        [postId]: reaction,
-                    }));
-                }
-            } else {
-                console.error('Failed to react to the post');
-            }
-        } catch (error) {
-            console.error('Error reacting to the post:', error);
-        }
-    };
-
-    const deleteReaction = async (postId, reaction) => {
-        try {
-            const endpoint = `https://localhost:7200/api/Post/deletelike?postId=${postId}`;
-            const response = await fetch(endpoint, {
-                method: 'DELETE',
-                credentials: 'include',
-            });
-
-            if (response.ok) {
-                console.log('Reaction deleted successfully');
-                // Reset userReactions and fetch updated counts
-                setUserReactions((prev) => ({
-                    ...prev,
-                    [postId]: null,
-                }));
-                fetchReactionsCounts();
-            } else {
-                console.error('Failed to delete the reaction');
-            }
-        } catch (error) {
-            console.error('Error deleting the reaction:', error);
-        }
-    };
-
-    const fetchReactionCount = async (postId, reaction) => {
-        try {
-            const response = await fetch(`https://localhost:7200/api/Post/likecount?postId=${postId}&reaction=${reaction}`, {
+            const response = await fetch(`https://localhost:7200/api/post/reactionscount/${postId}`, {
                 method: 'GET',
                 credentials: 'include',
             });
-
             if (response.ok) {
-                const count = await response.json();
-                // Handle the count based on reaction type
-                setReactionsCounts((prevCounts) => ({ ...prevCounts, [postId]: count }));
+                const data = await response.json();
+                setReactionsCounts((prevCounts) => ({
+                    ...prevCounts,
+                    [postId]: data,
+                }));
             } else {
-                console.error(`Failed to fetch reaction count for post ${postId}`);
+                console.error('Failed to fetch reactions count');
+                // Set reactions count to 0 if there's an error
+                setReactionsCounts((prevCounts) => ({
+                    ...prevCounts,
+                    [postId]: 0,
+                }));
             }
         } catch (error) {
-            console.error('Error fetching reaction count:', error);
+            console.error('Error fetching reactions count:', error);
+            // Set reactions count to 0 if there's an error
+            setReactionsCounts((prevCounts) => ({
+                ...prevCounts,
+                [postId]: 0,
+            }));
         }
     };
+
+    useEffect(() => {
+        posts.forEach((post) => {
+            fetchReactionsCount(post.postID);
+        });
+    }, [posts]);
+
+    const reactToPost = async (postId, reactionType) => {
+        try {
+            const response = await fetch(`https://localhost:7200/api/post/likepost?postId=${postId}&reaction=${reactionType}`, {
+                method: 'POST',
+                credentials: 'include',
+            });
+            if (response.ok) {
+                console.log('Post liked successfully');
+                // Update user reactions immediately after reacting to a post
+                fetchUserReactions();
+                // Fetch updated reaction counts for all posts
+                fetchReactionsCount(postId);
+            } else {
+                console.error('Failed to like post');
+            }
+        } catch (error) {
+            console.error('Error liking post:', error);
+        }
+    };
+
+
+    // Function to remove user reaction
+    // Function to remove user reaction
+    // Function to remove user reaction
+    const deleteReaction = async (postId) => {
+        try {
+            const response = await fetch(`https://localhost:7200/api/Post/deletelike?postId=${postId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+            if (response.ok) {
+                console.log('Reaction deleted successfully');
+                setUserReactions((prevUserReactions) => {
+                    const updatedReactions = { ...prevUserReactions };
+                    delete updatedReactions[postId];
+                    return updatedReactions;
+                });
+                // Fetch reactions count after deleting reaction
+                fetchReactionsCount(postId);
+                // Reset showReactionOptions for the post
+                setShowReactionOptions((prev) => ({
+                    ...prev,
+                    [postId]: false,
+                }));
+            } else {
+                console.error('Failed to delete reaction');
+            }
+        } catch (error) {
+            console.error('Error deleting reaction:', error);
+        }
+    };
+
+
+
+
+
 
     const mainFeaturedGroup = {
         title: groupData.name,
@@ -297,35 +280,40 @@ const GroupInformation = ({ groupData }) => {
                                 </Typography>
                                 {!userReactions[post.postID] && !showReactionOptions[post.postID] && (
                                     <Button
-                                        onMouseEnter={() => toggleReactionOptions(post.postID, true)}
-                                        onMouseLeave={() => toggleReactionOptions(post.postID, false)}
-                                        style={{ display: 'inline-block' }}
+                                        onClick={() => toggleReactionOptions(post.postID, true)}
+                                        style={{ position: 'absolute', bottom: '1px' }}
                                     >
-                                        React
+                                        Like
                                     </Button>
+
                                 )}
 
                                 {showReactionOptions[post.postID] && (
-                                    <div
-                                        onMouseEnter={() => toggleReactionOptions(post.postID, true)}
-                                        onMouseLeave={() => toggleReactionOptions(post.postID, false)}
-                                    >
+                                    <div>
                                         {!userReactions[post.postID] && (
                                             <>
                                                 <Button onClick={() => reactToPost(post.postID, 1)}>👍</Button>
                                                 <Button onClick={() => reactToPost(post.postID, 2)}>❤️</Button>
                                             </>
                                         )}
-                                        {userReactions[post.postID] && (
-                                            <Typography variant="body2">
-                                                {userReactions[post.postID] === 1 ? '👍' : '❤️'}
-                                            </Typography>
-                                        )}
                                     </div>
                                 )}
+
+
+
                                 <Typography variant="caption" color="textSecondary" style={{ position: 'absolute', bottom: 0, right: 0 }}>
                                     Reactions: {reactionsCounts[post.postID] || 0}
                                 </Typography>
+                                {/* Render the user's reaction */}
+                                {userReactions[post.postID] && (
+                                    <Typography variant="caption" color="textSecondary" style={{ position: 'absolute', bottom: 0, left: 0 }}>
+                                        You reacted: {userReactions[post.postID] === 1 ? '👍' : '❤️'}
+                                        {userReactions[post.postID] && (
+                                            <Button onClick={() => deleteReaction(post.postID)}>Undo Reaction</Button>
+                                        )}
+                                    </Typography>
+
+                                )}
                             </Paper>
                         ))}
                     </Paper>
@@ -345,6 +333,7 @@ const GroupInformation = ({ groupData }) => {
             </Dialog>
         </Box>
     );
+
 };
 
 GroupInformation.propTypes = {
@@ -359,3 +348,4 @@ GroupInformation.propTypes = {
 };
 
 export default GroupInformation;
+

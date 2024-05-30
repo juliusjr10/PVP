@@ -121,6 +121,16 @@ namespace PVP.Server.Helpers.Services
 
             return likesCount;
         }
+        public async Task<Like?> GetUserReactionOnPost(int postId, string userId)
+        {
+            // Find the like associated with the postId and userId
+            var like = await _context.Likes
+                .FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == userId);
+
+            // Return the found like entity
+            return like;
+        }
+
 
     }
 }
