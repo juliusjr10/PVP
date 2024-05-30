@@ -21,8 +21,9 @@ const GroupsContainer = styled(Box)({
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: '20px',
-    width: 'calc(100% - 300px)', // Account for the 200px empty space on the right
+    width: 'calc(100% - 300px - 300px)', // Account for the 200px empty space on the right
     marginRight: '300px', // Add the 200px empty space on the right
+    marginLeft: '300px',
     boxSizing: 'border-box',
     // Ensure there are exactly 3 cards per row
     '& > div': {
