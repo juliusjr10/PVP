@@ -282,7 +282,7 @@ export default function WorkoutHabit() {
     }
 
     return (
-        <WorkoutHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <WorkoutHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', overflow: 'auto', }}>
             <CloseButton onClick={handleCloseContainer}>
                 <CloseIcon />
             </CloseButton>

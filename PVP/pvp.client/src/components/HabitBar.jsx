@@ -231,10 +231,16 @@ export default function HabitBar() {
     const allHabitsPresent = userHabits.length === 9;
 
     return (
-        <Box sx={{ width: "50%", mt: '75px' }}>
+        <Box sx={{
+            width: "50%",
+            mt: '75px',
+            maxHeight: 'calc(100vh - 100px)', // Adjust to fit within viewport height
+            overflow: 'auto', // Enable scrolling
+            padding: '10px' // Add some padding for better spacing
+        }}>
             <Typography variant='h2' sx={{
-                width:'100%',
-                backgroundColor:'#ffffff',
+                width: '100%',
+                backgroundColor: '#ffffff',
                 marginBottom: '25px',
                 display: {
                     xl: 'flex',
@@ -362,22 +368,22 @@ export default function HabitBar() {
                 })}
 
                 {!allHabitsPresent && (
-                        <AddHabitCard addUserHabit={addUserHabit} />
+                    <AddHabitCard addUserHabit={addUserHabit} />
                 )}
                 {showSmokingHabit && (
-                        <SmokingHabit />
+                    <SmokingHabit />
                 )}
                 {showMeditateHabit && (
-                        <MeditateHabit />
+                    <MeditateHabit />
                 )}
                 {showWaterHabit && (
-                        <WaterHabit />
+                    <WaterHabit />
                 )}
                 {showFoodHabit && (
-                        <FoodHabit />
+                    <FoodHabit />
                 )}
                 {showAlcoholHabit && (
-                        <AlcoholHabit />
+                    <AlcoholHabit />
 
                 )}
                 {showReadingHabit && (

@@ -183,7 +183,7 @@ const PublicGroups = ({ publicGroups }) => {
                         {filteredGroups.map((group) => (
                             <StyledCard key={group.groupID} sx={{ width: '100%' }}>
                                 <StyledCardContent sx={{ display: 'flex' }}>
-                                    <Avatar sx={{ width: 128, height: 128, marginRight: '16px' }} src={`https://source.unsplash.com/random?wallpapers&${group.groupID}`} /> {/* Group photo */}
+                                    <Avatar sx={{ width: 128, height: 128, marginRight: '16px' }} src={`https://picsum.photos/1920/1080?random`} /> {/* Group photo */}
                                     <Box sx={{ justifyContent: 'space-between', width: '100%' }}>
                                         <Box sx={{ float: 'left' }}>
                                             <Typography variant="h3">

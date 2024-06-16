@@ -242,12 +242,12 @@ const GroupInformation = ({ groupData }) => {
     const mainFeaturedGroup = {
         title: groupData.name,
         description: groupData.description,
-        image: 'https://source.unsplash.com/random?wallpapers',
+        image: 'https://picsum.photos/1920/1080?random',
         imageText: 'IMAGE TEXT',
     };
 
     return (
-        <Box sx={{ position: 'relative', top: -50, width: '100%' }}>
+        <Box sx={{ position: 'relative', top: -50, width: '100%', padding: '0px' }}>
             <MainFeaturedGroup post={mainFeaturedGroup} />
             <Button onClick={handleLeaveConfirmation} variant="contained" style={{ backgroundColor: 'red', color: 'white', marginBottom: '10px', float: 'right' }}>Leave Group</Button>
             <Grid container spacing={3} marginTop={2}>
@@ -267,7 +267,7 @@ const GroupInformation = ({ groupData }) => {
                         {posts.slice().reverse().map((post) => (
                             <Paper key={post.postID} elevation={3} style={{ position: 'relative', padding: '20px', marginTop: '20px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                                    <Avatar sx={{ width: 64, height: 64, marginRight: '16px' }} src={`https://source.unsplash.com/random?wallpapers${post.id}`} />
+                                    <Avatar sx={{ width: 64, height: 64, marginRight: '16px' }} src={`https://picsum.photos/1920/1080?random`} />
                                     <div>
                                         <Typography variant="body1"><strong>{post.user.username}</strong></Typography>
                                         <Typography variant="caption" color="textSecondary">{new Date(post.timestamp).toLocaleString()}</Typography>
