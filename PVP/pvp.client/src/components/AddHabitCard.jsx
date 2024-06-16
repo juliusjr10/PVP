@@ -83,6 +83,10 @@ const AddHabitCard = ({ addUserHabit }) => {
             setTempSelectedValue(2000);
         } else if (selectedHabit === 6) { // Reading habit
             setTempSelectedValue(1);
+        } else if (selectedHabit === 7) {
+            setTempSelectedValue(8);
+        } else if (selectedHabit === 8) {
+            setTempSelectedValue(1);
         } else {
             setTempSelectedValue(3); // Default value
         }
@@ -171,7 +175,7 @@ const AddHabitCard = ({ addUserHabit }) => {
     };
 
     const renderGoalSection = () => {
-        if (selectedHabit === 2 || selectedHabit === 3 || selectedHabit === 6 || selectedHabit ===4) { // Meditation, Water, or Reading habit
+        if ([2, 3, 4, 6, 7, 8, 9].includes(selectedHabit)) { // Meditation, Water, or Reading habit
             return (
                 <>
                     <Typography variant="subtitle1" sx={{ marginBottom: '8px', marginLeft: '3px' }}>
@@ -192,11 +196,11 @@ const AddHabitCard = ({ addUserHabit }) => {
                                 onChange={(e) => setTempSelectedUnit(e.target.value)}
                                 fullWidth
                             >
-                                {(selectedHabit === 6 || selectedHabit === 2) && <MenuItem value="Mins">Mins</MenuItem>}
-                                {(selectedHabit === 6 || selectedHabit === 2) && <MenuItem value="Hours">Hours</MenuItem>}
-                                {selectedHabit == 3 && <MenuItem value="Ml">Ml</MenuItem>} {/* For other habits */}
-                                {selectedHabit == 3 && <MenuItem value="L">L</MenuItem>} {/* For other habits */}
-                                {selectedHabit == 4 && <MenuItem value="Times">Times</MenuItem>} {/* For other habits */}
+                                {(selectedHabit === 6 || selectedHabit === 2 || selectedHabit === 8 || selectedHabit === 9) && <MenuItem value="Mins">Mins</MenuItem>}
+                                {(selectedHabit === 6 || selectedHabit === 2 || selectedHabit === 7 || selectedHabit === 8 || selectedHabit === 9) && <MenuItem value="Hours">Hours</MenuItem>}
+                                {selectedHabit === 3 && <MenuItem value="Ml">Ml</MenuItem>} {/* For other habits */}
+                                {selectedHabit === 3 && <MenuItem value="L">L</MenuItem>} {/* For other habits */}
+                                {(selectedHabit === 4 || selectedHabit === 6 || selectedHabit === 7 || selectedHabit === 2 || selectedHabit===8) && <MenuItem value="Times">Times</MenuItem>} {/* For other habits */}
                             </Select>
                         </FormControl>
                         <FormControl sx={{ minWidth: 130 }}>
@@ -205,11 +209,9 @@ const AddHabitCard = ({ addUserHabit }) => {
                                 onChange={(e) => setTempSelectedGoal(e.target.value)}
                                 fullWidth
                             >
-                                <MenuItem value="Per day">
-                                    Per day
-                                </MenuItem>
-                                <MenuItem value="Per week">Per week</MenuItem>
-                                <MenuItem value="Per month">Per month</MenuItem>
+                                <MenuItem value="Per day">Per day</MenuItem>
+                                {(selectedHabit !== 7 || selectedHabit !== 9) && <MenuItem value="Per week">Per week</MenuItem>}
+                                {(selectedHabit !== 7 || selectedHabit !== 9) && <MenuItem value="Per month">Per month</MenuItem>}
                             </Select>
                         </FormControl>
                     </Box>
@@ -219,6 +221,7 @@ const AddHabitCard = ({ addUserHabit }) => {
             return null;
         }
     };
+
 
     return (
         <>

@@ -6,12 +6,18 @@ import ReadingCard from '../components/ReadingCard';
 import AlcoholCard from '../components/AlcoholCard';
 import WaterCard from '../components/WaterCard';
 import FoodCard from '../components/FoodCard';
+import SleepCard from '../components/SleepCard';
+import WorkoutCard from '../components/WorkoutCard';
+import ScreenCard from '../components/ScreenCard';
 import SmokingHabit from '../components/SmokingHabit';
 import FoodHabit from '../components/FoodHabit';
 import WaterHabit from '../components/WaterHabit';
 import MeditateHabit from '../components/MeditateHabit';
 import ReadingHabit from '../components/ReadingHabit';
 import AlcoholHabit from '../components/AlcoholHabit';
+import SleepHabit from '../components/SleepHabit';
+import WorkoutHabit from '../components/WorkoutHabit';
+import ScreenHabit from '../components/ScreenHabit';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -25,6 +31,9 @@ export default function HabitBar() {
     const [showMeditateHabit, setShowMeditateHabit] = useState(false); // State to manage visibility of MeditateHabit
     const [showReadingHabit, setShowReadingHabit] = useState(false); // State to manage visibility of ReadingHabit
     const [showAlcoholHabit, setShowAlcoholHabit] = useState(false); // State to manage visibility of AlcoholHabit
+    const [showSleepHabit, setShowSleepHabit] = useState(false); // State to manage visibility of SleepHabit
+    const [showWorkoutHabit, setShowWorkoutHabit] = useState(false); // State to manage visibility of WorkoutHabit
+    const [showScreenHabit, setShowScreenHabit] = useState(false); // State to manage visibility of ScreenHabit
 
     useEffect(() => {
         // Close the sidebar whenever userHabits change
@@ -97,6 +106,15 @@ export default function HabitBar() {
             if (habitId === 6) { // Reading habitId
                 setShowReadingHabit(false);
             }
+            if (habitId === 7) { // Sleep habitId
+                setShowSleepHabit(false);
+            }
+            if (habitId === 8) { // Workout habitId
+                setShowWorkoutHabit(false);
+            }
+            if (habitId === 9) { // Screen habitId
+                setShowScreenHabit(false);
+            }
             setOpen(false); // Always close the sidebar
         } catch (error) {
             console.error('Error deleting habit:', error);
@@ -111,6 +129,9 @@ export default function HabitBar() {
         setShowMeditateHabit(false); // Close MeditateHabit
         setShowReadingHabit(false); // Close ReadingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
     };
 
     // Function to toggle visibility of FoodHabit
@@ -121,6 +142,9 @@ export default function HabitBar() {
         setShowMeditateHabit(false); // Close MeditateHabit
         setShowReadingHabit(false); // Close ReadingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
     };
 
     // Function to toggle visibility of WaterHabit
@@ -131,6 +155,9 @@ export default function HabitBar() {
         setShowMeditateHabit(false); // Close MeditateHabit
         setShowReadingHabit(false); // Close ReadingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
     };
 
     // Function to toggle visibility of MeditateHabit
@@ -141,6 +168,9 @@ export default function HabitBar() {
         setShowFoodHabit(false); // Close FoodHabit
         setShowWaterHabit(false); // Close WaterHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
     };
 
     const toggleAlcoholHabit = () => {
@@ -150,6 +180,9 @@ export default function HabitBar() {
         setShowMeditateHabit(false); // Close MeditateHabit
         setShowReadingHabit(false); // Close ReadingHabit
         setShowSmokingHabit(false); // Close SmokingHabit
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
     };
     const toggleReadingHabit = () => {
         setShowReadingHabit(prev => !prev);
@@ -158,9 +191,44 @@ export default function HabitBar() {
         setShowMeditateHabit(false); // Close MeditateHabit
         setShowSmokingHabit(false); // Close SmokingHabit
         setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
     };
-
-    const allHabitsPresent = userHabits.length === 6;
+    const toggleSleepHabit = () => {
+        setShowSleepHabit(prev => !prev);
+        setShowFoodHabit(false); // Close FoodHabit
+        setShowWaterHabit(false); // Close WaterHabit
+        setShowMeditateHabit(false); // Close MeditateHabit
+        setShowSmokingHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowReadingHabit(false); // Close Reading
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+        setShowScreenHabit(false); // Close ScreenHabit
+    };
+    const toggleWorkoutHabit = () => {
+        setShowWorkoutHabit(prev => !prev);
+        setShowFoodHabit(false); // Close FoodHabit
+        setShowWaterHabit(false); // Close WaterHabit
+        setShowMeditateHabit(false); // Close MeditateHabit
+        setShowSmokingHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowReadingHabit(false); // Close Reading
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowScreenHabit(false); // Close ScreenHabit
+    };
+    const toggleScreenHabit = () => {
+        setShowScreenHabit(prev => !prev);
+        setShowFoodHabit(false); // Close FoodHabit
+        setShowWaterHabit(false); // Close WaterHabit
+        setShowMeditateHabit(false); // Close MeditateHabit
+        setShowSmokingHabit(false); // Close SmokingHabit
+        setShowAlcoholHabit(false); // Close AlcoholHabit
+        setShowReadingHabit(false); // Close Reading
+        setShowSleepHabit(false); // Close SleepHabit
+        setShowWorkoutHabit(false); // Close WorkoutHabit
+    };
+    const allHabitsPresent = userHabits.length === 9;
 
     return (
         <Box sx={{ width: "50%", mt: '75px' }}>
@@ -258,6 +326,36 @@ export default function HabitBar() {
                                     />
                                 </Box>
                             );
+                        case 7: // Sleep
+                            return (
+                                <Box key={index}>
+                                    <SleepCard
+                                        onClick={toggleSleepHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Box>
+                            );
+                        case 8: // Workout
+                            return (
+                                <Box key={index}>
+                                    <WorkoutCard
+                                        onClick={toggleWorkoutHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Box>
+                            );
+                        case 9: // Screen
+                            return (
+                                <Box key={index}>
+                                    <ScreenCard
+                                        onClick={toggleScreenHabit}
+                                        onDelete={deleteHabit} // Add this line
+                                        habitId={habit.habitId}
+                                    />
+                                </Box>
+                            );
                         default:
                             return null;
                     }
@@ -284,6 +382,15 @@ export default function HabitBar() {
                 )}
                 {showReadingHabit && (
                     <ReadingHabit />
+                )}
+                {showSleepHabit && (
+                    <SleepHabit />
+                )}
+                {showWorkoutHabit && (
+                    <WorkoutHabit />
+                )}
+                {showScreenHabit && (
+                    <ScreenHabit />
                 )}
             </Box>
         </Box>

@@ -14,11 +14,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import CheckIcon from '@mui/icons-material/Check';
-import Divider from '@mui/material/Divider';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
+import Divider from '@mui/material/Divider';
 
-const AlcoholHabitContainer = styled(Box)({
+
+
+const WorkoutHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
     right: 0,
@@ -30,6 +32,7 @@ const AlcoholHabitContainer = styled(Box)({
     zIndex: 999,
 });
 
+
 const CloseButton = styled(Button)({
     position: 'absolute',
     top: 20,
@@ -39,13 +42,19 @@ const CloseButton = styled(Button)({
     color: '#333',
 });
 
-export default function AlcoholHabit() {
+
+
+export default function WorkoutHabit() {
     const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
     const [note, setNote] = useState('');
     const [showPopup, setShowPopup] = useState(false); // State for showing popup
     const [selectedDate, setSelectedDate] = useState(new Date()); // State for selected date
+    const [goal, setGoal] = useState('');
+    const [frequency, setFrequency] = useState('');
+    const [time, setTime] = useState('');
+    const [userHabitId, setUserHabitId] = useState(null);
     const [notes, setNotes] = useState([]);
     useEffect(() => {
         setIsVisible(true);
@@ -54,7 +63,7 @@ export default function AlcoholHabit() {
     useEffect(() => {
         const fetchCheckIns = async () => {
             try {
-                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/5', {
+                const response = await fetch('https://localhost:7200/api/Habits/getuserhabitcheckins/8', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
                 });
@@ -71,9 +80,29 @@ export default function AlcoholHabit() {
 
         fetchCheckIns();
     }, []);
+    useEffect(() => {
+        const fetchHabitId = async () => {
+            try {
+                const response = await fetch('https://localhost:7200/api/Habits/gethabituseridbyhabitidanduserid?habitId=8', {
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch habitId');
+                }
+                const data = await response.json();
+                console.log("aaaaaaa" + data.habitUserId);
+                setUserHabitId(data.habitUserId); // Assuming the habitId is returned as 'HabitUserId'
+            } catch (error) {
+                console.error('Error fetching habitId:', error);
+            }
+        };
+        fetchHabitId();
+    }, []);
+
     const fetchNotes = async () => {
         try {
-            const response = await fetch(`https://localhost:7200/api/Habits/notesbyuseridandhabitid?habitId=5`, {
+            const response = await fetch(`https://localhost:7200/api/Habits/notesbyuseridandhabitid?habitId=8`, {
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
             });
@@ -92,6 +121,29 @@ export default function AlcoholHabit() {
             console.error('Error fetching notes:', error);
         }
     };
+    useEffect(() => {
+        if (userHabitId !== null) {
+            const fetchGoalFrequencyTime = async () => {
+                try {
+                    console.log("Id yra = " + userHabitId);
+                    const response = await fetch(`https://localhost:7200/api/Habits/getgoalfrequencytime/${userHabitId}`, {
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch goal, frequency, and time');
+                    }
+                    const data = await response.json();
+                    setGoal(data.goal);
+                    setFrequency(data.frequency);
+                    setTime(data.time);
+                } catch (error) {
+                    console.error('Error fetching goal, frequency, and time:', error);
+                }
+            };
+            fetchGoalFrequencyTime();
+        }
+    }, [userHabitId]);
     const streakDays = () => {
         let streak = 0;
         const reversedCheckIns = [...checkIns].reverse();
@@ -153,7 +205,7 @@ export default function AlcoholHabit() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    HabitId: 5,
+                    HabitId: 8,
                     Mood: mood,
                     Date: formattedDate,
                     Note: note
@@ -184,9 +236,6 @@ export default function AlcoholHabit() {
         setNote(event.target.value);
     };
 
-    const handleOpenPopup = () => {
-        setShowPopup(true);
-    };
 
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -233,7 +282,7 @@ export default function AlcoholHabit() {
     }
 
     return (
-        <AlcoholHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <WorkoutHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
             <CloseButton onClick={handleCloseContainer}>
                 <CloseIcon />
             </CloseButton>
@@ -243,10 +292,18 @@ export default function AlcoholHabit() {
                     mt: '10px'
                 }}>
                     <Typography variant="h5" gutterBottom sx={{ fontSize: '2rem', color: '#333333' }}>
-                        Stop Drinking
+                        Workout
                     </Typography>
+                    <Divider />
                 </Box>
-                <Divider />
+                <Box sx={{
+                    textAlign: 'center',
+                    mt: '10px',
+                    mb: '20px'
+                }}>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Your goal:</Typography>
+                    <Typography variant="body1" sx={{ fontSize: '1rem', color: '#333333' }}>Workout {goal} {frequency.toLowerCase()} {time.toLowerCase()}</Typography>
+                </Box>
                 <Box
                     sx={{
                         display: 'flex',
@@ -365,6 +422,7 @@ export default function AlcoholHabit() {
                     <Button onClick={handleCloseNotesDialog}>Close</Button>
                 </DialogActions>
             </Dialog>
-        </AlcoholHabitContainer>
+        </WorkoutHabitContainer>
     );
+
 }

@@ -20,7 +20,7 @@ import Divider from '@mui/material/Divider';
 
 
 
-const SmokingHabitContainer = styled(Box)({
+const ReadingHabitContainer = styled(Box)({
     position: 'fixed',
     top: 50,
     right: 0,
@@ -44,7 +44,7 @@ const CloseButton = styled(Button)({
 
 
 
-export default function SmokingHabit() {
+export default function ReadingHabit() {
     const [isVisible, setIsVisible] = useState(false);
     const [checkIns, setCheckIns] = useState([]);
     const [selectedMood, setSelectedMood] = useState(0);
@@ -282,7 +282,7 @@ export default function SmokingHabit() {
     }
 
     return (
-        <SmokingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <ReadingHabitContainer style={{ transform: isVisible ? 'translateX(0)' : 'translateX(100%)', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
             <CloseButton onClick={handleCloseContainer}>
                 <CloseIcon />
             </CloseButton>
@@ -422,7 +422,7 @@ export default function SmokingHabit() {
                     <Button onClick={handleCloseNotesDialog}>Close</Button>
                 </DialogActions>
             </Dialog>
-        </SmokingHabitContainer>
+        </ReadingHabitContainer>
     );
 
 }
