@@ -17,5 +17,6 @@ namespace PVP.Server.Helpers.Interfaces
         Task<(int? Goal, string Frequency, string Time)?> GetGoalFrequencyTimeByHabitUserId(int habitUserId);
         Task<int?> GetHabitUserIdByHabitIdAndUserId(int userId, int habitId);
         Task<ICollection<(string Note, DateTime Date)>> NotesByUserIdAndHabitId(int userId, int habitId);
+
     }
 }

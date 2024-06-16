@@ -1,52 +1,103 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Card, CardContent, Typography, Box, Paper, Divider } from '@mui/material';
+import dayjs from 'dayjs';
+
+// Mapping habitId to habitName
+const habitIdToName = {
+    1: 'Smoking',
+    2: 'Meditation',
+    3: 'Water',
+    4: 'Healthy food',
+    5: 'Alcohol',
+    6: 'Reading',
+    7: 'Sleeping',
+    8: 'Workout',
+    9: 'Screen time',
+};
 
 function WeeklyReport() {
-    const [week1Days] = useState({
-        Monday: { Smoking: false, Meditation: true },
-        Tuesday: { Smoking: false, Meditation: true },
-        Wednesday: { Smoking: false, Meditation: true },
-        Thursday: { Smoking: false, Meditation: true },
-        Friday: { Smoking: false, Meditation: true },
-        Saturday: { Smoking: true, Meditation: false },
-        Sunday: { Smoking: true, Meditation: true },
-    });
+    const [userHabits, setUserHabits] = useState([]);
+    const [selectedHabitData, setSelectedHabitData] = useState({});
+    const [monthlyHabitData, setMonthlyHabitData] = useState({});
 
-    const [week2Days] = useState({
-        Monday: { Smoking: true, Meditation: false },
-        Tuesday: { Smoking: false, Meditation: true },
-        Wednesday: { Smoking: true, Meditation: true },
-        Thursday: { Smoking: false, Meditation: false },
-        Friday: { Smoking: true, Meditation: true },
-        Saturday: { Smoking: false, Meditation: true },
-        Sunday: { Smoking: false, Meditation: false },
-    });
+    useEffect(() => {
+        const fetchUserHabits = async () => {
+            try {
+                const response = await fetch('https://localhost:7200/api/habits/getuserhabits', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user habits');
+                }
+                const data = await response.json();
+                console.log('Fetched user habits:', data);
 
-    const [week3Days] = useState({
-        Monday: { Smoking: false, Meditation: false },
-        Tuesday: { Smoking: false, Meditation: false },
-        Wednesday: { Smoking: false, Meditation: false },
-        Thursday: { Smoking: true, Meditation: false },
-        Friday: { Smoking: true, Meditation: true },
-        Saturday: { Smoking: false, Meditation: true },
-        Sunday: { Smoking: true, Meditation: true },
-    });
+                if (data && data.$values && Array.isArray(data.$values)) {
+                    const habitsWithNames = data.$values.map(habit => ({
+                        ...habit,
+                        habitName: habitIdToName[habit.habitId]
+                    }));
+                    setUserHabits(habitsWithNames);
 
-    const [week4Days] = useState({
-        Monday: { Smoking: true, Meditation: true },
-        Tuesday: { Smoking: true, Meditation: true },
-        Wednesday: { Smoking: true, Meditation: true },
-        Thursday: { Smoking: true, Meditation: true },
-        Friday: { Smoking: true, Meditation: true },
-        Saturday: { Smoking: false, Meditation: false },
-        Sunday: { Smoking: false, Meditation: true },
-    });
+                    // Process the check-ins to calculate the past 7 days data
+                    const processedData = processCheckIns(habitsWithNames, 0, 6, true);
+                    setSelectedHabitData(processedData);
 
-    const habits = ["Smoking", "Meditation"];
+                    // Process the check-ins to calculate the past month data for 4 weeks
+                    const monthlyData = {
+                        week1: processCheckIns(habitsWithNames, 21, 27),
+                        week2: processCheckIns(habitsWithNames, 14, 20),
+                        week3: processCheckIns(habitsWithNames, 7, 13),
+                        week4: processCheckIns(habitsWithNames, 0, 6),
+                    };
+                    setMonthlyHabitData(monthlyData);
+                } else {
+                    console.error('Invalid data format:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching user habits:', error);
+            }
+        };
+
+        fetchUserHabits();
+    }, []);
+
+    const processCheckIns = (habits, startDayOffset, endDayOffset, useDayNames = false) => {
+        const today = dayjs();
+        const dateRange = [...Array(endDayOffset - startDayOffset + 1).keys()].map(i => {
+            const date = today.subtract(i + startDayOffset, 'day');
+            return useDayNames ? date.format('dddd') : date.format('YYYY-MM-DD');
+        });
+
+        const processedData = {};
+        habits.forEach(habit => {
+            const habitName = habit.habitName;
+            processedData[habitName] = {};
+
+            dateRange.forEach(day => {
+                processedData[habitName][day] = false;
+            });
+
+            habit.checkIns.$values.forEach(checkIn => {
+                const checkInDate = dayjs(checkIn.date);
+                const checkInKey = useDayNames ? checkInDate.format('dddd') : checkInDate.format('YYYY-MM-DD');
+                if (dateRange.includes(checkInKey)) {
+                    processedData[habitName][checkInKey] = true;
+                }
+            });
+        });
+
+        return processedData;
+    };
 
     const calculatePercentage = (weekData, habit) => {
-        const days = Object.keys(weekData);
-        const checkedDaysCount = days.filter(day => weekData[day][habit]).length;
+        if (!weekData || !weekData[habit]) return 0;
+        const days = Object.keys(weekData[habit]);
+        const checkedDaysCount = days.filter(day => weekData[habit][day]).length;
         return (checkedDaysCount / days.length) * 100;
     };
 
@@ -57,10 +108,10 @@ function WeeklyReport() {
     };
 
     const weeks = [
-        { week: "Week 1", data: week1Days },
-        { week: "Week 2", data: week2Days },
-        { week: "Week 3", data: week3Days },
-        { week: "Week 4", data: week4Days },
+        { week: "Week 1", data: monthlyHabitData.week1 },
+        { week: "Week 2", data: monthlyHabitData.week2 },
+        { week: "Week 3", data: monthlyHabitData.week3 },
+        { week: "Week 4", data: monthlyHabitData.week4 },
     ];
 
     return (
@@ -75,51 +126,66 @@ function WeeklyReport() {
                 borderRadius: '5px',
                 fontWeight: '600'
             }}>
-                WEEKLY REPORT
+                LAST WEEK REPORT
             </Typography>
             <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                 <Grid container spacing={2} justifyContent="center">
-                    {Object.keys(week1Days).map((day) => (
-                        <Grid item xs={1.5} key={day}>
-                            <Card
-                                sx={{
-                                    backgroundColor: '#f5f5f5',
-                                    minHeight: '150px',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                <CardContent>
-                                    <Typography variant="h6" align="center">
-                                        {day}
-                                    </Typography>
-                                    {habits.map((habit) => (
+                    {selectedHabitData && userHabits.length > 0 ? (
+                        userHabits.map(habit => (
+                            <Grid item xs={12} key={habit.habitName}>
+                                <Card
+                                    sx={{
+                                        backgroundColor: '#f5f5f5',
+                                        minHeight: '150px',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <CardContent>
+                                        <Typography variant="h6" align="center">
+                                            {habit.habitName}
+                                        </Typography>
                                         <Box
-                                            key={habit}
                                             sx={{
                                                 display: 'flex',
+                                                flexDirection: 'row',
                                                 alignItems: 'center',
-                                                mt: 1,
+                                                justifyContent: 'space-between',
+                                                width: '100%',
                                             }}
                                         >
-                                            <Box
-                                                sx={{
-                                                    width: 20,
-                                                    height: 20,
-                                                    backgroundColor: week4Days[day][habit] ? '#4caf50' : '#f44336',
-                                                    marginRight: 1,
-                                                }}
-                                            />
-                                            <Typography variant="body2">{habit}</Typography>
+                                            {selectedHabitData[habit.habitName] && Object.keys(selectedHabitData[habit.habitName]).map(day => (
+                                                <Box
+                                                    key={day}
+                                                    sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        m: 1,
+                                                    }}
+                                                >
+                                                    <Typography variant="body2">{day}</Typography>
+                                                    <Box
+                                                        sx={{
+                                                            width: 20,
+                                                            height: 20,
+                                                            backgroundColor: selectedHabitData[habit.habitName][day] ? '#4caf50' : '#f44336',
+                                                            marginTop: 1,
+                                                        }}
+                                                    />
+                                                </Box>
+                                            ))}
                                         </Box>
-                                    ))}
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))
+                    ) : (
+                        <Typography variant="h6">No habits data available</Typography>
+                    )}
                 </Grid>
             </Paper>
             <Divider sx={{ my: 4, height: 2 }} />
@@ -134,12 +200,12 @@ function WeeklyReport() {
                 borderRadius: '5px',
                 fontWeight: '600'
             }}>
-                MONTHLY REPORT
+                LAST MONTH REPORT
             </Typography>
             <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                 <Grid container spacing={2} justifyContent="center">
                     {weeks.map((week) => (
-                        <Grid item xs={2.5} key={week.week}>
+                        <Grid item xs={12} key={week.week}>
                             <Card
                                 sx={{
                                     backgroundColor: '#f5f5f5',
@@ -155,33 +221,44 @@ function WeeklyReport() {
                                     <Typography variant="h6" align="center">
                                         {week.week}
                                     </Typography>
-                                    {habits.map((habit) => {
-                                        const percentage = calculatePercentage(week.data, habit);
-                                        const backgroundColor = getBackgroundColor(percentage);
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            width: '100%',
+                                        }}
+                                    >
+                                        {userHabits.map(habit => {
+                                            const habitName = habit.habitName;
+                                            const percentage = week.data && week.data[habitName] ? calculatePercentage(week.data, habitName) : 0;
+                                            const backgroundColor = getBackgroundColor(percentage);
 
-                                        return (
-                                            <Box
-                                                key={habit}
-                                                sx={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    mt: 1,
-                                                    width: '100%',
-                                                    justifyContent: 'center',
-                                                }}
-                                            >
+                                            return (
                                                 <Box
+                                                    key={habitName}
                                                     sx={{
-                                                        width: 20,
-                                                        height: 20,
-                                                        backgroundColor: backgroundColor,
-                                                        marginRight: 1,
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        m: 1,
                                                     }}
-                                                />
-                                                <Typography variant="body2">{habit}: {Math.round(percentage)}%</Typography>
-                                            </Box>
-                                        );
-                                    })}
+                                                >
+                                                    <Typography variant="body2">{habitName}</Typography>
+                                                    <Box
+                                                        sx={{
+                                                            width: 20,
+                                                            height: 20,
+                                                            backgroundColor: backgroundColor,
+                                                            marginTop: 1,
+                                                        }}
+                                                    />
+                                                    <Typography variant="body2">{Math.round(percentage)}%</Typography>
+                                                </Box>
+                                            );
+                                        })}
+                                    </Box>
                                 </CardContent>
                             </Card>
                         </Grid>
