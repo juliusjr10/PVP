@@ -23,7 +23,7 @@ export default function ScreenCard({ onClick, onDelete, habitId }) {
                         <MdPhoneIphone style={{ fontSize: '6rem', color: '#5a00ec' }} />
                     </div>
                     <Typography gutterBottom variant="h5" component="div" style={{ marginTop: '20px' }}>
-                        Sleep
+                        Screen Time
                     </Typography>
                 </CardContent>
             </CardActionArea>
